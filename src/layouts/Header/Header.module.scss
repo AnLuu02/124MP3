@@ -1,0 +1,211 @@
+header {
+    width: calc(100% - 240px);
+    height: 70px;
+    padding: 20px 4%;
+
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 104;
+    background: transparent;
+
+    &.active {
+        background-color: #1b2039;
+        box-shadow: rgb(0 0 0 / 12%) 0px 2px 12px;
+    }
+
+    .navHeader {
+        display: flex;
+        align-items: center;
+        width: 8%;
+
+        div {
+            font-size: 22px;
+            color: white;
+            margin-right: 20px;
+
+            .icon {
+                opacity: .2;
+                cursor: not-allowed;
+
+                &.active,
+                &.active {
+                    opacity: 1;
+                    cursor: pointer;
+                }
+            }
+
+
+
+        }
+    }
+
+    .user {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        // button {
+        //     border: none;
+        //     outline: none;
+        //     font-size: 16px;
+        //     font-weight: 500;
+        //     color: white;
+        //     background-color: transparent;
+        //     border: 1px solid transparent;
+        //     border-bottom: 1px solid aqua;
+        //     padding: 6px 10px;
+        //     border-radius: 20px;
+        //     transition: .2s;
+        //     cursor: pointer;
+
+        //     &:hover {
+        //         border: 1px solid aqua;
+        //         box-shadow: 0px 0px 4px aqua, 0px 0px 6px aqua, 0px 0px 10px aqua;
+        //     }
+
+        // }
+
+        // .profile {
+        //     position: relative;
+        //     width: 40px;
+        //     height: 40px;
+        //     border: 1px solid white;
+        //     border-radius: 50%;
+        //     margin-left: 10px;
+        //     display: none;
+
+        //     img {
+        //         width: 100%;
+        //         height: 100%;
+        //         object-fit: cover;
+        //         border-radius: 50%;
+        //         background-position: center;
+        //         cursor: pointer;
+        //     }
+
+        // }
+
+        .rightHeader {
+            width: 100%;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            justify-content: flex-end;
+            display: flex;
+
+            &>div {
+                margin: 0 5px;
+            }
+
+            .icon {
+                width: 40px;
+                height: 40px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: rgba(256, 256, 256, .1);
+                border-radius: 50%;
+                font-size: 18px;
+                cursor: pointer;
+                transition: all 0.5s;
+
+                &:hover {
+                    background: rgba(256, 256, 256, .2);
+
+                }
+            }
+
+            .profile {
+                overflow: hidden;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+
+        .downloadWindows {
+            color: #8c9af6 !important;
+            text-align: center;
+            font-weight: bold;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: rgba(256, 256, 256, .1);
+            border: 1px solid transparent;
+            padding: 6px 20px;
+            border-radius: 20px;
+            transition: .1s;
+            cursor: pointer;
+
+            .subIcon {
+                margin-right: 6px !important;
+            }
+
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+
+        .update_user {
+            border-color: #1a2570;
+            background-color: #1a2570;
+            color: white !important;
+
+        }
+
+        /* setting  */
+
+        .user .settings_header,
+        .navMobile {
+            display: flex;
+            color: white;
+            font-size: 24px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: hsla(0, 0%, 100%, 0.1);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hedaer_mobile {
+            display: none;
+        }
+
+        .settings_header {
+            display: flex;
+            color: white;
+            font-size: 24px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: hsla(0, 0%, 100%, 0.1);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hedaer_mobile {
+            display: none;
+        }
+
+        /* search */
+
+        header .search {
+            flex: 1;
+            height: 40px;
+            position: relative;
+            color: white;
+            /* overflow: hidden; */
+        }
+
+        ::placeholder {
+            color: white;
+            opacity: .8;
+        }
+
+    }
+}

@@ -1,0 +1,129 @@
+.home {
+    width: 100%;
+    color: white !important;
+
+    ul {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        flex-wrap: nowrap !important;
+        overflow: hidden;
+    }
+
+    .title {
+        font-size: 22px;
+        font-weight: bold;
+        margin: 0px 0 20px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: white;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        &>a {
+            display: block;
+            font-size: 14px;
+            color: white;
+            opacity: .7;
+            font-weight: 400;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    &.active ul {
+        flex-wrap: wrap !important;
+    }
+
+    #home.active ul li {
+        flex: unset;
+    }
+
+    #bannerHome {
+        justify-content: unset;
+        display: flex;
+        align-items: center;
+        height: 490px;
+        margin-bottom: 50px;
+
+        .content {
+            h2 {
+                font-size: 50px !important;
+                color: aqua;
+                animation-delay: .6s;
+            }
+
+            p {
+                font-size: 16px;
+                line-height: 1.6;
+                margin: 20px 0;
+                animation-delay: .8s;
+            }
+
+            .navHome {
+                animation-delay: 1.2s;
+            }
+
+            button {
+                font-size: 14px;
+                background-color: transparent !important;
+                outline: none;
+                font-weight: 500;
+                cursor: pointer;
+                border: none;
+                border-radius: 20px;
+
+                .btn {
+                    display: block;
+                    padding: 6px 10px;
+                    color: white;
+                    border-radius: 20px;
+                    transition: 0.2s;
+
+                    &:hover {
+                        border: unset !important;
+                        border: 1px solid aqua;
+                        box-shadow: 0px 0px 4px aqua, 0px 0px 6px aqua, 0px 0px 8px aqua;
+                    }
+                }
+
+                &:nth-child(1) {
+                    background: transparent;
+                    border-bottom: 1px solid aqua;
+                    margin-right: 12px;
+
+                    .btn {
+                        color: white;
+                    }
+                }
+
+                &:nth-child(2) {
+                    border-top: 1px solid aqua;
+                }
+
+            }
+        }
+    }
+
+    .aim {
+        transform: translateX(-100px);
+        opacity: 0;
+        animation: showText 1s ease-in-out forwards;
+    }
+
+    @keyframes showText {
+        100% {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    .widget {
+        margin-bottom: 50px;
+    }
+
+}

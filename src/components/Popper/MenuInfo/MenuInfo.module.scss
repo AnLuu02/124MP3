@@ -1,0 +1,303 @@
+// Menu wrapper
+// span {
+//     display: block;
+//     margin: 0 !important;
+//     padding: 0 !important;
+//     max-height: 16.8px;
+//     display: flex;
+//     align-items: center;
+// }
+
+.menu-list {
+    width: 300px;
+    min-height: 100px;
+
+
+    .header {
+        all: unset;
+        font-size: 14px;
+
+        .not-login {
+            text-align: center;
+
+            button {
+                width: 100%;
+                font-size: 16px;
+            }
+        }
+    }
+
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-height: min((100vh - 96px) - 60px, 734px);
+        min-height: 100px;
+        color: white;
+        border-radius: 8px;
+        background-color: #1b2039;
+        box-shadow: rgb(0 0 0 / 12%) 0px 2px 12px;
+        overflow: auto;
+        z-index: 105 !important;
+        padding: 6px;
+
+
+        &::-webkit-scrollbar {
+            width: 0.4em;
+        }
+
+
+        &::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: white;
+            border-radius: 10px;
+        }
+
+        hr {
+            margin: 0;
+            padding: 0;
+            max-width: 100%;
+            height: 2px;
+            margin: 9px 12px;
+            border: none;
+            background-color: rgba(255, 255, 255, 0.2);
+            text-align: center;
+        }
+
+        .not-login {
+            padding: 10px 10px 0 10px;
+
+            .title {
+                font-size: 16px;
+                margin-bottom: 8px;
+            }
+
+            .menu-item {
+                padding: 16px 20px;
+                margin-bottom: 12px;
+                background-color: rgb(241, 220, 241);
+                border-radius: 14px;
+
+                .card-header {
+                    width: 100%;
+                    display: flex !important;
+                    align-items: center !important;
+                    margin-bottom: 4px;
+
+                    h3 {
+                        all: unset;
+                        font-size: 24px;
+                        font-weight: bold;
+                        color: #8E4CFF;
+
+                    }
+
+                    div {
+                        all: unset;
+                        display: block !important;
+                        font-size: 12px;
+                        font-weight: bold;
+                        border-radius: 4px;
+                        padding: 2px 10px;
+                        background-color: #8E4CFF;
+                        margin-left: 4px;
+                    }
+                }
+
+                &.premium {
+                    background-color: rgb(243, 234, 205);
+
+                    .card-header {
+
+                        h3 {
+                            color: rgb(232, 182, 34);
+
+                        }
+
+                        div {
+                            background-color: rgb(232, 182, 34);
+                        }
+                    }
+
+                    button {
+                        background-color: rgb(232, 182, 34);
+
+
+                    }
+                }
+            }
+
+            .price {
+                font-size: 14px;
+                margin-bottom: 4px;
+                font-weight: bold;
+                color: black;
+            }
+
+            .desc {
+                font-size: 14px;
+                margin-bottom: 16px;
+                font-weight: 400;
+                color: black;
+            }
+
+            button {
+                border: none;
+                outline: none;
+                font-size: 13px;
+                font-weight: bold;
+                background: #8E4CFF;
+                padding: 6px 24px;
+                border-radius: 20px;
+                color: white;
+
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+        }
+
+        .line {
+            width: 100%;
+            height: 2px;
+            background-color: red;
+        }
+    }
+}
+
+
+
+.menu-item-custom {
+    border-radius: 4px;
+    padding: 14px !important;
+}
+
+.menu {
+    font-size: 14px;
+
+    .menu-item {
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        position: relative;
+        opacity: .7;
+        cursor: pointer;
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 12px;
+        }
+
+        .icon_sub_menu {
+            position: absolute;
+            right: 0;
+        }
+    }
+}
+
+.header {
+    .login {
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        font-weight: bold;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 6px 24px;
+        border-radius: 20px;
+        color: white;
+        cursor: pointer;
+
+        &>div {
+            margin-left: 6px;
+        }
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+
+    .menu {
+        padding: 10px;
+
+
+        .user {
+            display: flex;
+            align-items: start;
+            margin-bottom: 16px;
+
+            .avatar {
+                width: 64px;
+                height: 64px;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    background-position: center;
+                    background-size: cover;
+                    background-repeat: no-repeat;
+                }
+            }
+
+            .info {
+                margin-left: 10px;
+
+                .name {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 6px;
+
+                    &>div:nth-child(1) {
+                        font-size: 16px;
+                        font-weight: bold;
+                        max-width: 100px;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+
+                    &>div.package {
+                        font-size: 12px;
+                        border-radius: 8px;
+                        font-weight: bold;
+                        background-color: gray;
+                        width: max-content;
+                        padding: 2px 6px;
+                        margin-left: 10px;
+                    }
+
+
+                }
+
+                .email {
+                    font-size: 12px;
+                    opacity: 0.6;
+                    font-weight: 300;
+                }
+            }
+        }
+
+        .btn-upgrade {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-size: 13px;
+            font-weight: 400;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid transparent;
+            padding: 6px 24px;
+            border-radius: 20px;
+            color: white;
+        }
+
+    }
+}

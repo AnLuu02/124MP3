@@ -1,0 +1,87 @@
+.show_about_artist {
+    height: 448px;
+    width: 480px;
+    color: white;
+    background-color: #1b2051;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+
+    .icon {
+        position: absolute;
+        right: 12px;
+        top: 12px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    .top_content {
+        padding: 24px 24px 0;
+        text-align: center;
+        width: 100%;
+        height: 182px;
+
+
+        img {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+
+        }
+
+        .name_artist:hover {
+            cursor: unset;
+            text-decoration: unset;
+            color: unset;
+        }
+
+        .name_artist {
+            font-size: 24px;
+            width: 100%;
+            height: 36px;
+            font-weight: 700;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
+
+
+    .all_des {
+        padding: 24px !important;
+        width: 100%;
+        height: 266px;
+        font-size: 14px;
+        color: #FFFFFF80;
+
+        p {
+            overflow-y: scroll;
+            padding-right: 10px;
+            height: 218px;
+            margin: 0;
+
+            &::-webkit-scrollbar {
+                width: 4px;
+                border-radius: 20px;
+            }
+
+            /* Track */
+            &::-webkit-scrollbar-track {
+                background: transparent;
+            }
+
+            /* Handle */
+            &::-webkit-scrollbar-thumb {
+                background: rgba(256, 256, 256, 0.1);
+                border-radius: 20px;
+
+            }
+        }
+
+
+    }
+}

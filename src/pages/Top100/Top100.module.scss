@@ -1,0 +1,31 @@
+.home {
+    width: 100%;
+    color: white !important;
+    overflow: hidden;
+
+    &.active ul {
+        flex-wrap: wrap !important;
+    }
+
+    .title_main {
+        font-size: 22px;
+        font-weight: bold;
+        margin: 0px 0 20px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: white;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .banner {
+        width: 100%;
+        height: 170px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 50px;
+    }
+}

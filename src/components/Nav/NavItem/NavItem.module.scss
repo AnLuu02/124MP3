@@ -1,0 +1,109 @@
+li {
+    width: 100%;
+
+    &:hover {
+        cursor: pointer;
+        background: rgba(130, 128, 128, 0.2);
+    }
+
+    &.nav_library {
+        position: relative;
+    }
+
+    &>.nav_item {
+        padding: 12px 21px;
+        color: white;
+        display: flex;
+        align-items: center !important;
+        font-size: 14px;
+        letter-spacing: 1px;
+        text-decoration: none;
+
+        div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        &.active {
+            background: rgba(130, 128, 128, 0.2);
+            border-right: 3px solid aqua;
+        }
+    }
+
+    &.nav_playlist {
+        position: absolute;
+        bottom: 0;
+        border-top: 1px solid rgba(256, 256, 256, .2) !important;
+    }
+
+    &.active {
+        bottom: 90px !important;
+    }
+
+    &.nav_playlist>a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-right: 0 !important;
+        margin-left: -20px;
+        padding-left: 0;
+    }
+
+    .icon {
+        width: 24px;
+        height: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 12px;
+    }
+}
+
+.yeucaulogin>div {
+    color: white;
+    background-color: #355c7d;
+    font-size: 14px;
+    padding: 10px;
+    margin: 14px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer;
+
+    p {
+        text-align: center;
+        color: white;
+    }
+
+    .btnLogin {
+        all: unset;
+        padding: 8px 20px;
+        border-radius: 20px;
+        border: 1px solid;
+        border-color: #fff !important;
+        transition: 0.1s;
+
+        a {
+            color: white;
+        }
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+}
+
+.upPremium>div {
+    background: linear-gradient(to right, #35557d, #6c5b7b, #355c7d) !important;
+    font-size: 12px;
+
+    .btnLogin {
+        background-color: #FFDB00 !important;
+        color: #32323D;
+        font-weight: bold;
+        outline: none;
+    }
+}

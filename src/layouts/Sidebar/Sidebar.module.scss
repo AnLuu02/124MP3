@@ -1,0 +1,19 @@
+.wrapper {
+    width: 240px;
+    min-height: 100vh;
+    position: fixed;
+    background-color: #1b2039;
+    left: 0;
+    top: 0;
+    z-index: 100;
+
+
+
+    &>span {
+        display: block;
+        height: 1px;
+        margin: 0 30px;
+        background: rgba(130, 128, 128, 0.2);
+    }
+
+}

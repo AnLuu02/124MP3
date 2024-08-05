@@ -1,0 +1,44 @@
+.bxh {
+    color: white;
+    overflow: hidden;
+
+    #randomSong {
+        cursor: pointer;
+        margin-left: 10px;
+    }
+
+    #randomSong:hover {
+        opacity: .7;
+    }
+
+    .listSong {
+        min-height: 500px;
+
+        ul {
+            padding: 0;
+
+            li {
+                width: 100%;
+                border-radius: 4px;
+                margin: 1px 0;
+                padding: 10px;
+                transition: 0.1s;
+                position: relative;
+
+            }
+
+            &.music {
+                li::after {
+                    content: "";
+                    width: 100%;
+                    height: 0.6px;
+                    background-color: rgba(256, 256, 256, 0.1);
+                    position: absolute;
+                    bottom: 0;
+                    left: 50%;
+                    transform: translateX(-50%);
+                }
+            }
+        }
+    }
+}

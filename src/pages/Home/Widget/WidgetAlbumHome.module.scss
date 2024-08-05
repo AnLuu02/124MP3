@@ -1,0 +1,10 @@
+ul.music {
+    // width: 100%;
+    // flex-wrap: nowrap !important;
+    overflow: hidden;
+
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}

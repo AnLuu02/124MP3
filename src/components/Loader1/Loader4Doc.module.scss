@@ -1,0 +1,52 @@
+.doc_container {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.doc {
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin: 0 6px !important;
+    animation: load 1s linear infinite alternate;
+}
+
+.doc:nth-child(1) {
+    animation-delay: 0.1s;
+    background-color: red;
+}
+
+.doc:nth-child(2) {
+    animation-delay: 0.2s;
+    background-color: green;
+}
+
+.doc:nth-child(3) {
+    animation-delay: 0.3s;
+    background-color: violet;
+
+}
+
+.doc:nth-child(4) {
+    animation-delay: 0.4s;
+    background-color: lightblue;
+
+}
+
+@keyframes load {
+    0% {
+        transform: translateY(4px) scale(1);
+    }
+
+    50% {
+        transform: translateY(-6px) scale(1.5);
+    }
+
+    100% {
+        transform: translateY(4px) scale(1);
+    }
+}

@@ -1,0 +1,59 @@
+#list_music_library .list_music_render .music {
+    width: 100%;
+    height: max-content;
+    min-height: 310px;
+}
+
+.same_list_music .titleHeaderMusic {
+    width: 100%;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    opacity: 0.7;
+    padding: 10px 10px 10px 50px;
+    font-size: 14px;
+}
+
+.same_list_music .titleHeaderMusic div:nth-child(1) {
+    flex: 1;
+}
+
+.same_list_music .titleHeaderMusic div:nth-child(2) {
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.same_list_music .titleHeaderMusic div:nth-child(3) {
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.same_list_music,
+.same_list_music ul {
+    width: 100%;
+}
+
+.same_list_music ul li {
+    width: 100%;
+    border-radius: 4px;
+    margin: 1px 0;
+    padding: 10px;
+    transition: 0.1s;
+    position: relative;
+}
+
+.same_list_music ul.music li::after {
+    content: "";
+    width: 100%;
+    height: 0.6px;
+    background-color: rgba(256, 256, 256, 0.1);
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}

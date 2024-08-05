@@ -1,0 +1,189 @@
+.release {
+    width: 100% !important;
+    color: white !important;
+    overflow: hidden;
+
+    ul {
+        padding: 0;
+    }
+
+    &.active {
+        display: block !important;
+    }
+
+    a {
+        display: block;
+        color: white;
+    }
+
+    h1.title {
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+        font-size: 40px;
+
+        .iconRelease {
+            width: 20px;
+            height: 20px;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #090b1e;
+            background-color: white;
+            border-radius: 50%;
+            margin-left: 18px;
+        }
+
+    }
+
+
+    .listPlaylist {
+        width: 100%;
+        font-size: 14px;
+        font-weight: 500;
+        margin: 10px 0 40px 0;
+        display: flex !important;
+        overflow: hidden !important;
+        scroll-snap-type: x mandatory;
+    }
+
+
+    .navLibrary {
+        position: relative;
+        margin: 32px 0 !important;
+
+        .line {
+            margin: 0;
+            padding: 0;
+            position: absolute;
+            width: 100%;
+            bottom: -1px;
+
+        }
+    }
+
+    .navLibrary,
+    .subNavLibrary {
+        display: flex;
+        align-items: center;
+    }
+
+    .navLibrary .navCategory {
+        width: max-content;
+        font-size: 14px;
+        margin-right: 2%;
+        color: white !important;
+        padding: 10px;
+        font-weight: bold;
+    }
+
+    .navLibrary .navCategory.active {
+        border-bottom: 1px solid aqua;
+    }
+
+    .subNavLibrary {
+        margin: 20px 0;
+
+        .navCountryItem {
+            width: max-content;
+            margin-right: 12px;
+            padding: 4px 24px;
+            font-size: 12px;
+            border-radius: 14px !important;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            color: white !important;
+
+            &.active {
+                border: none;
+                font-weight: 500;
+                background: #1b2070;
+                border: 2px solid #1b2070;
+            }
+
+            &:not(.active):hover {
+                border-color: #1b2070 !important;
+                background-color: transparent !important;
+                color: #1b2070 !important;
+            }
+
+        }
+    }
+
+    .listSong {
+        min-height: 310px;
+
+        .titleHeaderMusic {
+            width: 100%;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            opacity: 0.7;
+            padding: 10px 10px 10px 50px;
+            font-size: 14px;
+
+            div {
+                &:nth-child(1) {
+                    flex: 1;
+                }
+
+                &:nth-child(2) {
+                    width: 40%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                &:nth-child(3) {
+                    width: 10%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+
+        }
+
+        &,
+        ul {
+            width: 100%;
+        }
+
+        ul li {
+            width: 100%;
+            border-radius: 4px;
+            margin: 1px 0;
+            padding: 10px;
+            transition: 0.1s;
+            position: relative;
+        }
+
+        ul.music li::after {
+            content: "";
+            width: 100%;
+            height: 0.6px;
+            background-color: rgba(256, 256, 256, 0.1);
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    }
+
+    #listSongRelease .listSongRender .music {
+        width: 100%;
+        height: max-content;
+        min-height: 310px;
+    }
+
+    #allPlaymusic {
+        cursor: pointer;
+    }
+
+    #allPlaymusic:hover {
+        opacity: .7;
+    }
+}

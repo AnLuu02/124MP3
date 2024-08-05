@@ -1,0 +1,96 @@
+.widgetItem {
+    width: 18%;
+    flex: 0 0 18%;
+    max-height: 286px;
+    color: white;
+    scroll-snap-align: start;
+    border-radius: 6px;
+    z-index: 1 !important;
+
+    &:hover {
+        background-color: unset !important;
+    }
+
+    &:not(:nth-child(1)) {
+        margin-left: calc(10%/4);
+    }
+
+    .title,
+    .author {
+        font-weight: bold;
+        margin: 10px 0 4px 0 !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis !important;
+
+    }
+
+    .author {
+        opacity: .4;
+        margin: 4px 0 4px 0 !important;
+        font-size: 12px;
+        font-weight: 100;
+    }
+
+    .content {
+        width: 100%;
+        height: 214px;
+        border-radius: 6px;
+        position: relative;
+        overflow: hidden;
+        z-index: 1 !important;
+
+        img {
+            width: 100%;
+            height: 100%;
+            border-radius: 6px;
+            transition: 0.5s;
+            background-position: center !important;
+            background-size: cover !important;
+            object-fit: cover !important;
+        }
+
+        &:hover .hoverWidgetItem {
+            opacity: 1;
+        }
+
+        &:hover img {
+            transform: scale(1.1);
+        }
+
+        .hoverWidgetItem {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 6px;
+            font-size: 26px;
+            font-weight: 500;
+            opacity: 0;
+            transition: 0.3s;
+            z-index: 1 !important;
+
+            .iconWidget[name="play"] {
+                display: block;
+                font-size: 20px;
+                border: 1px solid white;
+                padding: 10px;
+                border-radius: 50%;
+            }
+
+            .iconWidget:hover {
+                cursor: pointer;
+                opacity: .7;
+            }
+
+        }
+    }
+
+
+
+}

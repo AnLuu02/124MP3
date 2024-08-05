@@ -1,0 +1,19 @@
+.listSongRender {
+    width: 100%;
+    // max-height: 300px;
+    height: max-content;
+    display: flex !important;
+    align-items: center;
+    flex-wrap: wrap !important;
+    justify-content: space-between;
+    margin-bottom: 60px;
+    overflow: unset !important;
+
+    .custom {
+        width: 32%;
+        padding: 10px;
+        border-radius: 4px;
+        background-color: transparent;
+        position: relative;
+    }
+}

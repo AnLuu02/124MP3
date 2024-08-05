@@ -1,0 +1,21 @@
+.main_right {
+    width: calc(100% - 240px);
+    position: relative;
+    top: 0;
+    margin-left: 240px;
+    padding: 6% 60px 0px 60px;
+    background: url(../../../public/images/footer_bg.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    .logo,
+    .navMobile,
+    .searchIcon,
+    .searchMobile {
+        display: none;
+    }
+
+    main {
+        width: 100%;
+    }
+}
