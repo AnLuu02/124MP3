@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from "classnames/bind";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import img_1 from "../../../public/images/1.jpg";
 import { changeVolume, minuteTimeSong, nextSong, pauseSong, playSong, prevSong, randomSong, repeatSong, secondTimeSong, timeProgress, timeUpdateSong } from "../../components/store/songReducer";
 import styles from "./Footer.module.scss";
 const cx = classNames.bind(styles);
@@ -102,7 +103,7 @@ function Footer() {
 
             <div className={cx("musicFixed", isPlay || song.id ? "active" : "")}>
                 <div className={cx("leftMusicFixed")}>
-                    <img src="../../../public/images/1.jpg" alt="" />
+                    <img src={img_1} alt="" />
                     <div className={cx("desMusicFixed")}>
                         <div className={cx("nameMusicFixed")}><a>{song.name}</a></div>
                         <div id={cx("nameArtist")} >{song.artist}</div>

@@ -5,6 +5,7 @@ import PropTypes, { object } from 'prop-types';
 import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import 'tippy.js/dist/tippy.css';
+import avatar_default from "../../../public/images/avata_default.jpg";
 import AudioRun from "../AudioRun/AudioRun";
 import Menu from "../Popper/Menu/Menu";
 import { playSong } from "../store/songReducer";
@@ -46,7 +47,7 @@ function Song({ songId, indexSong, dataSong, classNames = {} }) {
             >
                 <div className={cx("contentSong")}>
                     <div className={cx("imageSong")}>
-                        <img src="../../../public/images/avata_default.jpg" alt="" />
+                        <img src={avatar_default} alt="" />
                         <div
                             className={
                                 cx(

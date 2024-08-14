@@ -4,6 +4,7 @@ import classNames from "classnames/bind";
 import PropTypes, { object } from 'prop-types';
 import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import avatar_default from "../../../public/images/avata_default.jpg";
 import AudioRun from "../AudioRun/AudioRun";
 import Menu from "../Popper/Menu/Menu";
 import { playSong } from "../store/songReducer";
@@ -46,7 +47,7 @@ function SongFull({ songId, indexSong, dataSong, classNames = {}, showIdSong = t
                     </div>}
                 <div className={cx("contentSong")}>
                     <div className={cx("imageSong")}>
-                        <img src="../../../public/images/avata_default.jpg" alt="" />
+                        <img src={avatar_default} alt="" />
                         <div
                             className={
                                 cx(

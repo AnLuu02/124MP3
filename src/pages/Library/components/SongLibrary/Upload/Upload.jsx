@@ -1,11 +1,12 @@
 import classNames from "classnames/bind";
+import empty_upload_dark from "../../../../../../public/images/empty-upload-dark.png";
 import styles from "./Upload.module.scss";
 const cx = classNames.bind(styles);
 function Upload() {
     return (
         <div className={cx("listSong", "upload")} >
             <div className={cx("empty")}>
-                <img src="../../../../../public/images/empty-upload-dark.png" />
+                <img src={empty_upload_dark} />
                 <div className={cx("text")}>Chưa có bài hát tải lên trong thư viện cá nhân
                 </div>
                 <button>TẢI LÊN NGAY</button>

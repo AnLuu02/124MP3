@@ -2,6 +2,7 @@ import { faClose, faHeart, faPlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from "classnames/bind";
 import PropTypes, { object } from 'prop-types';
+import image_1 from "../../../../public/images/1.jpg";
 import styles from "./AlbumItem.module.scss";
 const cx = classNames.bind(styles);
 
@@ -10,7 +11,7 @@ function AlbumItem() {
         <>
             <li className={cx("widgetItem")} >
                 <div className={cx("content")}>
-                    <img src="../../../public/images/1.jpg" alt="" />
+                    <img src={image_1} alt="" />
                     <div className={cx("hoverWidgetItem")}>
                         <FontAwesomeIcon className={cx("iconWidget")} icon={faClose} />
                         <FontAwesomeIcon className={cx("iconWidget")} icon={faPlay} />

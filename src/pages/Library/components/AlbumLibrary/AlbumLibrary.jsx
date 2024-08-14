@@ -1,11 +1,12 @@
 import classNames from "classnames/bind";
+import empty_album_dark from "../../../../../public/images/empty-album-dark.png";
 import styles from "./AlbumLibrary.module.scss";
 const cx = classNames.bind(styles);
 function AlbumLibrary() {
     return (
         <div className={cx("listSong", "albumLibrary")} >
             <div className={cx("empty")}>
-                <img src="../../../../../public/images/empty-album-dark.png" />
+                <img src={empty_album_dark} />
                 <div className={cx("text")}>Chưa có album trong thư viện cá nhân
                 </div>
             </div>

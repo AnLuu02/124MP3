@@ -1,11 +1,12 @@
 import classNames from "classnames/bind";
+import empty_mv_dark from "../../../../../public/images/empty-mv-dark.png";
 import styles from "./MvLibrary.module.scss";
 const cx = classNames.bind(styles);
 function MvLibrary() {
     return (
         <div className={cx("listSong", "mvLibrary")} >
             <div className={cx("empty")}>
-                <img src="../../../../../public/images/empty-mv-dark.png" />
+                <img src={empty_mv_dark} />
                 <div className={cx("text")}>Chưa có MV nào trong thư viện cá nhân
 
                 </div>

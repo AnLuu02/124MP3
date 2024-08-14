@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Tippy from "@tippyjs/react/headless";
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
+import avatar_default from '../../../../public/images/avata_default.jpg';
 import styles from './Menu.module.scss';
 const cx = classNames.bind(styles);
 
@@ -36,7 +37,7 @@ function Header({ valueMenu }) {
         >
             <header className={cx('header')}>
                 <div className={cx("song-info")}>
-                    <img src='../../../../public/images/avata_default.jpg' />
+                    <img src={avatar_default} />
                     <div className={cx("song-content")}>
                         <div className={cx("song-name")}>
                             {valueMenu && valueMenu.name}

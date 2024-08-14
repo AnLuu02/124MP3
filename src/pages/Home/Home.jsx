@@ -1,5 +1,6 @@
 import classNames from "classnames/bind";
 import { NavLink } from "react-router-dom";
+import banner from "../../../public/images/banner.d40c4ec4.png";
 import styles from "./Home.module.scss";
 import WidgetAlbumHome from "./Widget/WidgetAlbumHome";
 const cx = classNames.bind(styles);
@@ -8,7 +9,7 @@ function Home() {
     return (<>
         <div className={cx("home")} id={cx("home")}>
             <div className={cx("banner")} id={cx("bannerHome")}>
-                <img src="../../../public/images/banner.d40c4ec4.png" alt="" className={cx("aim")} />
+                <img src={banner} alt="" className={cx("aim")} />
                 <div className={cx("content")}>
                     <h2 className={cx("aim")} style={{ fontWeight: "bold", lineHeight: 1.8 }}>Âm nhạc <br /> <span style={{ fontSize: 30, fontWeight: "500" }}>Một loại ngôn ngữ hài hòa</span></h2>
                     <p className={cx("aim")}>Thêm chút đường cà phê có ngọt? <br />Thêm chút tình mình có thuộc về nhau?</p>

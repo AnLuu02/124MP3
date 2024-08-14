@@ -2,6 +2,7 @@ import { faPlay, faShuffle, faUserPlus } from "@fortawesome/free-solid-svg-icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames/bind";
 import { useDispatch } from "react-redux";
+import son_tung_mtp from "../../../public/images/son_tung_mtp.jpg";
 import SongFull from "../../components/SongFull/SongFull";
 import { handleShowModal } from "../../components/store/ModalReducer/modalReducer";
 import styles from "./Artist.module.scss";
@@ -31,7 +32,7 @@ function Artist() {
                 {/*rgba(41, 21, 71, 0.8)*/}
                 <div className={cx("content_header")}>
                     <div className={cx("left_view_header")}>
-                        <img src="../../../public/images/son_tung_mtp.jpg" alt="" className={cx("avatar_artist")} />
+                        <img src={son_tung_mtp} alt="" className={cx("avatar_artist")} />
                     </div>
                     <div className={cx("right_view_header")}>
                         <div className={cx("name_artist_profile")}>
@@ -94,7 +95,7 @@ function Artist() {
                 <ul className={cx("list_artist_other")}>
                     <li>
                         <div className={cx("content")}>
-                            <img src="../../../public/images/son_tung_mtp.jpg" alt="" />
+                            <img src={son_tung_mtp} alt="" />
                             <div className={cx("hover_playlist")}>
                                 <div className={cx("circleIcon")}> <FontAwesomeIcon icon={faShuffle} className={cx("icon")} /></div>
                             </div>
@@ -121,7 +122,7 @@ function Artist() {
                 </div>
                 <ul className={cx("main_list")}>
                     <li>
-                        <img src="../../../public/images/son_tung_mtp.jpg" alt="" />
+                        <img src={son_tung_mtp} alt="" />
                     </li>
                     <li>
                         <div className={cx("des")}>

@@ -2,6 +2,7 @@ import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames/bind";
 import { useDispatch } from "react-redux";
+import son_tung_mtp from "../../../../public/images/son_tung_mtp.jpg";
 import { handleHideModal } from "../../store/ModalReducer/modalReducer";
 import styles from "./ModalShowDesciptionArtist.module.scss";
 const cx = classNames.bind(styles);
@@ -17,7 +18,7 @@ export default function ModalShowDesciptionArtist() {
                 <FontAwesomeIcon icon={faClose} className={cx("icon")} />
             </span>
             <div className={cx("top_content")}>
-                <img src="../../../../public/images/son_tung_mtp.jpg" alt="" />
+                <img src={son_tung_mtp} alt="" />
                 <div className={cx("name_artist")}>Sơn Tùng - MTP</div>
             </div>
             <div className={cx("all_des")} >

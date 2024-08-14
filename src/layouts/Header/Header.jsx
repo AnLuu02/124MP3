@@ -7,6 +7,7 @@ import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+import default_avatar from "../../../public/images/default_avatar.png";
 import MenuHeader from "../../components/Popper/MenuHeader/MenuHeader";
 import MenuInfo from "../../components/Popper/MenuInfo/MenuInfo";
 import Search from "../Search/Search";
@@ -99,7 +100,7 @@ function Header() {
                             <div className={cx("icon", "profile")}>
                                 <div>
                                     {isLoggedIn ?
-                                        <img src={user?.photoURL || "../../../../public/images/default_avatar.png"} />
+                                        <img src={user?.photoURL || default_avatar} />
                                         :
                                         <FontAwesomeIcon icon={faUser} />
                                     }

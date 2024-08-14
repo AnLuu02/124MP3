@@ -2,6 +2,7 @@ import { faClose, faHeart, faPlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from "classnames/bind";
 import PropTypes, { object } from 'prop-types';
+import album_default from "../../../../../../public/images/album_default.png";
 import styles from "./PlaylistItem.module.scss";
 const cx = classNames.bind(styles);
 
@@ -15,7 +16,7 @@ function PlaylistItem() {
                         <FontAwesomeIcon className={cx("iconWidget")} icon={faPlay} />
                         <FontAwesomeIcon className={cx("iconWidget")} icon={faHeart} />
                     </div>
-                    <img src="../../../../../../public/images/album_default.png" alt="" />
+                    <img src={album_default} alt="" />
                 </div>
                 <div className={cx("title")} style={{ margin: "4 0 2 0" }}>aaaaaaaaaaaaaaaaaaaaaaa
                     siêu cấp vip pr</div>

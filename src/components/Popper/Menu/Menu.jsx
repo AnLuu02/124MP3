@@ -6,14 +6,13 @@ import Tippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import { forwardRef } from "react";
+import { useDispatch } from "react-redux";
+import create_playlist_SVG from '../../../../public/images/create_playlist_SVG.svg';
 import stylesSong from "../../Song/Song.module.scss";
 import stylesSongFull from "../../SongFull/SongFull.module.scss";
-
+import { handleShowModal } from "../../store/ModalReducer/modalReducer";
 import Header from './Header';
 import styles from './Menu.module.scss';
-
-import { useDispatch } from "react-redux";
-import { handleShowModal } from "../../store/ModalReducer/modalReducer";
 import MenuItem from "./MenuItem";
 const cx = classNames.bind(styles);
 const cxSongFull = classNames.bind(stylesSongFull);
@@ -88,7 +87,7 @@ function Menu({ children, valueMenu }, ref) {
                     <div className={cx("menu-item", "createPlaylist")} onClick={onShow}>
                         {/* <FontAwesomeIcon className={cx("icon")} icon={faPlus} /> */}
                         <div className={cx("icon")}>
-                            <img src="../../../../public/images/create_playlist_SVG.svg" />
+                            <img src={create_playlist_SVG} />
                         </div>
                         <span>Tạo playlist mới</span>
 

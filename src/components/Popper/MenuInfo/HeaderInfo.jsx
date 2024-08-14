@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
+import default_avatar from '../../../../public/images/default_avatar.png';
 import SignInwithGoogle from '../../FireBase/signInWIthGoogle';
 import styles from './MenuInfo.module.scss';
 const cx = classNames.bind(styles);
@@ -40,7 +41,7 @@ function HeaderInfo({ isLogin }) {
                     <div>
                         <div className={cx("user")}>
                             <div className={cx("avatar")}>
-                                <img src={user?.photoURL || "../../../../public/images/default_avatar.png"} />
+                                <img src={user?.photoURL || default_avatar} />
                             </div>
                             <div className={cx("info")}>
                                 <div className={cx("name")}>

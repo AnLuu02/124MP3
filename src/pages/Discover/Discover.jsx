@@ -5,6 +5,9 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Outlet, useLocation, useParams } from "react-router-dom";
 import 'tippy.js/dist/tippy.css';
+import img_slide1 from "../../../public/images/1.jpg";
+import img_slide2 from "../../../public/images/2.jpg";
+import img_slide3 from "../../../public/images/3.jpg";
 import useFetch from "../../Custom hooks/useFetch";
 import Loader4Doc from "../../components/Loader1/Loader4Doc";
 import WidgetAlbum from "../../components/WidgetAlbum/WidgetAlbum";
@@ -23,7 +26,7 @@ function Discover() {
 
     const dispath = useDispatch();
     const listSong = useSelector(state => state.listSong.listSong);
-    const user = useSelector(state => state.user.user);
+    // const user = useSelector(state => state.user.user);
     const { get, loading } = useFetch(
         "http://localhost:8080/API_Servlet/api/"
     );
@@ -49,13 +52,13 @@ function Discover() {
         <div id={cx("discover")}>
             <div className={cx("all-slides")}>
                 <div className={cx("single-slide")} data-order="2">
-                    <img src="../../../public/images/3.jpg" alt="1" />
+                    <img src={img_slide3} alt="1" />
                 </div>
                 <div className={cx("single-slide")} data-order="3">
-                    <img src="../../../public/images/2.jpg" alt="2" />
+                    <img src={img_slide2} alt="2" />
                 </div>
                 <div className={cx("single-slide")} data-order="1">
-                    <img src="../../../public/images/1.jpg" alt="3" />
+                    <img src={img_slide1} alt="3" />
                 </div>
             </div>
             <div className={cx("newSong", "listSong")}>
