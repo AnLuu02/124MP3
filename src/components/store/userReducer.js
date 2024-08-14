@@ -3,7 +3,7 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../FireBase/firebaseConfig";
 
 const initialStateUser = {
-    isLogin: true,
+    isLogin: false,
     user: {}
 }
 
@@ -19,7 +19,7 @@ const userSlice = createSlice({
             state.user = { ...action.payload };
         },
         clearUser: (state) => {
-            state.isLogin = true;
+            state.isLogin = false;
             state.user = {};
         },
 
