@@ -34,7 +34,7 @@ function Library() {
             <ul className={cx("navCountry")}>
                 <h2 className={cx("headerLibraryH2")}>
                     <div>PLAYLIST</div>
-                    <Tippy allowHTML content=<div style={{ fontSize: 10 }}>Tạo playlist mới</div> arrow={true} >
+                    <Tippy allowHTML content={<div style={{ fontSize: 10 }}>Tạo playlist mới</div>} arrow={true} >
                         <div className={cx("boxIconLibrary")} onClick={onShowModal}>
                             <FontAwesomeIcon className={cx("iconLibrary")} icon={faPlus} />
                         </div>

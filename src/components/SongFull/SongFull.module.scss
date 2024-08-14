@@ -15,6 +15,10 @@
         z-index: 105;
     }
 
+    &.showMenu .durationSong {
+        opacity: 0 !important;
+    }
+
     &:hover {
         z-index: 105;
     }
