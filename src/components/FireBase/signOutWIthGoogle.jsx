@@ -3,8 +3,6 @@ import { logout } from "../store/userReducer";
 
 
 function SignOutwithGoogle({ children }) {
-
-
     return (
         <div onClick={logout()}>
             {children}

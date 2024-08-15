@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
 import PropTypes from 'prop-types';
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CreatePlaylist from "../../components/Modal/ModalCreatePlaylist/CreatePlaylist.jsx";
 import ModalShowDesciptionArtist from "../../components/Modal/ModalShowDesciptionArtist/ModalShowDesciptionArtist.jsx";
@@ -11,6 +11,7 @@ import Header from "../Header/Header";
 import Modal from "../Modal/Modal.jsx";
 import Sidebar from "../Sidebar/Sidebar.jsx";
 import styles from "./DefaultLayout.module.scss";
+import LoadingContainer from "./LoadingContainer/LoadingContainer.jsx";
 
 const cx = classNames.bind(styles);
 function DefaultLayout({ children }) {
@@ -23,22 +24,33 @@ function DefaultLayout({ children }) {
     const isPlay = useSelector(state => state.song.isPlay)
     const isRepeat = useSelector(state => state.song.isRepeat)
     const isRandom = useSelector(state => state.song.isRandom)
-
-
     const typeModal = useSelector(state => state.modal.type);
 
+
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        var timer = setTimeout(() => {
+            setLoading(false)
+        }, 1000)
+        return () => {
+            clearTimeout(timer);
+        }
+    }, [])
 
 
     useEffect(() => {
         if (isPlay) {
-            videoRef.current.play();
+            videoRef?.current?.play();
         }
         else {
-            videoRef.current.pause();
+            videoRef?.current?.pause();
         }
     }, [song.name, isPlay])
     useEffect(() => {
-        videoRef.current.volume = currentVolume;
+        if (videoRef && videoRef.current) {
+            videoRef.current.volume = currentVolume;
+        }
     }, [currentVolume])
     const handleMusicEnded = song => {
         if (isRepeat) {
@@ -67,22 +79,27 @@ function DefaultLayout({ children }) {
         }
     }
 
-    return (<>
-        <div className={cx("wrapper")}>
-            <Video ref={videoRef} src={song ? song.src : ""} onEnded={() => handleMusicEnded(song)} onTimeUpdate={handleTimeUpDateSong} />
-            <Sidebar />
-            <div className={cx("main_right")}>
-                <main>
-                    <Header />
-                    {children}
-                </main>
-                <Footer />
-            </div>
-        </div>
-        <Modal>
-            {renderModal()}
-        </Modal>
-    </>
+    return (
+        loading
+            ?
+            <LoadingContainer />
+            :
+            <>
+                <div className={cx("wrapper")}>
+                    <Video ref={videoRef} src={song ? song.src : ""} onEnded={() => handleMusicEnded(song)} onTimeUpdate={handleTimeUpDateSong} />
+                    <Sidebar />
+                    <div className={cx("main_right")}>
+                        <main>
+                            <Header />
+                            {children}
+                        </main>
+                        <Footer />
+                    </div>
+                </div>
+                <Modal>
+                    {renderModal()}
+                </Modal>
+            </>
     );
 }
 

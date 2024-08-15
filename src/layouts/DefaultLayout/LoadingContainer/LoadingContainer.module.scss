@@ -1,0 +1,25 @@
+.wrapper {
+    position: fixed;
+    inset: 0;
+    background-color: black;
+    z-index: 100000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .box {
+
+        .doc_container {
+            font-size: 30px;
+            margin-bottom: 20px;
+
+
+
+        }
+    }
+
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}

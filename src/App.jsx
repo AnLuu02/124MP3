@@ -48,7 +48,6 @@ import SearchResult from './pages/SearchResult/SearchResult.jsx';
 import Top from "./pages/Top100/Top100";
 function App() {
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(checkAuthState());
   }, [dispatch]);

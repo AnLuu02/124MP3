@@ -15,8 +15,8 @@ const userSlice = createSlice({
     initialState: initialStateUser,
     reducers: {
         setUser: (state, action) => {
-            state.isLogin = true;
-            state.user = { ...action.payload };
+            state.isLogin = action.payload.isLogin;
+            state.user = { ...action.payload.data };
         },
         clearUser: (state) => {
             state.isLogin = false;
@@ -32,8 +32,12 @@ const { setUser, clearUser } = userSlice.actions;
 export const loginWithGoogle = () => async (dispatch) => {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider).then(async (result) => {
+        window.location.reload();
         const token = result.user.getIdToken(true);
-        dispatch(setUser(result.user));
+        dispatch(setUser({
+            isLogin: true,
+            data: { ...result.user }
+        }));
         localStorage.setItem('token', JSON.stringify(token));
     }).catch((error) => {
         // Handle Errors here.
@@ -49,7 +53,10 @@ export const checkAuthState = () => (dispatch) => {
     auth.onAuthStateChanged((user) => {
         if (user) {
             const token = user.getIdToken(true);
-            dispatch(setUser(user));
+            dispatch(setUser({
+                isLogin: true,
+                data: { ...user }
+            }));
             localStorage.setItem('token', JSON.stringify(token));
         } else {
             dispatch(clearUser());
@@ -59,6 +66,7 @@ export const checkAuthState = () => (dispatch) => {
 };
 export const logout = () => (dispatch) => {
     auth.signOut().then(() => {
+        window.location.reload();
         dispatch(clearUser());
         localStorage.removeItem('token');
     }).catch((error) => {
