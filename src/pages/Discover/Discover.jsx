@@ -1,7 +1,7 @@
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from "classnames/bind";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Outlet, useLocation, useParams } from "react-router-dom";
 import 'tippy.js/dist/tippy.css';
@@ -42,12 +42,14 @@ function Discover() {
 
 
 
-    function formatPathname() {
+    const formatPathname = useCallback(() => {
+        console.log("call back call" + location.pathname);
         if (location.pathname.endsWith("/")) {
             return location.pathname.slice(0, -1);
         }
         return location.pathname;
-    }
+    }, [location.pathname])
+
     return (<>
         <div id={cx("discover")}>
             <div className={cx("all-slides")}>

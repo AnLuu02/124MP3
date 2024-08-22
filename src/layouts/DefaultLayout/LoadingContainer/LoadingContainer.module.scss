@@ -7,17 +7,25 @@
     justify-content: center;
     align-items: center;
 
-    .box {
+    .owner {
+        position: absolute;
+        bottom: 30px;
+        color: white;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 16px;
 
-        .doc_container {
-            font-size: 30px;
-            margin-bottom: 20px;
+        &>div {
+            margin: 0 4px;
+        }
 
-
-
+        &>i {
+            color: aqua;
+            font-weight: bold;
         }
     }
-
 }
 
 body::-webkit-scrollbar {

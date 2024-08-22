@@ -12,7 +12,6 @@ function MenuItem({ data, onClick = function () { } }) {
             {data.leftIcon && <FontAwesomeIcon className={cx("icon")} icon={data.leftIcon} />}
             <span>{data.title}</span>
             {data.rightIcon && <FontAwesomeIcon className={cx("icon", "icon_sub_menu")} icon={data.rightIcon} />}
-
         </div>
     );
 }

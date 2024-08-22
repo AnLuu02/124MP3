@@ -11,10 +11,23 @@ function NavItem({ isAuth = false, to, title, iconSvg = null, iconFontAwesome = 
     const location = useLocation();
     const isLoggedIn = useSelector(state => state.user.isLogin);
     const icon = (iconSvg) ? iconSvg : iconFontAwesome;
-    const RequiredComponent = isAuth ? Required : Fragment
     const ProtectedNavLinkComponent = isAuth ? ProtectedNavLink : NavLink
+    function RequiredComponent({ children }) {
+        if (isAuth) {
+            return <Required
+                placement="auto"
+                valueMenu={true}
+                title={"Yêu cầu đăng nhập"}
+                isLoggedIn={isLoggedIn}
+            >
+                {children}
+            </Required>
+        }
+        return <Fragment>{children}</Fragment>
+    }
+
     return (
-        <RequiredComponent placement="auto" valueMenu={true} title={"Yêu cầu đăng nhập"} isLoggedIn={isLoggedIn}>
+        <RequiredComponent>
             <li className={cx(className)} onClick={onClick}>
                 <ProtectedNavLinkComponent to={to} className={cx("nav_item", { "active": location.pathname === to })}>
                     {icon}
@@ -31,6 +44,8 @@ NavItem.propTypes = {
     title: PropTypes.string,
     iconSvg: PropTypes.node,
     iconFontAwesome: PropTypes.node,
-    onClick: PropTypes.func
+    onClick: PropTypes.func,
+    children: PropTypes.node
 }
+
 export default NavItem

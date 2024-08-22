@@ -20,6 +20,7 @@ function Nav() {
         <>
             <ul className={cx("navSidebar")}>
                 <NavItem
+                    key={'trangchu'}
                     to="/"
                     title="Trang chủ"
                     iconSvg={
@@ -37,6 +38,7 @@ function Nav() {
                     }
                 />
                 <NavItem
+                    key={'khampha'}
                     to="/discover"
                     title="Khám phá"
                     iconSvg={
@@ -55,6 +57,7 @@ function Nav() {
                 />
 
                 <NavItem
+                    key={'zingchart'}
                     to="/zingchart"
                     title="ZingChart"
                     iconSvg={
@@ -74,6 +77,7 @@ function Nav() {
                 />
 
                 <NavItem
+                    key={"library"}
                     isAuth={true}
                     to="/library"
                     title="Thư viện"
@@ -84,6 +88,7 @@ function Nav() {
             <span className={cx("line")}></span>
             <ul className={cx("navSidebar", "nav2")}>
                 <NavItem
+                    key={"bxh"}
                     to="/bxh"
                     title="BXH Nhạc Mới"
                     iconSvg={
@@ -102,6 +107,7 @@ function Nav() {
                 />
 
                 <NavItem
+                    key={"chude"}
                     to="/chude"
                     title="Chủ đề"
                     iconSvg={
@@ -145,7 +151,7 @@ function Nav() {
                 />
 
                 <li>
-                    <NavLink to="/top100" className={cx("nav_item", location.pathname.includes('/top100') ? "active" : "")} activeClassName={styles.active}>
+                    <NavLink key={"top100"} to="/top100" className={cx("nav_item", location.pathname.includes('/top100') ? "active" : "")} activeClassName={styles.active}>
                         <div className={cx("icon")}>
                             <svg width="24" height="24" viewBox="0 0 24 24"
                                 fill="none">
@@ -188,6 +194,7 @@ function Nav() {
 
                 {isLoggedIn && <>
                     <NavItem
+                        key={"history"}
                         to="/library/history"
                         title="Nghe gần đây"
                         iconSvg={
@@ -223,6 +230,7 @@ function Nav() {
                         }
                     />
                     <NavItem
+                        key={"loveSong"}
                         to="/loveSong"
                         title="Bài hát yêu thích"
                         iconSvg={
@@ -261,6 +269,7 @@ function Nav() {
                         }
                     />
                     <NavItem
+                        key={"playlistNav"}
                         to="/library/playlist"
                         title="Playlist"
                         iconSvg={
@@ -271,6 +280,7 @@ function Nav() {
                     />
 
                     <NavItem
+                        key={"albumNav"}
                         to="/album"
                         title="Album"
                         iconSvg={
@@ -281,6 +291,7 @@ function Nav() {
                         }
                     />
                     <NavItem
+                        key={'uploaded'}
                         to="/uploaded"
                         title="Đã tải lên"
                         iconSvg={
@@ -291,11 +302,16 @@ function Nav() {
                     />
                 </>}
                 <NavItem
+                    key={"create_playlistNav"}
                     isAuth={true}
                     to=""
                     title="Tạo playlist"
                     className={"nav_playlist"}
-                    onClick={isLoggedIn && onShowModal}
+                    onClick={() => {
+                        if (isLoggedIn) {
+                            return onShowModal()
+                        }
+                    }}
                     iconFontAwesome={<FontAwesomeIcon className={cx("icon")} icon={faPlus} />}
                 />
             </ul>

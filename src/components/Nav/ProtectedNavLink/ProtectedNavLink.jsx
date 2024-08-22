@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 import { PropTypes } from 'prop-types';
 
-const ProtectedNavLink = ({ to, children, ...res }) => {
+const ProtectedNavLink = ({ children, to, ...res }) => {
     const isLoggedIn = useSelector(state => state.user.isLogin);
 
     const handleClick = (e) => {
@@ -21,9 +21,9 @@ const ProtectedNavLink = ({ to, children, ...res }) => {
 };
 
 ProtectedNavLink.propTypes = {
+    children: PropTypes.node,
     to: string,
-    children: PropTypes.isRequired,
-    res: PropTypes.isRequired,
+    res: PropTypes.object,
 };
 
 

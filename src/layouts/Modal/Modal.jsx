@@ -30,7 +30,7 @@ export default function Modal({ children }) {
     )
 }
 Modal.propTypes = {
-    children: PropTypes.node.isRequired,
+    children: PropTypes.node,
     isShow: PropTypes.bool,
     onHide: PropTypes.func,
     onComfirm: PropTypes.func,

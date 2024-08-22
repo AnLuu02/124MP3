@@ -65,9 +65,7 @@ const MenuItemData = [
 
     }
 ]
-function MenuHeader({ children, valueMenu }, ref) {
-
-
+const MenuHeader = forwardRef(function MenuHeader({ children, valueMenu }, ref) {
     const renderResult = (attrs) => (
         <div className={cx('menu-list')} tabIndex="-1" {...attrs}>
             <div className={cx('wrapper', 'menu-popper')}>
@@ -120,7 +118,9 @@ function MenuHeader({ children, valueMenu }, ref) {
             {children}
         </Tippy>
     );
-}
+})
+
+
 
 MenuHeader.propTypes = {
     children: PropTypes.node.isRequired,
@@ -130,4 +130,4 @@ MenuHeader.propTypes = {
     placement: PropTypes.string
 };
 
-export default forwardRef(MenuHeader);
+export default MenuHeader;

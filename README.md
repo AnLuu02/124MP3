@@ -1,8 +1,37 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# 124Mp3 Web Music
 
-Currently, two official plugins are available:
+This is a web-based music streaming website. The site is for the community.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 About Me
+I am a final-year student at Saigon University (SGU). With a strong passion for programming, particularly in front-end development, I aim to become a Front-end Developer and eventually a Full-Stack Developer in the future.
+
+
+## Website
+
+This is my first website built using the ReactJS library. It is still in progress and not yet fully complete. The site features a modern, visually appealing interface with harmonious colors.
+[https://musicbyanluu.vercel.app/](https://musicbyanluu.vercel.app)
+
+
+
+## Features
+
+- Login/Logout by Google
+- Listen to music
+- Add music to the library and play tracks
+- View artist information
+- Search for songs
+
+
+## Tech Stack
+
+**Client:** 
+- ReactJS + ReactDOM
+- Redux Tookit
+- CSS modile + SASS
+- Some UI libraries (tippyjs, MUI,...)
+
+**Server:** 
+- Restful Api by Java
+- Firebase (Auth, Storage,...)
+
