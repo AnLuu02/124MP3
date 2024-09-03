@@ -301,3 +301,15 @@
 
     }
 }
+
+@media screen and (max-width: 480px) {
+    .menu-list {
+        width: 270px;
+    }
+
+    .header {
+        .login {
+            padding: 4px 16px;
+        }
+    }
+}

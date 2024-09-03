@@ -33,11 +33,15 @@ function NewRelease() {
     const dispath = useDispatch();
     const listSong = useSelector(state => state.listSong.listSong);
     const { get, loading } = useFetch(
-        "http://localhost:8080/API_Servlet/api/"
+        "http://localhost:3000/api/"
     );
 
     useEffect(() => {
-        get(`music/${params.filter && params.filter != "all" ? params.filter : ""}`)
+        let query = `musics?limit=9`;
+        if (params.filter) {
+            query += `&nation=${params.filter && params.filter != "all" ? params.filter : ""}`;
+        }
+        get(query)
             .then((data) => {
                 dispath(setListSong(data));
             })
@@ -51,7 +55,6 @@ function NewRelease() {
                 <FontAwesomeIcon className={cx("iconRelease")} icon={faPlay} id={cx("allPlaymusic")} />
             </h1>
 
-            <ul className={cx("listPlaylist")} id={cx("listPlaylist")}></ul>
             <ul className={cx("navLibrary")}>
 
                 {/* <NavLink to={location.pathname.includes("song") ? location.pathname : "song"} className={cx("navCategory", { "active": formatPathname(location.pathname).includes('/song') })}>BÀI HÁT</NavLink> */}

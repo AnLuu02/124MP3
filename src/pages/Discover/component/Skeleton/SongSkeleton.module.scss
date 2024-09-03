@@ -1,0 +1,109 @@
+.listSongRender {
+    width: 100%;
+    // max-height: 300px;
+    height: max-content;
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    padding: 0;
+    overflow: unset !important;
+    flex-wrap: wrap !important;
+
+
+    .song {
+        width: 32%;
+        margin: 0 0 4px 0;
+
+        .contentSong {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            color: white;
+
+
+            .skeleton_image {
+                position: relative;
+                width: 60px !important;
+                height: 60px !important;
+                border-radius: 4px;
+                display: flex;
+                align-items: center;
+                background-color: gray;
+            }
+
+            .desSong {
+                flex: 1;
+                padding-left: 10px;
+                font-size: 14px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+
+                .timeUpLoad {
+                    opacity: 0.3;
+                    font-size: 12px;
+                    color: white;
+                }
+            }
+
+        }
+    }
+}
+
+// @media screen and (max-width: 768px) {
+//     .listSongRender {
+//         .song {
+//             width: 100% !important;
+//         }
+//     }
+// }
+
+
+
+// @media screen and (min-width: 769px) {
+//     .listSongRender {
+//         .song {
+//             width: 48% !important;
+//         }
+//     }
+// }
+
+// @media screen and (min-width: 1300px) {
+//     .listSongRender {
+//         .song {
+//             width: 32% !important;
+//         }
+//     }
+// }
+@media screen and (max-width: 768px) {
+    .listSongRender {
+        .song {
+            width: 100% !important;
+        }
+    }
+}
+
+
+
+@media screen and (min-width: 769px) and (max-width: 1200px) {
+    .listSongRender {
+        .song {
+            width: 48% !important;
+        }
+    }
+}
+
+@media screen and (min-width: 1300px) {
+    .listSongRender {
+        .song {
+            width: 32% !important;
+        }
+    }
+}
+
+@media screen and (min-width: 1300px) {
+    li.custom {
+        flex: 0 0 15%;
+    }
+}

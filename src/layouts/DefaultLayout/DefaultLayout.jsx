@@ -1,9 +1,10 @@
 import classNames from "classnames/bind";
 import PropTypes from 'prop-types';
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CreatePlaylist from "../../components/Modal/ModalCreatePlaylist/CreatePlaylist.jsx";
 import ModalShowDesciptionArtist from "../../components/Modal/ModalShowDesciptionArtist/ModalShowDesciptionArtist.jsx";
+import PrivateRoute from "../../components/PrivateRoute/PrivateRoute.jsx";
 import Video from "../../components/Video/Video.jsx";
 import { endedSong, playSong, timeUpdateSong } from "../../components/store/songReducer.js";
 import Footer from "../Footer/Footer.jsx";
@@ -13,10 +14,11 @@ import Sidebar from "../Sidebar/Sidebar.jsx";
 import styles from "./DefaultLayout.module.scss";
 import LoadingContainer from "./LoadingContainer/LoadingContainer.jsx";
 
+
 const cx = classNames.bind(styles);
 function DefaultLayout({ children }) {
     const videoRef = useRef();
-    const dispath = useDispatch();
+    const dispatch = useDispatch();
     const song = useSelector(state => state.song.song);
     const currentVolume = useSelector(state => state.song.volume);
     const listSong = useSelector(state => state.listSong.listSong);
@@ -25,9 +27,9 @@ function DefaultLayout({ children }) {
     const isRepeat = useSelector(state => state.song.isRepeat)
     const isRandom = useSelector(state => state.song.isRandom)
     const typeModal = useSelector(state => state.modal.type);
-
-
+    const objData = useSelector(state => state.modal.objData);
     const [loading, setLoading] = useState(true);
+
 
     useEffect(() => {
         var timer = setTimeout(() => {
@@ -40,44 +42,53 @@ function DefaultLayout({ children }) {
 
 
     useEffect(() => {
-        if (isPlay) {
-            videoRef?.current?.play();
+        if (videoRef.current) {
+            if (isPlay) {
+                videoRef.current.play();
+            } else {
+                videoRef.current.pause();
+            }
         }
-        else {
-            videoRef?.current?.pause();
-        }
-    }, [song.name, isPlay])
+    }, [song.name, isPlay]);
+
     useEffect(() => {
-        if (videoRef && videoRef.current) {
+        if (videoRef.current) {
             videoRef.current.volume = currentVolume;
         }
-    }, [currentVolume])
-    const handleMusicEnded = song => {
+    }, [currentVolume]);
+
+    const handleMusicEnded = useCallback(() => {
         if (isRepeat) {
-            dispath(playSong({ song: song, indexSong: indexSong }));
-        }
-        else if (isRandom) {
+            dispatch(playSong({ song, indexSong }));
+        } else if (isRandom) {
             const randomMusic = listSong[Math.floor(Math.random() * listSong.length)];
-            dispath(playSong({ song: randomMusic, indexSong: indexSong }));
+            dispatch(playSong({ song: randomMusic, indexSong }));
+        } else {
+            dispatch(endedSong(song));
         }
-        else {
-            dispath(endedSong(song));
-        }
-    }
+    }, [dispatch, isRepeat, isRandom, listSong, song, indexSong]);
 
 
-    const handleTimeUpDateSong = () => {
-        dispath(timeUpdateSong({ currentTime: videoRef.current.currentTime, durationTime: videoRef.current.duration }))
-    }
 
-    function renderModal() {
-        if (typeModal === "CREATE_PLAYLIST") {
-            return <CreatePlaylist />
+    const handleTimeUpDateSong = useCallback(() => {
+        if (videoRef.current) {
+            dispatch(timeUpdateSong({
+                currentTime: videoRef.current.currentTime,
+                durationTime: videoRef.current.duration
+            }));
         }
-        if (typeModal === "SHOW_ALL_DESCRIPTION_ARTIST") {
-            return <ModalShowDesciptionArtist />
+    }, [dispatch]);
+
+    const renderModal = useCallback(() => {
+        switch (typeModal) {
+            case "CREATE_PLAYLIST":
+                return <CreatePlaylist />;
+            case "SHOW_ALL_DESCRIPTION_ARTIST":
+                return <ModalShowDesciptionArtist objData={objData} />;
+            default:
+                return null;
         }
-    }
+    }, [typeModal]);
 
     return (
         loading
@@ -86,12 +97,12 @@ function DefaultLayout({ children }) {
             :
             <>
                 <div className={cx("wrapper")}>
-                    <Video ref={videoRef} src={song ? song.src : ""} onEnded={() => handleMusicEnded(song)} onTimeUpdate={handleTimeUpDateSong} />
+                    <Video ref={videoRef} src={song ? song.previewUrl : ""} onEnded={() => handleMusicEnded(song)} onTimeUpdate={handleTimeUpDateSong} />
                     <Sidebar />
-                    <div className={cx("main_right")}>
+                    <div className={cx("main_right", song.name ? "hasMusicFixed" : "")}>
                         <main>
                             <Header />
-                            {children}
+                            <PrivateRoute>{children}</PrivateRoute>
                         </main>
                         <Footer />
                     </div>

@@ -1,5 +1,4 @@
 import classNames from "classnames/bind";
-import { useEffect } from "react";
 import { NavLink, useLocation, useParams } from "react-router-dom";
 import { formatPathname } from "../../../../utils/formatPatnameFunction";
 import Favorite from "./Favorite/Favorite";
@@ -9,13 +8,6 @@ const cx = classNames.bind(styles);
 function SongLibrary() {
     const location = useLocation();
     const params = useParams();
-    useEffect(() => {
-        console.log(params.filter)
-    }, [params])
-
-
-
-
 
     return (
         <>

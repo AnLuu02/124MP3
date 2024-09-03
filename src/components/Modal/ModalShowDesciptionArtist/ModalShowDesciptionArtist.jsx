@@ -1,13 +1,13 @@
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames/bind";
+import PropTypes from 'prop-types';
 import { useDispatch } from "react-redux";
-import son_tung_mtp from "../../../../public/images/son_tung_mtp.jpg";
 import { handleHideModal } from "../../store/ModalReducer/modalReducer";
 import styles from "./ModalShowDesciptionArtist.module.scss";
 const cx = classNames.bind(styles);
 
-export default function ModalShowDesciptionArtist() {
+function ModalShowDesciptionArtist({ objData }) {
     const dispatch = useDispatch();
     const onHideModal = () => {
         dispatch(handleHideModal());
@@ -18,19 +18,19 @@ export default function ModalShowDesciptionArtist() {
                 <FontAwesomeIcon icon={faClose} className={cx("icon")} />
             </span>
             <div className={cx("top_content")}>
-                <img src={son_tung_mtp} alt="" />
-                <div className={cx("name_artist")}>Sơn Tùng - MTP</div>
+                <img src={objData?.profileImage} alt="" />
+                <div className={cx("name_artist")}>{objData?.name}</div>
             </div>
             <div className={cx("all_des")} >
                 <p>
-                    Thanh Tùng bắt đầu chơi nhạc từ cấp ba với nghệ danh M-TP và được biết đến với "Cơn Mưa Ngang Qua".
-                    Năm 2012, anh đậu thủ khoa Nhạc viện TPHCM và ký hợp đồng với Văn Production, đổi nghệ danh sang Sơn Tùng M-TP.
-                    Từ 2013 đến 2015, anh có nhiều bản hit như "Em Của Ngày Hôm Qua", "Nắng Ấm Xa Dần"...
-                    Năm 2015, anh rời khỏi công ty cũ và gia nhập WePro, tổ chức minishow đầu tiên "M-TP and Friends".
-                    Năm 2017, anh rời khỏi WePro để thành lập M-TP Entertainment, ra mắt "Lạc Trôi" và "Nơi Này Có Anh". Anh ra mắt album đầu tay "m-tp M-TP".
-                    Năm 2018 anh ra mắt "Chạy Ngay Đi" và "Hãy Trao Cho Anh" năm 2019. Cả hai bài hát đều trở thành hit. Đặc biệt "Hãy Trao Cho Anh" kết hợp với Snopp Dogg đã đưa tên tuổi anh ra thế giới.
+                    {objData?.biography}
                 </p>
             </div>
         </div >
     )
 }
+
+ModalShowDesciptionArtist.PropTypes = {
+    objData: PropTypes.object
+}
+export default ModalShowDesciptionArtist;

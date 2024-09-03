@@ -1,10 +1,11 @@
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import Song from "../../components/Song/Song";
-import SongFull from "../../components/SongFull/SongFull";
+import Song from "../../components/SongItem/Song/Song";
+import SongOptions from "../../components/SongItem/SongOptions/SongOptions";
 import WidgetAlbum from "../../components/WidgetAlbum/WidgetAlbum";
 import { formatPathname } from "../../utils/formatPatnameFunction";
+import CustomizedMenus from "./Mobile/Menu";
 import styles from "./SearchResult.module.scss";
 const cx = classNames.bind(styles);
 function SearchResult() {
@@ -17,17 +18,12 @@ function SearchResult() {
         setQuery(searchParams.get('q'));
     }, [location.search]);
 
-    // const { get } = useFetch(
-    //     "http://localhost:8080/API_Servlet/api/"
-    // );
-
-
 
     return (<>
         <div className={cx("searchResult")}>
             <div className={cx("searchHeader")}>
-                <h2>Kết Quả Tìm Kiếm</h2>
-                <ul className={cx("navSearch")}>
+                <h2>Kết Quả</h2>
+                <ul className={cx("navSearch", "mobile")}>
                     <NavLink to={`/tim-kiem/tat-ca?q=${query}`} className={cx("navItem", formatPathname(location.pathname).includes("/tim-kiem/tat-ca") ? "active" : "")}>
                         TẤT CẢ
                     </NavLink>
@@ -44,7 +40,12 @@ function SearchResult() {
                         MV
                     </NavLink>
                 </ul>
+                <div className={cx("menuMobile")}>
+                    <CustomizedMenus />
+                </div>
             </div>
+            <p className={cx("keySearchValue")}>Từ khóa "{query}"</p>
+
             <div className={cx("searchBody")}>
                 <div className={cx("widget", "hotSong")}>
                     <h3>Nổi bật </h3>
@@ -59,10 +60,10 @@ function SearchResult() {
                     <h3>Bài hát</h3>
                     <div className={cx("listSong")}>
                         <ul className={cx("music")}>
-                            <SongFull key={1} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} />
-                            <SongFull key={1} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} />
-                            <SongFull key={1} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} />
-                            <SongFull key={1} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} />
+                            <SongOptions key={1} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} />
+                            <SongOptions key={1} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} />
+                            <SongOptions key={1} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} />
+                            <SongOptions key={1} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} />
                         </ul>
                     </div>
                 </div>

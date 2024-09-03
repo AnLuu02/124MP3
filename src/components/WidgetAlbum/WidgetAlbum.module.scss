@@ -1,11 +1,8 @@
 ul.listWidget {
     padding: 0;
     width: 100%;
-    font-size: 14px;
-    font-weight: 500;
-    // margin: 10px -14px 40px -14px;
     display: flex !important;
-    overflow: hidden !important;
     scroll-snap-type: x mandatory;
     margin-bottom: 50px;
+    overflow-x: hidden !important;
 }

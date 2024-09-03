@@ -1,9 +1,12 @@
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames/bind";
-import { useEffect, useState } from "react";
+import { addDoc, collection } from "firebase/firestore";
+import { useEffect, useRef, useState } from "react";
 import { Spinner } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { notifyError, notifySuccess } from "../../../utils/toastifyMessage";
+import { db } from "../../FireBase/firebaseConfig";
 import { handleHideModal } from "../../store/ModalReducer/modalReducer";
 import styles from "./CreatePlaylist.module.scss";
 const cx = classNames.bind(styles);
@@ -12,8 +15,11 @@ export default function CreatePlaylist() {
     const [publicPlaylist, setPublicPlaylist] = useState(false);
     const [randomPlaylist, setRandomPlaylist] = useState(false);
     const [loading, setLoading] = useState(false);
+    const user = useSelector(state => state.user.user);
+    const inputRef = useRef();
     const dispatch = useDispatch();
-    const onHideModal = () => {
+    const onHideModal = (e) => {
+        e.stopPropagation();
         dispatch(handleHideModal());
     }
 
@@ -21,16 +27,35 @@ export default function CreatePlaylist() {
         const timer = setTimeout(() => {
             setLoading(false)
         }, 1000)
+        console.log(user);
+
         return () => clearTimeout(timer)
     }, [loading])
-    const onCreatePlaylist = () => {
-        console.log(namePlaylist, publicPlaylist, randomPlaylist);
-        setLoading(true)
-        // dispatch(addPlaylist({
-        //     name: namePlaylist,
-        //     public: publicPlaylist,
-        //     random: randomPlaylist
-        // }));
+
+    useEffect(() => {
+        inputRef.current.focus()
+    })
+    const handleCreatePlaylist = async () => {
+        try {
+            if (!namePlaylist) {
+                alert("Vui lòng nhập tên playlist.");
+
+            } else {
+                setLoading(true)
+                await addDoc(collection(db, 'playlistCollection'), {
+                    userId: user?.uid,
+                    namePlaylist,
+                    publicPlaylist,
+                    randomPlaylist,
+                    timestamp: new Date()
+                });
+                onHideModal()
+                notifySuccess();
+            }
+        } catch (e) {
+            console.error("Error adding document: ", e);
+            notifyError();
+        }
     }
     return (
         <div className={cx("createPlaylist")}>
@@ -40,7 +65,7 @@ export default function CreatePlaylist() {
             </div>
             <div className={cx("body")}>
                 <div className={cx("inputName")}>
-                    <input value={namePlaylist} type="text" placeholder="Nhập tên playlist" onChange={e => setNamePlaylist(e.target.value)} />
+                    <input value={namePlaylist} ref={inputRef} type="text" placeholder="Nhập tên playlist" onChange={e => setNamePlaylist(e.target.value)} />
                 </div>
                 <div className={cx("statePlaylist")}>
                     <div className={cx("left")}>
@@ -67,7 +92,7 @@ export default function CreatePlaylist() {
                     </div>
                 </div>
             </div>
-            <button onClick={onCreatePlaylist} className={cx({ "active": loading })} disabled={loading}>
+            <button onClick={handleCreatePlaylist} className={cx({ "active": loading })} disabled={loading}>
                 Tạo mới
                 {loading &&
                     <Spinner animation="border" role="status" style={{ width: 20, height: 20, position: "absolute", left: "30%" }}>

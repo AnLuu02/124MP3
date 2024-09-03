@@ -22,15 +22,18 @@
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-toastify/dist/ReactToastify.css'; // Import CSS for Toastify
 
 import { useEffect } from 'react';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import PrivateRoute from './components/PrivateRoute/PrivateRoute.jsx';
+import { ToastContainer } from 'react-toastify';
 import { checkAuthState } from './components/store/userReducer.js';
 import DefaultLayout from "./layouts/DefaultLayout/DefaultLayout.jsx";
 import Artist from './pages/Artist/Artist.jsx';
 import BXH from './pages/BXH/BXH';
+import DetailSong from './pages/DetailSong/DetailSong.jsx';
 import Discover from "./pages/Discover/Discover";
 import SongDiscover from './pages/Discover/component/SongDiscover/SongDiscover.jsx';
 import Home from "./pages/Home/Home";
@@ -46,6 +49,7 @@ import SongNewRelease from './pages/New-release/SubNewRelease/Song/SongNewReleas
 import NotFound from './pages/NotFound/NotFound.jsx';
 import SearchResult from './pages/SearchResult/SearchResult.jsx';
 import Top from "./pages/Top100/Top100";
+
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -54,12 +58,21 @@ function App() {
   return (
     <BrowserRouter>
       <>
+        {/* <ScrollToTop /> */}
+        <ToastContainer />
         <Routes>
 
           <Route path="/" element={<DefaultLayout><Home /></DefaultLayout>}>
             <Route path="/home" element={<DefaultLayout><Home /></DefaultLayout>}>
             </Route>
           </Route>
+
+          <Route path="/album" element={<DefaultLayout><DetailSong /></DefaultLayout>}>
+
+          </Route>
+
+          <Route path="/artist/:artist" element={<DefaultLayout><Artist /></DefaultLayout>}></Route>
+
 
 
           <Route path="/discover" element={<DefaultLayout>< Discover /></DefaultLayout>}>
@@ -68,7 +81,7 @@ function App() {
           </Route>
 
 
-          <Route path="/library" element={<PrivateRoute><DefaultLayout><Library /></DefaultLayout></PrivateRoute>}>
+          <Route path="/library" element={<DefaultLayout><Library /></DefaultLayout>}>
             <Route path="/library/" element={<SongLibrary />}>
               <Route path="/library/song" element={<SongLibrary />}>
                 <Route path="/library/song/:filter" element={<SongLibrary />}></Route>

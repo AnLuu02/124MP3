@@ -21,11 +21,6 @@ export default function Playlist() {
         return location.pathname;
     }
 
-    // const { get } = useFetch(
-    //     "http://localhost:8080/API_Servlet/api/"
-    // );
-
-
 
     return (
         <div className={cx("myMusicPlaylist")}>

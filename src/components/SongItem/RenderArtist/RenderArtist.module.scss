@@ -1,0 +1,30 @@
+.nameArtist {
+    width: max-content;
+    max-width: 80% !important;
+    font-size: 12px;
+    color: white;
+    opacity: 0.4;
+    overflow: hidden;
+    z-index: 4;
+    position: relative;
+    text-overflow: ellipsis;
+
+    p {
+        width: max-content;
+        display: inline;
+
+        &:hover {
+            cursor: pointer;
+            text-decoration: underline;
+            color: aqua;
+        }
+    }
+
+}
+
+@media screen and (max-width: 480px) {
+    .nameArtist {
+        max-width: unset !important;
+        width: 100% !important;
+    }
+}

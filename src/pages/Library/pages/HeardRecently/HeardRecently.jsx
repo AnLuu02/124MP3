@@ -1,8 +1,8 @@
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import Song from "../../../../components/Song/Song";
-import SongFull from "../../../../components/SongFull/SongFull";
+import Song from "../../../../components/SongItem/Song/Song";
+import SongOptions from "../../../../components/SongItem/SongOptions/SongOptions";
 import WidgetAlbum from "../../../../components/WidgetAlbum/WidgetAlbum";
 import styles from "./HeardRecently.module.scss";
 const cx = classNames.bind(styles);
@@ -52,10 +52,10 @@ export default function HeardRecently() {
                     <h3>Bài hát</h3>
                     <div className={cx("listSong")}>
                         <ul className={cx("music")}>
-                            <SongFull key={1} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} />
-                            <SongFull key={1} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} />
-                            <SongFull key={1} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} />
-                            <SongFull key={1} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} />
+                            <SongOptions key={1} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} />
+                            <SongOptions key={1} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} />
+                            <SongOptions key={1} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} />
+                            <SongOptions key={1} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} />
                         </ul>
                     </div>
                 </div>

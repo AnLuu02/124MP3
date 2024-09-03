@@ -1,4 +1,4 @@
-li {
+li.navItem {
     width: 100%;
 
     &:hover {
@@ -34,10 +34,15 @@ li {
     &.nav_playlist {
         position: absolute;
         bottom: 0;
+        background-color: #1b2039;
         border-top: 1px solid rgba(256, 256, 256, .2) !important;
+
+        &:hover {
+            background-color: #282e4b;
+        }
     }
 
-    &.active {
+    &.nav_playlist.active {
         bottom: 90px !important;
     }
 
@@ -49,61 +54,48 @@ li {
         margin-left: -20px;
         padding-left: 0;
     }
-
-    .icon {
-        width: 24px;
-        height: 24px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-right: 12px;
-    }
 }
 
-.yeucaulogin>div {
-    color: white;
-    background-color: #355c7d;
-    font-size: 14px;
-    padding: 10px;
-    margin: 14px;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    align-items: center !important;
-    justify-content: center !important;
-    cursor: pointer;
-
-    p {
-        text-align: center;
-        color: white;
-    }
-
-    .btnLogin {
-        all: unset;
-        padding: 8px 20px;
-        border-radius: 20px;
-        border: 1px solid;
-        border-color: #fff !important;
-        transition: 0.1s;
-
-        a {
-            color: white;
+@media screen and (min-width: 481px) and (max-width: 1023px) {
+    li {
+        &>.nav_item {
+            div.title {
+                display: none !important;
+            }
         }
 
-        &:hover {
-            opacity: 0.8;
+        &.navItem.mobile {
+            display: none !important;
+
+            &.nav_playlist {
+                display: none;
+                border-color: transparent !important;
+
+
+            }
+        }
+
+        &.showFullSidebar {
+            div.title {
+                display: block !important;
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
+                white-space: nowrap !important;
+                max-lines: 1;
+
+            }
+
+            &.navItem.mobile {
+                display: block !important;
+
+                &.nav_playlist {
+                    border-color: white !important;
+                }
+            }
         }
     }
+
+
 }
 
-.upPremium>div {
-    background: linear-gradient(to right, #35557d, #6c5b7b, #355c7d) !important;
-    font-size: 12px;
-
-    .btnLogin {
-        background-color: #FFDB00 !important;
-        color: #32323D;
-        font-weight: bold;
-        outline: none;
-    }
-}
+@media screen and (max-width: 480px) {}

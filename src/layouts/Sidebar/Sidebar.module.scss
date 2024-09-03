@@ -6,6 +6,7 @@
     left: 0;
     top: 0;
     z-index: 100;
+    transition: 0.2s;
 
 
 
@@ -17,3 +18,59 @@
     }
 
 }
+
+
+
+@media screen and (max-width: 480px) {
+    .wrapper {
+        width: 240px;
+        transform: translateX(-100%);
+
+        &.active {
+            transform: translateX(0);
+
+        }
+
+        z-index: 1000;
+    }
+
+    .overlay {
+        position: fixed;
+        inset: 0;
+        left: 240px;
+        z-index: 1001;
+        background-color: red;
+
+        &.active {
+            display: block;
+        }
+    }
+
+
+}
+
+
+@media screen and (min-width: 481px) and (max-width: 1023px) {
+    .wrapper {
+        width: 70px !important;
+
+        &.active {
+            width: 240px !important;
+            z-index: 200;
+        }
+    }
+
+    .overlay {
+        position: fixed;
+        inset: 0;
+        left: 240px;
+        z-index: 1001;
+
+        &.active {
+            display: block;
+        }
+    }
+
+}
+
+@media screen and (max-width: 768px) {}

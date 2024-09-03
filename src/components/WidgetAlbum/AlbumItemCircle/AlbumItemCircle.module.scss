@@ -1,0 +1,196 @@
+li.widgetItemCircle {
+    flex: none !important;
+    width: calc((100vw - 400px) / 5) !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    scroll-snap-align: start;
+    z-index: 1 !important;
+    position: relative;
+
+
+    &:not(:nth-child(1)) {
+        margin-left: 10px;
+    }
+
+    .name_artist {
+        font-size: 14px;
+        opacity: 1 !important;
+        margin: 15px 0 4px 0;
+        cursor: pointer;
+
+        &:hover {
+            color: aqua;
+            text-decoration: underline;
+        }
+    }
+
+    .care_artist {
+        font-size: 12px;
+        opacity: .4;
+        display: flex;
+        align-items: center;
+
+        .quantityCare {
+            margin-right: 4px;
+
+        }
+    }
+
+
+    .follow_artist {
+        width: max-content;
+        margin: 15px 0px;
+        background-color: #2f86eb;
+        color: white;
+        padding: 4px 24px;
+        font-size: 12px;
+        border-radius: 20px;
+        border: 1px solid #2f86eb;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: 0.2s;
+        cursor: pointer;
+
+        .icon {
+            margin-right: 5px;
+        }
+
+        &:hover {
+            opacity: 0.5;
+        }
+
+    }
+
+    .content {
+        width: 100%;
+        height: 100%;
+        border-radius: 50% !important;
+        position: relative;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: calc((100vw - 400px) / 5);
+            transition: all 0.5s;
+            object-fit: cover;
+            background-position: center;
+
+        }
+
+        .hover_playlist {
+            position: absolute;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: 0.2s !important;
+
+            .circleIcon {
+                width: 44px;
+                height: 44px;
+                border: 1px solid white;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .icon {
+                    font-size: 20px !important;
+                }
+            }
+        }
+
+        &:hover {
+            .hover_playlist {
+                opacity: 1;
+            }
+
+            img {
+                scale: 1.1;
+            }
+        }
+    }
+
+
+}
+
+@media screen and (max-width: 480px) {
+    li.widgetItemCircle {
+        width: calc((100vw - 42px) / 2) !important;
+
+        .content {
+
+            img {
+                height: calc((100vw - 42px) / 2) !important;
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+
+
+    li.widgetItemCircle {
+        width: calc((100vw - 132px) / 4) !important;
+
+        .content {
+
+            img {
+                height: calc((100vw - 132px) / 4) !important;
+            }
+        }
+
+        &:not(:nth-child(1)) {
+            margin-left: 10px;
+        }
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1023px) {
+
+    li.widgetItemCircle {
+        width: calc((100vw - 132px) / 4) !important;
+
+        .content {
+
+            img {
+                height: calc((100vw - 132px) / 4) !important;
+            }
+        }
+
+        &:not(:nth-child(1)) {
+            margin-left: 10px;
+        }
+    }
+}
+
+
+
+
+@media screen and (min-width: 1024px) and (max-width: 1200px) {
+
+    li.widgetItemCircle {
+        width: calc((100vw - 318px) / 4) !important;
+
+        .content {
+
+            img {
+                height: calc((100vw - 318px) / 4) !important;
+            }
+        }
+
+        &:not(:nth-child(1)) {
+            margin-left: 10px;
+        }
+    }
+}
+
+
+
+
+@media screen and (min-width: 1300px) {}

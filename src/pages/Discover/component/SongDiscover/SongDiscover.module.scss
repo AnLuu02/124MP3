@@ -6,7 +6,8 @@
     align-items: center;
     flex-wrap: wrap !important;
     justify-content: space-between;
-    margin-bottom: 60px;
+    margin-bottom: 30px;
+    padding: 0;
     overflow: unset !important;
 
     .custom {
@@ -17,3 +18,36 @@
         position: relative;
     }
 }
+
+
+@media screen and (max-width: 768px) {
+    .listSongRender {
+        .custom {
+            width: 100% !important;
+        }
+    }
+}
+
+
+
+@media screen and (min-width: 769px) and (max-width: 1200px) {
+    .listSongRender {
+        .custom {
+            width: 48% !important;
+        }
+    }
+}
+
+@media screen and (min-width: 1300px) {
+    .listSongRender {
+        .custom {
+            width: 32% !important;
+        }
+    }
+}
+
+// @media screen and (min-width: 1300px) {
+//     li.custom {
+//         flex: 0 0 15%;
+//     }
+// }

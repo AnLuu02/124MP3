@@ -1,0 +1,511 @@
+.playSong {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 300px auto;
+    color: white;
+    margin-top: 20px;
+    column-gap: 30px;
+    padding-bottom: 100px;
+    display: grid;
+    overflow: hidden;
+
+    &.mobile {
+        display: none;
+    }
+
+    .layoutLeft {
+        width: 100%;
+        text-align: center !important;
+
+        .line {
+            margin: 0;
+            margin-bottom: 20px;
+        }
+
+        .boxAudio {
+            cursor: pointer;
+            width: 300px;
+            height: 300px;
+            border-radius: 10px;
+            position: relative;
+            left: 0;
+            overflow: hidden;
+
+            img {
+                width: 100%;
+                height: 100%;
+                background-size: cover;
+                background-position: center;
+                transition: 0.5s;
+            }
+
+            &:hover img {
+                transform: scale(1.2);
+            }
+
+            .boxControls {
+                position: absolute;
+                inset: 0;
+                background-color: transparent;
+                transition: 0.2s;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: rgba(0, 0, 0, 0.3);
+
+
+                .border1 {
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    border: 1px solid white;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    .icon {
+                        color: white;
+                        font-size: 20px;
+                        padding: 0;
+                        margin: 0;
+                        display: none;
+
+
+                        &.active {
+                            display: flex;
+
+                        }
+                    }
+
+                    .runAudio {
+                        width: 100%;
+                        height: 100%;
+                        display: none;
+
+                        b {
+                            display: inline-block;
+                            width: 2px;
+                            height: 30%;
+                            background-color: white;
+                            margin: 0 1.2px !important;
+                            animation: run 0.4s linear infinite alternate;
+
+                            &:nth-child(1) {
+                                animation-delay: 0.1s;
+                            }
+
+                            &:nth-child(2) {
+                                animation-delay: 0.4s;
+                            }
+
+                            &:nth-child(3) {
+                                animation-delay: 0.3s;
+                            }
+
+                            &:nth-child(4) {
+                                animation-delay: 0.2s;
+                            }
+                        }
+
+                        @keyframes run {
+                            100% {
+                                height: 0;
+                            }
+                        }
+
+                        &.active {
+                            display: block;
+
+                            &>div {
+                                border-radius: 50%;
+                                position: absolute;
+                                top: 50%;
+                                left: 50%;
+                                width: 30px;
+                                height: 30px;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                transform: translate(-50%, -50%);
+                            }
+                        }
+                    }
+                }
+
+
+                &:hover {
+                    background-color: rgba(0, 0, 0, 0.3);
+                }
+            }
+
+        }
+
+        .nameSong {
+            padding: 10px 0 0 0;
+            font-size: 20px;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .artist {
+            width: 100%;
+            margin: 6px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .releaseDate,
+        .loveSong {
+            font-size: 12px;
+            margin: 6px 0;
+            color: rgba(255, 255, 255, .5);
+
+        }
+
+        p.releaseDate {
+            font-size: 13px;
+            color: rgba(255, 255, 255, .5);
+        }
+
+
+
+        .controls {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 20px;
+            margin-top: 20px;
+
+            button {
+                cursor: pointer;
+                padding: 9px 24px;
+                border-radius: 20px;
+                background: #1b2051 !important;
+                border: none;
+                outline: none;
+                color: white;
+                font-size: 14px;
+                font-weight: 500;
+                display: none;
+
+                &:hover {
+                    opacity: 0.8;
+                }
+
+                .icon {
+                    display: block;
+                    margin-right: 10px;
+                    font-size: 15px;
+                }
+
+                &.active {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+        }
+
+        .anotherChoice {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+
+
+
+            .boxIcon {
+                cursor: pointer;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                font-size: 20px;
+                background-color: #1b2051;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .icon {
+                    font-size: 15px;
+                }
+            }
+        }
+
+
+    }
+
+    &.mobile {
+        margin-top: 50px;
+
+        .header {
+            height: 140px;
+            background-color: transparent;
+            overflow: hidden;
+            display: flex;
+            align-items: start;
+            padding: 20px 0;
+
+            .infoSong {
+                display: flex;
+                flex-direction: column;
+                align-items: start;
+
+                h3 {
+                    font-size: 18px;
+                    margin: 0;
+                    padding: 0;
+                }
+
+                p {
+                    font-size: 13px;
+                    padding: 0;
+                    margin: 4px 0;
+                }
+
+                .subInfo {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin-top: 5px;
+
+                    &>div {
+                        margin-right: 16px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+
+                        .icon {
+                            margin-right: 4px;
+                        }
+                    }
+                }
+
+            }
+
+            img {
+                width: 100px;
+                height: 100px;
+                object-fit: cover;
+                background-position: center;
+                margin-right: 16px;
+                border-radius: 4px;
+            }
+
+        }
+
+        .downLoad {
+            width: 100%;
+            background-color: #32323D;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            padding: 7px;
+        }
+
+        .controls {
+            width: 100%;
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+
+            .icon {
+                width: 20px;
+                height: 20px;
+                font-size: 20px;
+            }
+
+            button {
+                padding: 9px 24px;
+                width: 136px;
+                font-size: 14px;
+            }
+        }
+
+        .infoArtist {
+            display: flex;
+            align-items: center;
+            padding: 20px 0;
+
+            * {
+                margin: 0;
+            }
+
+            &>div:nth-child(1) {
+                img {
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                }
+            }
+
+            &>div.info {
+                display: flex;
+                flex-direction: column;
+                justify-content: start;
+                align-items: start;
+                margin-left: 16px;
+                flex: 1;
+
+                h3 {
+                    font-size: 14px;
+
+                }
+
+                p {
+                    color: #A0A0A0;
+                    font-size: 14px;
+                    margin-top: 8px;
+                }
+            }
+
+            &>div:nth-child(3) {
+                padding: 1px 13px;
+                margin: 0 0 0 8px;
+            }
+
+        }
+
+
+        .lyric {
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+
+            * {
+                margin: 0;
+
+            }
+
+            h4 {
+                font-size: 18px;
+            }
+
+            p {
+                font-size: 14px;
+                color: #A0A0A0;
+                padding: 15px 0 10px;
+            }
+
+            .lyricContent {
+                text-align: start;
+            }
+        }
+    }
+
+
+    .layoutRight {
+        width: 100%;
+
+        .titleHeaderMusic {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            opacity: 0.4;
+            padding: 10px 10px 10px 10px;
+            font-size: 12px;
+
+            &>div {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .icon {
+                    margin-right: 14px;
+                }
+            }
+        }
+
+        .line1 {
+            margin: 0;
+            height: 0.5px;
+        }
+
+
+        ul {
+            width: 100%;
+            padding: 0;
+
+            &.mobile {
+                display: none;
+            }
+        }
+
+        .infoAlbum {
+            margin-bottom: 20px;
+
+            h3 {
+                font-size: 14px;
+                padding: 20px 0 8px;
+
+            }
+
+            .subInfo {
+                display: flex;
+                font-size: 13px;
+                align-items: center;
+
+                .left,
+                .right {
+                    margin-right: 16px;
+
+                    h4 {
+                        font-size: 13px;
+                        margin: 0;
+                        padding: 6px 0;
+                        color: #FFFFFF80;
+                    }
+                }
+
+                .right {
+                    h4 {
+                        color: white;
+                    }
+                }
+            }
+        }
+
+        .boxHintMusic {
+            margin-top: 30px;
+
+            .titleHintMusic {
+                font-size: 21px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .playSong {
+        &:not(.mobile) {
+            display: none !important;
+        }
+
+        &.mobile {
+            display: block !important;
+        }
+
+        .layoutRight {
+            ul {
+                &:not(.mobile) {
+                    display: none !important;
+                }
+
+                &.mobile {
+                    display: block !important;
+                }
+            }
+        }
+    }
+
+}

@@ -2,17 +2,25 @@ import { faAngleRight, faPlay, faPlus } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Tippy from "@tippyjs/react";
 import classNames from "classnames/bind";
-import { useDispatch } from "react-redux";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
+import { db } from "../../components/FireBase/firebaseConfig";
 import { handleShowModal } from "../../components/store/ModalReducer/modalReducer";
 import styles from "./Library.module.scss";
 import PlaylistItem from "./pages/Playlist/AlbumItem/PlaylistItem";
 const cx = classNames.bind(styles);
 
 function Library() {
+    const [playlists, setPlaylists] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    const user = useSelector(state => state.user.user);
     const dispatch = useDispatch();
     const onShowModal = () => {
-        dispatch(handleShowModal("CREATE_PLAYLIST"));
+        dispatch(handleShowModal("MODAL_CREATE_PLAYLIST"));
     }
     const location = useLocation();
     if (location.pathname.includes("/history")
@@ -25,6 +33,33 @@ function Library() {
         }
         return location.pathname;
     }
+
+
+    useEffect(() => {
+        const getAllPlaylist = async () => {
+            if (user?.uid) {
+                const q = query(collection(db, 'playlistCollection'), where('userId', '==', user.uid));
+                try {
+                    const querySnapshot = await getDocs(q);
+                    const documents = [];
+                    querySnapshot.forEach((doc) => {
+                        documents.push({ id: doc.id, ...doc.data() });
+                    });
+                    setPlaylists(documents);
+                } catch (e) {
+                    console.error('Error getting documents:', e);
+                    setError(e);
+                } finally {
+                    setLoading(false);
+                }
+            } else {
+                setLoading(false);
+            }
+        };
+
+        getAllPlaylist();
+    });
+
     return (<>
         <div className={cx("library")}>
             <h1 className={cx("headerLibraryH1")}>
@@ -49,18 +84,16 @@ function Library() {
                 </li>
             </ul>
             <ul className={cx("listPlaylist")}>
-                <PlaylistItem />
-                <PlaylistItem />
-                <PlaylistItem />
-                <PlaylistItem />
-                <PlaylistItem />
-
+                {
+                    loading ? <div>Loading...</div> : error ? <div>Error: {error.message}</div>
+                        : playlists.map((playlist) => {
+                            return <PlaylistItem key={playlist.id} playlist={playlist} />
+                        })}
             </ul>
             <ul className={cx("navLibrary")}>
                 <NavLink to={location.pathname.includes("song") ? location.pathname : "song"} className={cx("navCategory", { "active": formatPathname(location.pathname).includes('/song') || formatPathname(location.pathname).endsWith('/library') })}>BÀI HÁT</NavLink>
                 <NavLink to={location.pathname.includes("album") ? location.pathname : "album"} className={cx("navCategory", { "active": formatPathname(location.pathname).includes('/album') })} >ALBUM</NavLink>
                 <NavLink to={location.pathname.includes("mv") ? location.pathname : "mv"} className={cx("navCategory", { "active": formatPathname(location.pathname).includes('/mv') })}>MV</NavLink>
-
                 <hr className={cx("line")}></hr>
 
             </ul>

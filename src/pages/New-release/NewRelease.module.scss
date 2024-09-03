@@ -11,10 +11,6 @@
         display: block !important;
     }
 
-    a {
-        display: block;
-        color: white;
-    }
 
     h1.title {
         display: flex;
@@ -52,6 +48,8 @@
     .navLibrary {
         position: relative;
         margin: 32px 0 !important;
+        display: flex;
+        align-items: center;
 
         .line {
             margin: 0;
@@ -61,29 +59,26 @@
             bottom: -1px;
 
         }
-    }
 
-    .navLibrary,
-    .subNavLibrary {
-        display: flex;
-        align-items: center;
-    }
+        .navCategory {
+            width: max-content;
+            font-size: 14px;
+            margin-right: 2%;
+            color: white !important;
+            padding: 10px;
+            font-weight: bold;
 
-    .navLibrary .navCategory {
-        width: max-content;
-        font-size: 14px;
-        margin-right: 2%;
-        color: white !important;
-        padding: 10px;
-        font-weight: bold;
-    }
+            &.active {
+                border-bottom: 1px solid aqua;
+            }
 
-    .navLibrary .navCategory.active {
-        border-bottom: 1px solid aqua;
+        }
     }
 
     .subNavLibrary {
         margin: 20px 0;
+        display: flex;
+        align-items: center;
 
         .navCountryItem {
             width: max-content;
@@ -114,6 +109,7 @@
 
     .listSong {
         min-height: 310px;
+        width: 100%;
 
         .titleHeaderMusic {
             width: 100%;
@@ -131,7 +127,7 @@
                 }
 
                 &:nth-child(2) {
-                    width: 40%;
+                    width: 42%;
                     display: flex;
                     justify-content: center;
                     align-items: center;
@@ -144,46 +140,86 @@
                     align-items: center;
                 }
             }
-
         }
 
-        &,
         ul {
             width: 100%;
+
+            li {
+                width: 100%;
+                border-radius: 4px;
+                margin: 1px 0;
+                padding: 10px;
+                transition: 0.1s;
+                position: relative;
+            }
+
+            &.music {
+                li::after {
+                    content: "";
+                    width: 100%;
+                    height: 0.6px;
+                    background-color: rgba(256, 256, 256, 0.1);
+                    position: absolute;
+                    bottom: 0;
+                    left: 50%;
+                    transform: translateX(-50%);
+                }
+            }
         }
 
-        ul li {
-            width: 100%;
-            border-radius: 4px;
-            margin: 1px 0;
-            padding: 10px;
-            transition: 0.1s;
-            position: relative;
-        }
-
-        ul.music li::after {
-            content: "";
-            width: 100%;
-            height: 0.6px;
-            background-color: rgba(256, 256, 256, 0.1);
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
+        &#listSongRelease {
+            .listSongRender .music {
+                width: 100%;
+                height: max-content;
+                min-height: 310px;
+            }
         }
     }
 
-    #listSongRelease .listSongRender .music {
-        width: 100%;
-        height: max-content;
-        min-height: 310px;
-    }
+
 
     #allPlaymusic {
         cursor: pointer;
-    }
 
-    #allPlaymusic:hover {
-        opacity: .7;
+        &:hover {
+            opacity: .7;
+        }
     }
 }
+
+@media screen and (max-width: 480px) {
+    .release {
+        margin-top: 70px;
+
+        h1.title {
+            font-weight: bold;
+            font-size: 30px;
+
+            .iconRelease {
+                width: 14px;
+                height: 14px;
+                padding: 6px;
+            }
+
+        }
+
+        .navLibrary {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            margin-bottom: 0 !important;
+        }
+
+        .subNavLibrary {
+            justify-content: space-between;
+
+            .navCountryItem {
+                margin-right: 0;
+                padding: 4px 16px;
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {}

@@ -40,3 +40,9 @@
         color: white;
     }
 }
+
+@media screen and (max-width: 480px) {
+    .wrapper {
+        background-color: #131e4f;
+    }
+}

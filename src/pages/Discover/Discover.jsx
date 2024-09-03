@@ -1,7 +1,8 @@
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Button } from "@mui/material";
 import classNames from "classnames/bind";
-import { useCallback, useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Outlet, useLocation, useParams } from "react-router-dom";
 import 'tippy.js/dist/tippy.css';
@@ -9,7 +10,6 @@ import img_slide1 from "../../../public/images/1.jpg";
 import img_slide2 from "../../../public/images/2.jpg";
 import img_slide3 from "../../../public/images/3.jpg";
 import useFetch from "../../Custom hooks/useFetch";
-import Loader4Doc from "../../components/Loader1/Loader4Doc";
 import WidgetAlbum from "../../components/WidgetAlbum/WidgetAlbum";
 import { setListSong } from "../../components/store/listSongReducer";
 import styles from "./Discover.module.scss";
@@ -18,48 +18,68 @@ const cx = classNames.bind(styles);
 function Discover() {
     const location = useLocation();
     const params = useParams();
+    const refOrther1 = useRef();
+    const refOrther2 = useRef();
+    const refOrther3 = useRef();
+
     const defaultParamsDiscover = {
         "vietnam": "vpop",
         "thegioi": "notVpop",
         "all": "",
     }
 
-    const dispath = useDispatch();
+    const dispatch = useDispatch();
     const listSong = useSelector(state => state.listSong.listSong);
     // const user = useSelector(state => state.user.user);
     const { get, loading } = useFetch(
-        "http://localhost:8080/API_Servlet/api/"
+        "http://localhost:3000/api/"
     );
 
     useEffect(() => {
-        get(`music/discover/${defaultParamsDiscover[params.filter] ?? "all"}`)
+        let query = `musics?limit=9`;
+        if (params.filter) {
+            query += `&nation=${defaultParamsDiscover[params.filter]}`;
+        }
+        get(query)
             .then((data) => {
-                dispath(setListSong(data));
-                console.log(data)
+                dispatch(setListSong(data));
             })
             .catch((error) => console.log("Goi API không thành công.", error));
     }, [params.filter]);
 
+    useEffect(() => {
+
+        let array = [1, 2, 3];
+
+        const interval = setInterval(() => {
+            const firstElement = array.shift();
+            array.push(firstElement);
+            const secondElement = array.shift();
+            array.unshift(secondElement);
+            if (refOrther1.current && refOrther2.current && refOrther3.current) {
+                refOrther1.current.dataset.order = array[0];
+                refOrther2.current.dataset.order = array[1];
+                refOrther3.current.dataset.order = array[2];
+            }
+        }, 5000)
+        return () => clearInterval(interval);
+    });
 
 
-    const formatPathname = useCallback(() => {
-        console.log("call back call" + location.pathname);
-        if (location.pathname.endsWith("/")) {
-            return location.pathname.slice(0, -1);
-        }
-        return location.pathname;
-    }, [location.pathname])
+    const formatPathname = () => {
+        return location.pathname.endsWith("/") ? location.pathname.slice(0, -1) : location.pathname;
+    };
 
     return (<>
         <div id={cx("discover")}>
             <div className={cx("all-slides")}>
-                <div className={cx("single-slide")} data-order="2">
+                <div className={cx("single-slide")} data-order="3" ref={refOrther3}>
                     <img src={img_slide3} alt="1" />
                 </div>
-                <div className={cx("single-slide")} data-order="3">
+                <div className={cx("single-slide")} data-order="2" ref={refOrther2}>
                     <img src={img_slide2} alt="2" />
                 </div>
-                <div className={cx("single-slide")} data-order="1">
+                <div className={cx("single-slide")} data-order="1" ref={refOrther1}>
                     <img src={img_slide1} alt="3" />
                 </div>
             </div>
@@ -73,7 +93,7 @@ function Discover() {
                         <NavLink to="vietnam" className={cx("navCountryItem", { "active": formatPathname() === '/discover/vietnam' })} id={cx("VN")}>VIỆT NAM</NavLink>
                         <NavLink to="thegioi" className={cx("navCountryItem", { "active": formatPathname() === '/discover/thegioi' })} id={cx("TG")}>THẾ GIỚI</NavLink>
                     </div>
-                    <li className={cx("showAll")} id={cx("showAll")}>
+                    <li className={cx("showAll", "mobile")} id={cx("showAll")}>
                         <NavLink to="/new-release/song/all" >
                             Tất cả
                             <FontAwesomeIcon icon={faAngleRight} style={{ marginLeft: "5px" }} />
@@ -81,7 +101,17 @@ function Discover() {
 
                     </li>
                 </ul>
-                {loading ? <Loader4Doc /> : <Outlet context={listSong} />}
+                {/* {loading ? <Loader4Doc /> : <Outlet context={listSong} />} */}
+                <Outlet context={{ listSong, loading }} />
+
+                <div className={cx("showAll_mobile")}>
+                    <NavLink to="/new-release/song/all" >
+                        <Button sx={{ color: "white" }} variant="outlined">
+                            Hiện tất cả
+                        </Button>
+                    </NavLink>
+                </div>
+
 
             </div >
             <div className={cx("topSong")} id={cx("outStanding")}>

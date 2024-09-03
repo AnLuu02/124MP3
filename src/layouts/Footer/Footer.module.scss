@@ -269,75 +269,141 @@
         }
     }
 
-
-
-
     .sliderMusic {
         width: 600px;
         font-size: 12px;
         opacity: 0.7;
+
+        .slider {
+            width: 90%;
+            height: 4px;
+            position: relative;
+            background-color: white;
+            border-radius: 10px;
+            margin: 0 6px;
+            z-index: -1;
+
+            .progressColor {
+                position: absolute;
+                top: 0;
+                height: 4px;
+                left: 0;
+                right: 50%;
+                background-color: #1b2051;
+                transition: 0.1s;
+
+                &::before {
+                    content: '';
+                    width: 10px;
+                    height: 10px;
+                    background-color: #1b2051;
+                    position: absolute;
+                    top: -3px;
+                    right: -10px;
+                    border-radius: 50%;
+                    opacity: 0;
+                }
+            }
+
+
+            .progress {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                -webkit-appearance: none;
+                height: 8px;
+                background: transparent;
+                outline: none;
+                opacity: 0.7;
+                -webkit-transition: 0.2s;
+                transition: opacity 0.2s;
+                z-index: 1;
+                cursor: pointer;
+
+                &::-webkit-slider-thumb {
+                    -webkit-appearance: none;
+                    appearance: none;
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 50%;
+                    cursor: pointer;
+                }
+
+                &:hover~.progressColor::before {
+                    opacity: 1;
+                }
+
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .musicFixed {
+        flex-direction: column;
+        height: max-content;
+
+        .leftMusicFixed {
+            max-width: unset;
+        }
+
+        .leftMusicFixed,
+        .centerMusicFixed,
+        .rightMusicFixed {
+            margin: 0;
+            padding: 0;
+            width: 100% !important;
+            position: relative;
+            margin: 20px 0;
+            padding: 0 20px;
+
+        }
+
+
+
+        .centerMusicFixed {}
+
+        .rightMusicFixed {
+            justify-content: center;
+        }
     }
 
-    .progress:hover~.progressColor::before {
-        opacity: 1;
+}
+
+@media screen and (max-width: 1200px) {
+    .musicFixed {
+        flex-wrap: wrap;
+        height: max-content;
+
+        .leftMusicFixed,
+        .centerMusicFixed,
+        .rightMusicFixed {
+            position: unset;
+        }
+
+        .leftMusicFixed {
+            max-width: unset;
+            width: 50%;
+
+            flex: 0 0 50%;
+            order: 2;
+        }
+
+        .centerMusicFixed {
+            flex: 0 0 100%;
+            width: 100%;
+            order: 1;
+            padding: 0 50px;
+            margin-bottom: 30px;
+
+        }
+
+        .rightMusicFixed {
+            width: 50%;
+            flex: 0 0 50%;
+            order: 3;
+
+        }
     }
-
-
-    .sliderMusic .slider {
-        width: 90%;
-        height: 4px;
-        position: relative;
-        background-color: white;
-        border-radius: 10px;
-        margin: 0 6px;
-        z-index: -1;
-    }
-
-    .progressColor {
-        position: absolute;
-        top: 0;
-        height: 4px;
-        left: 0;
-        right: 50%;
-        background-color: #1b2051;
-        transition: 0.1s;
-    }
-
-    .progressColor::before {
-        content: '';
-        width: 10px;
-        height: 10px;
-        background-color: #1b2051;
-        position: absolute;
-        top: -3px;
-        right: -10px;
-        border-radius: 50%;
-        opacity: 0;
-    }
-
-    .progress {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        -webkit-appearance: none;
-        height: 8px;
-        background: transparent;
-        outline: none;
-        opacity: 0.7;
-        -webkit-transition: 0.2s;
-        transition: opacity 0.2s;
-        z-index: 1;
-        cursor: pointer;
-    }
-
-    .progress::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        appearance: none;
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        cursor: pointer;
-    }
-
 }

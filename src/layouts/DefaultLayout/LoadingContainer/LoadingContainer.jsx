@@ -9,7 +9,7 @@ export default function LoadingContainer() {
         <div className={cx("wrapper")}>
             <div className={cx("box")}>
                 <div className={cx("doc_container")}>
-                    <Logo />
+                    <Logo notMobile={true} />
                 </div>
                 <Loader4Doc />
             </div>

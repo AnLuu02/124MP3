@@ -2,25 +2,23 @@ import { faArrowRightToBracket, faArrowUpFromBracket, faBan } from '@fortawesome
 import Tippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
-import { forwardRef, useEffect } from "react";
+import { forwardRef } from "react";
 import { useSelector } from 'react-redux';
-import stylesSong from "../../Song/Song.module.scss";
-import stylesSongFull from "../../SongFull/SongFull.module.scss";
+import stylesSong from "../../SongItem/Song/Song.module.scss";
+import stylesSongOptions from "../../SongItem/SongOptions/SongOptions.module.scss";
 import { logout } from '../../store/userReducer';
 import HeaderInfo from "./HeaderInfo";
 import styles from './MenuInfo.module.scss';
 import MenuItemInfo from './MenuItemInfo';
 
 const cx = classNames.bind(styles);
-const cxSongFull = classNames.bind(stylesSongFull);
+const cxSongFull = classNames.bind(stylesSongOptions);
 const cxSong = classNames.bind(stylesSong);
 const MenuInfo = forwardRef(
     function MenuInfo({ children }, ref) {
         const isLogin = useSelector(state => state.user.isLogin);
-        const user = useSelector(state => state.user.user);
-        useEffect(() => {
-            console.log("User: ", user)
-        })
+        // const user = useSelector(state => state.user.user);
+
         const renderResult = (attrs) => (
             <div className={cx('menu-list')} tabIndex="-1" {...attrs}>
                 <div className={cx('wrapper', 'menu-popper')}>

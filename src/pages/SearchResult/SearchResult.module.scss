@@ -1,9 +1,8 @@
 .searchResult {
     width: 100%;
     color: white !important;
-    margin-top: -20px;
-
     overflow: hidden;
+
 
     ul {
         padding: 0;
@@ -13,6 +12,14 @@
         display: flex;
         align-items: center;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+        .menuMobile {
+            float: right;
+            width: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
 
         h2 {
             flex-shrink: 0;
@@ -60,6 +67,16 @@
         }
     }
 
+    .keySearchValue {
+        width: max-content;
+        color: #A0A0A0;
+        font-size: 18px;
+        font-size: bold;
+        margin: 20px 0 0 0;
+        border: 1px solid #A0A0A0;
+        padding: 10px;
+    }
+
     .searchBody {
         margin-top: 40px;
 
@@ -88,8 +105,6 @@
                     position: relative;
                 }
             }
-
-
         }
 
 
@@ -135,3 +150,122 @@
         }
     }
 }
+
+@media screen and (max-width: 480px) {
+    .searchResult {
+        margin-top: 70px;
+
+        .navSearch.mobile {
+            display: none;
+        }
+
+        .hotSong {
+            .list_music {
+                .custom {
+                    width: 100% !important;
+                    margin: 4px;
+                }
+            }
+        }
+
+        .songResult {
+            .listSong {
+                .custom {
+                    width: 100% !important;
+                    margin: 4px;
+                }
+
+
+            }
+        }
+
+        .searchHeader {
+            .menuMobile {
+                display: flex;
+            }
+
+            h2 {
+                width: 66.66%;
+                font-size: 20px !important;
+
+
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+
+    .searchResult {
+        margin-top: 50px;
+
+        .hotSong {
+            .list_music {
+                .custom {
+                    width: 49% !important;
+                    margin: 4px 0;
+                }
+            }
+        }
+
+        .navSearch {
+
+            .navItem {
+                font-size: 13px;
+            }
+        }
+    }
+
+}
+
+@media screen and (min-width: 769px) and (max-width: 1023px) {
+    .searchResult {
+        margin-top: 50px;
+
+        .hotSong {
+            .list_music {
+                .custom {
+                    width: 49% !important;
+                    margin: 4px 0;
+                }
+            }
+        }
+
+        .navSearch {
+
+            .navItem {
+                font-size: 14px;
+            }
+        }
+    }
+}
+
+
+@media screen and (min-width: 1024px) and (max-width: 1200px) {
+    .searchResult {
+        margin-top: 50px;
+
+        .hotSong {
+            .list_music {
+                .custom {
+                    width: 49% !important;
+                    margin: 4px 0;
+                }
+            }
+        }
+
+        .navSearch {
+
+            .navItem {
+                font-size: 14px;
+            }
+        }
+    }
+}
+
+
+
+
+
+
+@media screen and (min-width: 1300px) {}

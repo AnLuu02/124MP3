@@ -12,6 +12,9 @@ function NavItem({ isAuth = false, to, title, iconSvg = null, iconFontAwesome = 
     const isLoggedIn = useSelector(state => state.user.isLogin);
     const icon = (iconSvg) ? iconSvg : iconFontAwesome;
     const ProtectedNavLinkComponent = isAuth ? ProtectedNavLink : NavLink
+    const song = useSelector(state => state.song.song);
+
+    const isShowSidebar = useSelector(state => state.mobile.isShowSidebar);
     function RequiredComponent({ children }) {
         if (isAuth) {
             return <Required
@@ -26,26 +29,39 @@ function NavItem({ isAuth = false, to, title, iconSvg = null, iconFontAwesome = 
         return <Fragment>{children}</Fragment>
     }
 
+    const handleActiveNav = () => {
+        return location.pathname === to || (to != "/" && location.pathname.startsWith(to))
+    }
+
     return (
         <RequiredComponent>
-            <li className={cx(className)} onClick={onClick}>
-                <ProtectedNavLinkComponent to={to} className={cx("nav_item", { "active": location.pathname === to })}>
+            <li className={cx("navItem", className, { "active": song.name ? true : false }, isShowSidebar ? "showFullSidebar" : "")} onClick={onClick}>
+                <ProtectedNavLinkComponent to={to} className={cx("nav_item", { "active": handleActiveNav() })}>
                     {icon}
-                    <div> {title}</div>
+                    <div className={cx("title")}> {title}</div>
                 </ProtectedNavLinkComponent>
             </li>
         </RequiredComponent>
     );
 }
+
 NavItem.propTypes = {
     isAuth: PropTypes.bool,
-    className: PropTypes.string,
-    to: PropTypes.string,
-    title: PropTypes.string,
+    className: PropTypes.object,
+    to: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
     iconSvg: PropTypes.node,
     iconFontAwesome: PropTypes.node,
     onClick: PropTypes.func,
     children: PropTypes.node
-}
+};
+
+NavItem.defaultProps = {
+    isAuth: false,
+    iconSvg: null,
+    iconFontAwesome: null,
+    className: null,
+    onClick: () => { },
+};
 
 export default NavItem
