@@ -38,8 +38,12 @@
             cursor: pointer;
         }
 
+
     }
 
+    ul.artistLibraryCared {
+        margin-bottom: 30px;
+    }
 
     .navCountry {
         padding: 0;
@@ -97,6 +101,7 @@
     ul.listPlaylist {
         padding: 0;
         width: 100%;
+        min-height: 70px;
         display: flex !important;
         overflow: hidden !important;
         flex-wrap: wrap;

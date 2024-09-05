@@ -1,0 +1,116 @@
+.mp3Chart {
+    color: white;
+    overflow: hidden;
+
+    .randomSong {
+        cursor: pointer;
+        margin-left: 10px;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #090b1e;
+        background-color: white;
+        border-radius: 50%;
+        margin-left: 18px;
+        cursor: pointer;
+
+        .icon {
+            margin: 0;
+            padding: 0;
+            font-size: 16px;
+        }
+    }
+
+    .randomSong:hover {
+        opacity: .7;
+    }
+
+    .listSong {
+        min-height: 500px;
+
+        ul {
+            padding: 0;
+        }
+    }
+
+    .title {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+
+        h3 {
+            width: max-content;
+            font-size: 36px;
+            font-weight: bold;
+            background: linear-gradient(to right, #d14444, #7a5bd1, #d572a8);
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+
+        &.mobile {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+
+            h2 {
+                font-size: 21px;
+            }
+
+            .randomSong {
+                margin: 15px 0;
+            }
+
+            .btn {
+                padding: 6px 20px;
+                border-radius: 20px;
+                border: 1px solid;
+                border-color: #fff !important;
+                transition: 0.1s;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                margin: 15px 0;
+
+                .btnLogin {
+                    color: white !important;
+                    all: unset;
+                    margin-left: 10px;
+                }
+            }
+
+        }
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .mp3Chart {
+        margin-top: 70px;
+
+        .title {
+            &:not(.mobile) {
+                display: none !important;
+            }
+
+            &.mobile {
+                display: flex !important;
+            }
+        }
+
+        .listSong {
+            ul {}
+        }
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 1024px) {}
+
+@media screen and (min-width: 1025px) {
+    .mp3Chart {
+        margin-top: 20px;
+    }
+}

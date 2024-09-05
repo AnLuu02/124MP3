@@ -58,6 +58,11 @@
             width: 240px !important;
             z-index: 200;
         }
+
+        &.isSong {
+            min-height: unset;
+            height: calc(100vh - 192px) !important;
+        }
     }
 
     .overlay {
@@ -71,6 +76,17 @@
             display: block;
         }
     }
+
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1036px) {
+    .wrapper {
+        &.isSong {
+            min-height: unset;
+            height: calc(100vh - 192px) !important;
+        }
+    }
+
 
 }
 

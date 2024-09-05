@@ -18,8 +18,7 @@ export default function CreatePlaylist() {
     const user = useSelector(state => state.user.user);
     const inputRef = useRef();
     const dispatch = useDispatch();
-    const onHideModal = (e) => {
-        e.stopPropagation();
+    const onHideModal = () => {
         dispatch(handleHideModal());
     }
 

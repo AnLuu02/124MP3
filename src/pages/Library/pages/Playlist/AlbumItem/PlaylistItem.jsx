@@ -5,6 +5,7 @@ import { deleteDoc, doc } from "firebase/firestore";
 import PropTypes from 'prop-types';
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import album_default from "../../../../../../public/images/album_default.png";
 import AlertDialog from '../../../../../components/AlertDialog/AlertDialog';
 import { db } from "../../../../../components/FireBase/firebaseConfig";
@@ -12,6 +13,8 @@ import { notifyError, notifySuccess } from "../../../../../utils/toastifyMessage
 import styles from "./PlaylistItem.module.scss";
 
 const cx = classNames.bind(styles);
+
+
 
 function PlaylistItem({ playlist }) {
     const user = useSelector(state => state.user.user);
@@ -43,13 +46,25 @@ function PlaylistItem({ playlist }) {
     //         setError('Error fetching document: ' + err.message);
     //     }
     // };
+
+    const navigate = useNavigate();
+    const handleDeletePlaylist = (e) => {
+        e.stopPropagation();
+        setShowDialog(true);
+    };
+    const handleClickPlaylist = () => {
+        navigate(`/playlist/${playlist?.id}`);
+    }
+    const handleClickIconPlayPlaylist = (e) => {
+        e.stopPropagation();
+    }
     return (
         <>
             <li className={cx("playlistItem")} >
-                <div className={cx("content")}>
+                <div className={cx("content")} onClick={handleClickPlaylist}>
                     <div className={cx("hoverWidgetItem")}>
-                        <FontAwesomeIcon className={cx("iconWidget")} icon={faClose} onClick={() => setShowDialog(true)} />
-                        <FontAwesomeIcon className={cx("iconWidget")} icon={faPlay} />
+                        <FontAwesomeIcon className={cx("iconWidget")} icon={faClose} onClick={handleDeletePlaylist} />
+                        <FontAwesomeIcon className={cx("iconWidget")} icon={faPlay} onClick={handleClickIconPlayPlaylist} />
                         <FontAwesomeIcon className={cx("iconWidget")} icon={faHeart} />
                     </div>
                     <img src={album_default} alt="" />
@@ -58,6 +73,7 @@ function PlaylistItem({ playlist }) {
                 <div className={cx("author")}>{user?.displayName}</div>
             </li>
             <AlertDialog
+                key={playlist?.id}
                 content={{ title: "Delete", description: "Are you sure to delete this playlist?" }}
                 open={showDialog}
                 onClose={() => setShowDialog(false)}

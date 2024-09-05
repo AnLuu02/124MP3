@@ -143,13 +143,30 @@ span.line {
             height: unset !important;
             height: calc(100vh - 350px) !important;
             overflow: scroll !important;
+
+            &.isSong {
+                height: calc(100vh - 350px) !important;
+
+            }
         }
     }
 
 }
 
 
-@media screen and (min-width: 481px) and (max-width: 1023px) {
+@media screen and (min-width: 481px) and (max-width: 767px) {
+    .yeucaulogin.mobile {
+        display: none;
+    }
+
+    .create_playlist.mobile {
+        display: flex !important;
+        bottom: 192px;
+    }
+
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
     .yeucaulogin.mobile {
         display: none;
     }
@@ -157,6 +174,7 @@ span.line {
 
     .create_playlist.mobile {
         display: flex !important;
+        bottom: 0;
     }
 
 }

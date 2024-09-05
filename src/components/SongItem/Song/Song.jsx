@@ -22,7 +22,7 @@ function Song({ songId, indexSong, dataSong, classNames }) {
     const refBoxOptions = useRef();
     const refSong = useRef();
 
-    const handleMusic = s => {
+    const handleSong = s => {
         dispatch(playSong({ song: s, indexSong: indexSong }));
     }
 
@@ -61,7 +61,7 @@ function Song({ songId, indexSong, dataSong, classNames }) {
                                     isPlay && songId == song.id ? "active" : "pause"
                                 )
                             }
-                            onClick={() => handleMusic(dataSong)} >
+                            onClick={() => handleSong(dataSong)} >
                             <FontAwesomeIcon className={cx("iconSong")} icon={faPlay} />
                         </div>
                         <AudioRun isPlay={isPlay} songId={songId} currentSongId={song.id} />

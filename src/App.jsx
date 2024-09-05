@@ -43,6 +43,7 @@ import MvLibrary from './pages/Library/components/MvLibrary/MvLibrary.jsx';
 import SongLibrary from './pages/Library/components/SongLibrary/SongLibrary.jsx';
 import HeardRecently from './pages/Library/pages/HeardRecently/HeardRecently.jsx';
 import Playlist from './pages/Library/pages/Playlist/Playlist.jsx';
+import Mp3Chart from './pages/Mp3Chart/Mp3Chart.jsx';
 import NewRelease from './pages/New-release/NewRelease.jsx';
 import AlbumNewRelease from './pages/New-release/SubNewRelease/Album/AlbumNewRelease.jsx';
 import SongNewRelease from './pages/New-release/SubNewRelease/Song/SongNewRelease.jsx';
@@ -67,13 +68,13 @@ function App() {
             </Route>
           </Route>
 
-          <Route path="/album" element={<DefaultLayout><DetailSong /></DefaultLayout>}>
+          {/*detail*/}
+          <Route path="/album/:filter" element={<DefaultLayout><DetailSong /></DefaultLayout>}></Route>
+          <Route path="/playlist/:filter" element={<DefaultLayout><DetailSong /></DefaultLayout>}></Route>
 
-          </Route>
+
 
           <Route path="/artist/:artist" element={<DefaultLayout><Artist /></DefaultLayout>}></Route>
-
-
 
           <Route path="/discover" element={<DefaultLayout>< Discover /></DefaultLayout>}>
             <Route path="" element={<SongDiscover />}></Route>
@@ -90,11 +91,7 @@ function App() {
 
 
             <Route path="/library/album" element={<AlbumLibrary />}> </Route>
-
-
             <Route path="/library/mv" element={<MvLibrary />}> </Route>
-
-
             <Route path="/library/history" element={<HeardRecently />}>
               <Route path="/library/history/:filter" element={<HeardRecently />}>
               </Route>
@@ -104,20 +101,16 @@ function App() {
             <Route path="/library/playlist" element={<Playlist />}>
               <Route path="/library/playlist/:filter" element={<Playlist />}></Route>
             </Route>
-
-
           </Route>
 
+          <Route path="/mp3chart" element={<DefaultLayout><Mp3Chart /></DefaultLayout>}></Route>
 
 
           <Route path="/bxh" element={<DefaultLayout><BXH /></DefaultLayout>}></Route>
 
           <Route path="/chude" element={<DefaultLayout><Artist /></DefaultLayout>}></Route>
 
-
           <Route path="/top100" element={<DefaultLayout><Top /></DefaultLayout>}></Route>
-
-
 
           <Route path="/new-release" element={<DefaultLayout><NewRelease /></DefaultLayout>}>
             <Route path="/new-release/" element={<SongNewRelease />}>
@@ -130,8 +123,6 @@ function App() {
               <Route path="/new-release/album/:filter" element={<AlbumNewRelease />}></Route>
             </Route>
           </Route>
-
-
 
           <Route path="/tim-kiem/:filter" element={<DefaultLayout>< SearchResult /></DefaultLayout>}></Route>
           {/*page not found*/}

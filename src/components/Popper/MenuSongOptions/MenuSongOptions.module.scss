@@ -188,6 +188,39 @@ span {
 .menu {
     font-size: 13px;
 
+    ul.listPlaylist {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+
+        li {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            font-size: 14px;
+            padding: 6px 14px;
+            transition: 0.1s;
+
+            .icon {
+                margin-right: 10px;
+            }
+
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+                cursor: pointer;
+            }
+
+            .title {
+                width: 80%;
+                white-space: nowrap;
+                max-lines: 1;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+        }
+    }
+
     .menu-item {
         display: flex;
         align-items: center;

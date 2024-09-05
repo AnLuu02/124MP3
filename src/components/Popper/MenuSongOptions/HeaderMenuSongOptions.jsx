@@ -5,6 +5,7 @@ import Tippy from "@tippyjs/react/headless";
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import avatar_default from '../../../../public/images/avata_default.jpg';
+import formatNumberToString from "../../../utils/formatNumberToString";
 import styles from './MenuSongOptions.module.scss';
 const cx = classNames.bind(styles);
 
@@ -38,21 +39,21 @@ function HeaderMenuSongOptions({ valueMenu }) {
         >
             <header className={cx('header')}>
                 <div className={cx("song-info")}>
-                    <img src={valueMenu.thumbnailUrl ?? avatar_default} />
+                    <img src={valueMenu?.thumbnailUrl ?? avatar_default} />
                     <div className={cx("song-content")}>
                         <div className={cx("song-name")}>
-                            {valueMenu && valueMenu.name}
+                            {valueMenu && valueMenu?.name}
                         </div>
 
                         <div className={cx("des-song")}>
                             <div className={cx("like-song")}>
                                 <FontAwesomeIcon className={cx("icon")} icon={faHeart} />
-                                <span>900</span>
+                                <span>{valueMenu?.like_count ? formatNumberToString(valueMenu?.like_count) : "900"}</span>
 
                             </div>
                             <div className={cx("like-song")}>
                                 <FontAwesomeIcon className={cx("icon")} icon={faHeadphones} />
-                                <span>11k</span>
+                                <span>{valueMenu?.listens ? formatNumberToString(valueMenu?.listens) : "900"}</span>
 
                             </div>
                         </div>

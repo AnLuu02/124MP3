@@ -40,7 +40,7 @@ function Artist() {
     }, [params.artist])
 
     useEffect(() => {
-        get(`artist?limit=10`)
+        get(`artist?limit=10&except=${params.artist}`)
             .then((data) => {
                 if (data) {
                     setArtistSuggest(data);
@@ -70,7 +70,7 @@ function Artist() {
         return des;
     }
     const showAllDes = () => {
-        dispatch(handleShowModal("MODAL_SHOW_ALL_DESCRIPTION_ARTIST", artist));
+        dispatch(handleShowModal("SHOW_ALL_DESCRIPTION_ARTIST", artist));
     }
     return (
         <div className={cx("view_artist", song.name ? "hasBottomMusicFixed" : "")}>

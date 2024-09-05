@@ -9,6 +9,7 @@ const cx = classNames.bind(styles);
 function Sidebar() {
     const dispatch = useDispatch();
     const isShowSidebar = useSelector(state => state.mobile.isShowSidebar);
+    const song = useSelector(state => state.song.song);
 
     const handleHideSidebar = () => {
         dispatch(setStateSidebar(false));
@@ -16,7 +17,7 @@ function Sidebar() {
 
     return (
         <>
-            <div className={cx("wrapper", isShowSidebar ? "active" : "")}>
+            <div className={cx("wrapper", isShowSidebar ? "active" : "", song?.name ? "isSong" : "")}>
                 <Logo />
                 <Nav />
             </div>

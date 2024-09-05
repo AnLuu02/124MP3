@@ -105,18 +105,42 @@ function Search() {
                                 <div className={cx("titleSearch")}>Đề xuất cho bạn</div>}
 
                             <ul className={cx("music")}>
-                                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].map((item, index) => {
-                                    return (
-                                        <NavLink key={index} to={`/tim-kiem/tat-ca?q=nhạc tết`} style={{ color: "#fff" }}
-                                        >
-                                            <li>
-                                                <FontAwesomeIcon className={cx("icon")} icon={faArrowTrendUp} />
-                                                nhạc tết {item}
-                                            </li>
-
-                                        </NavLink>
-                                    )
-                                })}
+                                <NavLink key={1} to={`/tim-kiem/tat-ca?q=nhạc tết`} style={{ color: "#fff" }} >
+                                    <li>
+                                        <FontAwesomeIcon className={cx("icon")} icon={faArrowTrendUp} />
+                                        anh trai say hi
+                                    </li>
+                                </NavLink>
+                                <NavLink key={2} to={`/tim-kiem/tat-ca?q=nhạc tết`} style={{ color: "#fff" }} >
+                                    <li>
+                                        <FontAwesomeIcon className={cx("icon")} icon={faArrowTrendUp} />
+                                        anh trai vượt ngàn chông gai
+                                    </li>
+                                </NavLink>
+                                <NavLink key={3} to={`/tim-kiem/tat-ca?q=nhạc tết`} style={{ color: "#fff" }} >
+                                    <li>
+                                        <FontAwesomeIcon className={cx("icon")} icon={faArrowTrendUp} />
+                                        là tại anh sai
+                                    </li>
+                                </NavLink>
+                                <NavLink key={4} to={`/tim-kiem/tat-ca?q=nhạc tết`} style={{ color: "#fff" }} >
+                                    <li>
+                                        <FontAwesomeIcon className={cx("icon")} icon={faArrowTrendUp} />
+                                        vừa hận vừa yêu
+                                    </li>
+                                </NavLink>
+                                <NavLink key={5} to={`/tim-kiem/tat-ca?q=nhạc tết`} style={{ color: "#fff" }} >
+                                    <li>
+                                        <FontAwesomeIcon className={cx("icon")} icon={faArrowTrendUp} />
+                                        mộng yu
+                                    </li>
+                                </NavLink>
+                                <NavLink key={6} to={`/tim-kiem/tat-ca?q=nhạc tết`} style={{ color: "#fff" }} >
+                                    <li>
+                                        <FontAwesomeIcon className={cx("icon")} icon={faArrowTrendUp} />
+                                        #124Mp3chart
+                                    </li>
+                                </NavLink>
                                 {/* {searchValue
                     ?
                     <li>

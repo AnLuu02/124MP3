@@ -33,7 +33,7 @@ li.navItem {
 
     &.nav_playlist {
         position: absolute;
-        bottom: 0;
+        bottom: 0 !important;
         background-color: #1b2039;
         border-top: 1px solid rgba(256, 256, 256, .2) !important;
 
@@ -53,6 +53,14 @@ li.navItem {
         padding-right: 0 !important;
         margin-left: -20px;
         padding-left: 0;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    li.navItem {
+        &.nav_playlist.active {
+            bottom: 0 !important;
+        }
     }
 }
 
@@ -98,4 +106,14 @@ li.navItem {
 
 }
 
-@media screen and (max-width: 480px) {}
+
+
+
+
+@media screen and (min-width: 481px) and (max-width: 1200px) {
+    li.navItem {
+        &.nav_playlist.active {
+            bottom: 0 !important;
+        }
+    }
+}

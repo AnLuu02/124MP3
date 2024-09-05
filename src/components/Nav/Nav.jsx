@@ -14,7 +14,7 @@ function Nav() {
     const song = useSelector(state => state.song.song);
     const dispatch = useDispatch();
     const onShowModal = () => {
-        dispatch(handleShowModal("MODAL_CREATE_PLAYLIST"));
+        dispatch(handleShowModal("CREATE_PLAYLIST"));
     }
 
 
@@ -75,9 +75,9 @@ function Nav() {
                 />
 
                 <NavItem
-                    key={'zingchart'}
-                    to="/zingchart"
-                    title="ZingChart"
+                    key={'mp3chart'}
+                    to="/mp3chart"
+                    title="#Mp3Chart"
                     onClick={handleHideSidebar}
                     iconSvg={
                         <div className={cx("icon")} >

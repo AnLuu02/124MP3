@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CreatePlaylist from "../../components/Modal/ModalCreatePlaylist/CreatePlaylist.jsx";
-import ModalShowDesciptionArtist from "../../components/Modal/ModalShowDesciptionArtist/ModalShowDesciptionArtist.jsx";
+import ModalShowDescriptionArtist from "../../components/Modal/ModalShowDescriptionArtist/ModalShowDescriptionArtist.jsx";
 import PrivateRoute from "../../components/PrivateRoute/PrivateRoute.jsx";
 import Video from "../../components/Video/Video.jsx";
 import { endedSong, playSong, timeUpdateSong } from "../../components/store/songReducer.js";
@@ -32,6 +32,15 @@ function DefaultLayout({ children }) {
 
 
     useEffect(() => {
+        if (song?.name && isPlay) {
+            document.title = `${song?.name} - ${song?.artist?.[0]?.name}${", " + song?.artist?.[1]?.name}`
+        }
+        else {
+            document.title = "124Mp3 - Nghe nhạc HOT, miễn phí"
+        }
+    }, [isPlay, song?.name]);
+
+    useEffect(() => {
         var timer = setTimeout(() => {
             setLoading(false)
         }, 1000)
@@ -39,6 +48,8 @@ function DefaultLayout({ children }) {
             clearTimeout(timer);
         }
     }, [])
+
+
 
 
     useEffect(() => {
@@ -84,7 +95,7 @@ function DefaultLayout({ children }) {
             case "CREATE_PLAYLIST":
                 return <CreatePlaylist />;
             case "SHOW_ALL_DESCRIPTION_ARTIST":
-                return <ModalShowDesciptionArtist objData={objData} />;
+                return <ModalShowDescriptionArtist objData={objData} />;
             default:
                 return null;
         }

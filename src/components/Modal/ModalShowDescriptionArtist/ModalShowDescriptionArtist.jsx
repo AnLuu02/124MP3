@@ -4,10 +4,10 @@ import classNames from "classnames/bind";
 import PropTypes from 'prop-types';
 import { useDispatch } from "react-redux";
 import { handleHideModal } from "../../store/ModalReducer/modalReducer";
-import styles from "./ModalShowDesciptionArtist.module.scss";
+import styles from "./ModalShowDescriptionArtist.module.scss";
 const cx = classNames.bind(styles);
 
-function ModalShowDesciptionArtist({ objData }) {
+function ModalShowDescriptionArtist({ objData }) {
     const dispatch = useDispatch();
     const onHideModal = () => {
         dispatch(handleHideModal());
@@ -30,7 +30,7 @@ function ModalShowDesciptionArtist({ objData }) {
     )
 }
 
-ModalShowDesciptionArtist.PropTypes = {
+ModalShowDescriptionArtist.PropTypes = {
     objData: PropTypes.object
 }
-export default ModalShowDesciptionArtist;
+export default ModalShowDescriptionArtist;

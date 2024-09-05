@@ -1,17 +1,24 @@
-import { faBackwardStep, faCompactDisc, faForwardStep, faHeadphones, faHeart, faIcons, faMicrophone, faPause, faPlay, faPlus, faRepeat, faShuffle, faVolumeHigh, faVolumeMute } from "@fortawesome/free-solid-svg-icons";
+import { faBackwardStep, faCompactDisc, faEllipsis, faForwardStep, faHeadphones, faMicrophone, faPause, faPlay, faRepeat, faShuffle, faVolumeHigh, faVolumeMute } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from "classnames/bind";
-import { useCallback, useEffect, useRef } from "react";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import avatar_default from "../../../public/images/avata_default.jpg";
+import { db } from "../../components/FireBase/firebaseConfig";
+import MenuSongOptions from "../../components/Popper/MenuSongOptions/MenuSongOptions";
+import AudioRun from "../../components/SongItem/AudioRun/AudioRun";
 import RenderArtist from "../../components/SongItem/RenderArtist/RenderArtist";
 import { changeVolume, minuteTimeSong, nextSong, pauseSong, playSong, prevSong, randomSong, repeatSong, secondTimeSong, timeProgress, timeUpdateSong } from "../../components/store/songReducer";
-import CustomizedMenus from "../../pages/SearchResult/Mobile/Menu";
+import { notifyError, notifySuccess } from "../../utils/toastifyMessage";
 import styles from "./Footer.module.scss";
 const cx = classNames.bind(styles);
 
 function Footer() {
+    const [playlists, setPlaylists] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [zoomOut, setZoomOut] = useState(false);
     const progressRef = useRef();
     const progressColorRef = useRef();
     const progressColorVolumeRef = useRef();
@@ -30,7 +37,7 @@ function Footer() {
     const timeProgressSong = useSelector(timeProgress);
     const secondTimeSongCur = useSelector(secondTimeSong);
     const minuteTimeSongCur = useSelector(minuteTimeSong);
-
+    const user = useSelector(state => state.user.user)
     useEffect(() => {
         if (progressRef.current) {
             progressRef.current.value = timeProgressSong;
@@ -104,32 +111,78 @@ function Footer() {
         progressColorVolumeRef.current.style.right = (1 - volumeVal) * 100 + '%';
     }, [disPatch]);
 
-    const handleDetailsSong = useCallback((song) => {
+    const handleGetPlaylist = () => {
+        const getAllPlaylist = async () => {
+            if (user?.uid) {
+                const q = query(collection(db, 'playlistCollection'), where('userId', '==', user.uid));
+                try {
+                    const querySnapshot = await getDocs(q);
+                    const documents = [];
+                    querySnapshot.forEach((doc) => {
+                        documents.push({ id: doc.id, ...doc.data() });
+                    });
+                    setPlaylists(documents);
+                    notifySuccess({ message: "Lấy danh sách playlist thành công!" });
+                } catch (e) {
+                    console.error('Error getting documents:', e);
+                } finally {
+                    setLoading(false);
+                }
+            } else {
+                notifyError({ message: "Đăng nhập để tiếp tục!" });
+            }
+        };
 
-    })
+        getAllPlaylist();
+    }
+
+    const handleZoom = () => {
+        setZoomOut(!zoomOut);
+    }
+
     return (
         <>
             <footer className={cx("footer")}>
                 <span>Copyright © 2023<a href="https://www.facebook.com/anluu099/"> Design and Code By An.</a> Tham khảo thoải mái 😄 </span>
             </footer>
 
-            <div className={cx("musicFixed", isPlay || song.id ? "active" : "")}>
+            <div className={cx("musicFixed", isPlay || song.id ? "active" : "", zoomOut ? "zoomOut" : "")} >
                 <div className={cx("leftMusicFixed")}>
-                    <NavLink to={`/album`}>
-                        <img src={song.thumbnailUrl ?? avatar_default} alt="" onClick={() => handleDetailsSong(song)} />
+                    <NavLink to={`/album/noi-bat`}>
+                        <div className={cx("imgMusicFixed", isPlay && zoomOut ? "zoomOut" : "")}>
+                            <img src={song.thumbnailUrl ?? avatar_default} alt="" />
+                            {isPlay && zoomOut && <AudioRun isPlay={isPlay} songId={song.id} currentSongId={song.id} />}
+                        </div>
                     </NavLink>
                     <div className={cx("desMusicFixed")}>
                         <div className={cx("nameMusicFixed")}><a>{song.name}</a></div>
-                        <RenderArtist dataArtist={song.artist} />
+                        <RenderArtist classNames={cx("nameArtistFixed")} dataArtist={song.artist} />
 
                     </div>
                     <div className={cx("AnotherChoiceFixed")}>
-                        <CustomizedMenus />
-                        <div className={cx("addLibrary")} id={cx("addLibrary")}>
-                            <FontAwesomeIcon className={cx("iconFixed")} icon={faHeart} />
+                        <div className={cx("icon")}>
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                height="20px"
+                                viewBox="0 -960 960 960"
+                                width="20px"
+                                fill="#e8eaed">
+                                <path
+                                    d="m480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Zm0-108q96-86 158-147.5t98-107q36-45.5 50-81t14-70.5q0-60-40-100t-100-40q-47 0-87 26.5T518-680h-76q-15-41-55-67.5T300-774q-60 0-100 40t-40 100q0 35 14 70.5t50 81q36 45.5 98 107T480-228Zm0-273Z" />
+                            </svg>
                         </div>
-                        <div className={cx("addPlaylist")} id={cx("addPlaylist")}>
-                            <FontAwesomeIcon className={cx("iconFixed")} icon={faPlus} />
+                        {/* <CustomizedMenus mainIcon={faHeart} /> */}
+                        <MenuSongOptions valueMenu={song} ref={[null, null]} placement={"top-end"}>
+                            <div className={cx("icon")} >
+                                <FontAwesomeIcon className={cx("iconFixed")} icon={faEllipsis} />
+
+                            </div>
+                        </MenuSongOptions>
+                        {/* <div className={cx("icon")} >
+                            <FontAwesomeIcon className={cx("iconFixed")} icon={faEllipsis} />
+
+                        </div> */}
+                        <div className={cx("iconZoomIn", { "active": !zoomOut })} onClick={handleZoom}>
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M120-120v-240h80v104l124-124 56 56-124 124h104v80H120Zm480 0v-80h104L580-324l56-56 124 124v-104h80v240H600ZM324-580 200-704v104h-80v-240h240v80H256l124 124-56 56Zm312 0-56-56 124-124H600v-80h240v240h-80v-104L636-580Z" /></svg>
                         </div>
                     </div>
 
@@ -184,8 +237,10 @@ function Footer() {
                         </div>
                     </div>
                     <div className={cx("line")}></div>
-                    <div className={cx("btn_run_listPlaymusic")}>
-                        <FontAwesomeIcon className={cx("iconFixed")} icon={faIcons} />
+                    <div className={cx("iconZoomOut")} onClick={handleZoom}>
+                        {/* <FontAwesomeIcon className={cx("iconFixed")} icon={faExpand} /> */}
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m156-100-56-56 124-124H120v-80h240v240h-80v-104L156-100Zm648 0L680-224v104h-80v-240h240v80H736l124 124-56 56ZM120-600v-80h104L100-804l56-56 124 124v-104h80v240H120Zm480 0v-240h80v104l124-124 56 56-124 124h104v80H600Z" /></svg>
+
                     </div>
                 </div>
             </div>

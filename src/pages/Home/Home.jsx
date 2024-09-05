@@ -10,7 +10,10 @@ const cx = classNames.bind(styles);
 
 function Home() {
     const [showBanner, setShowBanner] = useState(false);
-    const [topSong, setTopSong] = useState([]);
+    const [outStandingSong, setOutStandingSong] = useState([]);
+    const [trendingSong, setTrendingSong] = useState([]);
+
+
     const { pathname } = useLocation();
     useEffect(() => {
         const handleResizeWindow = () => {
@@ -27,7 +30,10 @@ function Home() {
 
     useEffect(() => {
         get("musics?top=5")
-            .then(data => setTopSong(data))
+            .then(data => setOutStandingSong(data))
+            .catch(err => console.log(err))
+        get("musics?topStart=21&topEnd=25")
+            .then(data => setTrendingSong(data))
             .catch(err => console.log(err))
     }, [])
 
@@ -47,19 +53,17 @@ function Home() {
             <div className={cx("widget1", "widget")}>
                 <div className={cx("title")}>
                     Nổi bật
-
-                    <NavLink to={"/album"}>Hiện tất cả</NavLink>
+                    {/* <NavLink to={"/album/noi-bat"}>Hiện tất cả</NavLink> */}
                 </div>
-                {loading ? <Loader4Doc /> : <WidgetAlbum data={topSong} />}
-                <WidgetAlbum />
+                {loading ? <Loader4Doc /> : <WidgetAlbum data={outStandingSong} q={"noi-bat"} />}
             </div>
             <div className={cx("widget2", "widget")}>
                 <div className={cx("title")}>
                     Thịnh hành
-                    <NavLink to={"/album"}>Hiện tất cả</NavLink>
-
+                    {/* <NavLink to={"/album/thinh-hanh"}>Hiện tất cả</NavLink> */}
                 </div>
-                <WidgetAlbum />
+                {loading ? <Loader4Doc /> : <WidgetAlbum data={trendingSong} q={"thinh-hanh"} />}
+
 
             </div>
         </div>

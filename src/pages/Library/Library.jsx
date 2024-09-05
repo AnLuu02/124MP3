@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { db } from "../../components/FireBase/firebaseConfig";
+import LoadingText from "../../components/Loader1/LoadingText";
 import { handleShowModal } from "../../components/store/ModalReducer/modalReducer";
 import styles from "./Library.module.scss";
 import PlaylistItem from "./pages/Playlist/AlbumItem/PlaylistItem";
@@ -20,7 +21,7 @@ function Library() {
     const user = useSelector(state => state.user.user);
     const dispatch = useDispatch();
     const onShowModal = () => {
-        dispatch(handleShowModal("MODAL_CREATE_PLAYLIST"));
+        dispatch(handleShowModal("CREATE_PLAYLIST"));
     }
     const location = useLocation();
     if (location.pathname.includes("/history")
@@ -66,6 +67,8 @@ function Library() {
                 THƯ VIỆN
                 <FontAwesomeIcon className={cx("iconLibrary")} icon={faPlay} />
             </h1>
+            {/* <ul className={cx("music", "artistLibraryCared")}>
+            </ul> */}
             <ul className={cx("navCountry")}>
                 <h2 className={cx("headerLibraryH2")}>
                     <div>PLAYLIST</div>
@@ -85,7 +88,7 @@ function Library() {
             </ul>
             <ul className={cx("listPlaylist")}>
                 {
-                    loading ? <div>Loading...</div> : error ? <div>Error: {error.message}</div>
+                    loading ? <LoadingText /> : error ? <div>Error: {error.message}<LoadingText /></div>
                         : playlists.map((playlist) => {
                             return <PlaylistItem key={playlist.id} playlist={playlist} />
                         })}

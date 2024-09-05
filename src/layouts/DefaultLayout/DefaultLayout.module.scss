@@ -35,7 +35,8 @@
 
         &.hasMusicFixed {
             margin-bottom: 0;
-            margin-bottom: 278px !important;
+            margin-bottom: 288px !important;
+            // margin-bottom: 100px !important;
         }
     }
 }
@@ -60,6 +61,11 @@
 @media screen and (min-width: 1024px) and (max-width: 1200px) {
     .main_right {
         padding: 6% 24px 0px 24px !important;
+
+        &.hasMusicFixed {
+            margin-bottom: 0;
+            margin-bottom: 192px !important;
+        }
     }
 }
 

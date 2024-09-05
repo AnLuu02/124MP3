@@ -1,16 +1,24 @@
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames/bind";
-import { useDispatch } from "react-redux";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useLocation } from "react-router-dom";
+import { db } from "../../../../components/FireBase/firebaseConfig";
+import LoadingText from "../../../../components/Loader1/LoadingText";
 import { handleShowModal } from "../../../../components/store/ModalReducer/modalReducer";
 import PlaylistItem from "./AlbumItem/PlaylistItem";
 import styles from "./Playlist.module.scss";
 const cx = classNames.bind(styles);
 export default function Playlist() {
-    // const [show, setShow] = useState(false);
+    const [playlists, setPlaylists] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const location = useLocation();
     const dispatch = useDispatch();
+
+    const user = useSelector(state => state.user.user);
     const onShowModal = () => {
         dispatch(handleShowModal("CREATE_PLAYLIST"));
     }
@@ -20,7 +28,30 @@ export default function Playlist() {
         }
         return location.pathname;
     }
+    useEffect(() => {
+        const getAllPlaylist = async () => {
+            if (user?.uid) {
+                const q = query(collection(db, 'playlistCollection'), where('userId', '==', user.uid));
+                try {
+                    const querySnapshot = await getDocs(q);
+                    const documents = [];
+                    querySnapshot.forEach((doc) => {
+                        documents.push({ id: doc.id, ...doc.data() });
+                    });
+                    setPlaylists(documents);
+                } catch (e) {
+                    console.error('Error getting documents:', e);
+                    setError(e);
+                } finally {
+                    setLoading(false);
+                }
+            } else {
+                setLoading(false);
+            }
+        };
 
+        getAllPlaylist();
+    }, []);
 
     return (
         <div className={cx("myMusicPlaylist")}>
@@ -38,11 +69,11 @@ export default function Playlist() {
                         <div className={cx("iconMain")}><FontAwesomeIcon className={cx("icon")} icon={faPlus} /></div>
                         <div className={cx("text")}>Tạo playlist mới</div>
                     </div>
-                    <PlaylistItem />
-                    <PlaylistItem />
-                    <PlaylistItem />
-                    <PlaylistItem />
-                    <PlaylistItem />
+                    {
+                        loading ? <LoadingText /> : error ? <div>Error: {error.message} <LoadingText /></div>
+                            : playlists.map((playlist) => {
+                                return <PlaylistItem key={playlist.id} playlist={playlist} />
+                            })}
                 </ul>
             </div>
         </div>

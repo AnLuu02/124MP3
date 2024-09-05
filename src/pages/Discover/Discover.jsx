@@ -2,7 +2,7 @@ import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from "@mui/material";
 import classNames from "classnames/bind";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Outlet, useLocation, useParams } from "react-router-dom";
 import 'tippy.js/dist/tippy.css';
@@ -16,6 +16,12 @@ import styles from "./Discover.module.scss";
 const cx = classNames.bind(styles);
 
 function Discover() {
+    const [songOutstanding, setSongOutstanding] = useState([]);
+    const [songVN, setSongVN] = useState([]);
+    const [songAsean, setSongAsean] = useState([]);
+    const [songUsuk, setSongUsuk] = useState([]);
+    const [artist, setArtist] = useState([]);
+
     const location = useLocation();
     const params = useParams();
     const refOrther1 = useRef();
@@ -46,6 +52,24 @@ function Discover() {
             })
             .catch((error) => console.log("Goi API không thành công.", error));
     }, [params.filter]);
+
+    useEffect(() => {
+        get("musics?top=5")
+            .then(data => setSongOutstanding(data))
+            .catch(err => console.log(err))
+        get("musics?nation=vpop")
+            .then(data => setSongVN(data))
+            .catch(err => console.log(err))
+        get("musics?nation=notUsuk")
+            .then(data => setSongAsean(data))
+            .catch(err => console.log(err))
+        get("musics?nation=usuk")
+            .then(data => setSongUsuk(data))
+            .catch(err => console.log(err))
+        get("artist?limit=5")
+            .then(data => setArtist(data))
+            .catch(err => console.log(err))
+    }, [])
 
     useEffect(() => {
 
@@ -116,29 +140,35 @@ function Discover() {
             </div >
             <div className={cx("topSong")} id={cx("outStanding")}>
                 <div className={cx("title")}> Nổi bật</div>
-                <WidgetAlbum />
+                <WidgetAlbum data={songOutstanding} />
             </div>
 
             <div className={cx("topSong")} id={cx("vn_music")}>
                 <div className={cx("title")}>
                     Nhạc Việt Nam
                 </div>
-                <WidgetAlbum />
+                <WidgetAlbum data={songVN} />
             </div>
 
             <div className={cx("topSong")} id={cx("asia_music")}>
                 <div className={cx("title")}>
                     Nhạc Châu Á
                 </div>
-                <WidgetAlbum />
+                <WidgetAlbum data={songAsean} />
             </div>
 
             <div className={cx("topSong")} id={cx("uk_music")}>
                 <div className={cx("title")}>
                     Nhạc Âu Mỹ
                 </div>
-                <WidgetAlbum />
+                <WidgetAlbum data={songUsuk} />
             </div>
+            <div className={cx("topSong")} id={cx("uk_music")}>
+                <div className={cx("title")}>
+                    Ca sĩ/ Nhạc sĩ
+                </div>
+            </div>
+            <WidgetAlbum artistWidget={true} data={artist} />
         </div >
     </>);
 }

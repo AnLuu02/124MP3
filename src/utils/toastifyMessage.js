@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 
 export const notifySuccess = (options) => {
-    toast.success("Success!" ?? options.message, {
+    toast.success(options?.message ?? "Success!", {
         autoClose: options?.autoClose ?? 2000,
         hideProgressBar: options?.hideProgressBar ?? false,
         closeOnClick: options?.closeOnClick ?? true,
@@ -11,7 +11,7 @@ export const notifySuccess = (options) => {
     });
 };
 export const notifyError = (options) => {
-    toast.error(options.message ?? 'Error notification!', {
+    toast.error(options?.message ?? 'Error notification!', {
         autoClose: options?.autoClose ?? 3000,
         hideProgressBar: options?.hideProgressBar ?? false,
         closeOnClick: options?.closeOnClick ?? true,

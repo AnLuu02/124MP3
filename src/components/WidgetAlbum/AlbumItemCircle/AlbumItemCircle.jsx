@@ -2,6 +2,7 @@ import { faShuffle, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from "classnames/bind";
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 import styles from "./AlbumItemCircle.module.scss";
 const cx = classNames.bind(styles);
 
@@ -15,9 +16,9 @@ function AlbumItemCircle({ data }) {
                         <div className={cx("circleIcon")}> <FontAwesomeIcon icon={faShuffle} className={cx("icon")} /></div>
                     </div>
                 </div>
-                <a href={`/artist/${data?.name}`} style={{ color: 'unset' }}>
+                <NavLink to={`/artist/${data?.name}`} style={{ color: 'unset' }}>
                     <div className={cx("name_artist")}>{data?.name}</div>
-                </a>
+                </NavLink>
                 <div className={cx("care_artist")} >
                     <div className={cx("quantityCare")}>{data?.followers}</div>
                     <div> quan tâm</div>
