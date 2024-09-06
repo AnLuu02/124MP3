@@ -8,6 +8,8 @@ import styles from "./AlbumItemCircle.module.scss";
 const cx = classNames.bind(styles);
 
 function AlbumItemCircle({ data, loading }) {
+    console.log(data);
+
     return (
         <>
             <li key={data?.id} className={cx("widgetItemCircle")}>
@@ -16,7 +18,6 @@ function AlbumItemCircle({ data, loading }) {
                         ?
                         <div className={cx("thumbnail_skeleton")}>
                             <Skeleton variant="circular" animation="wave" sx={{ bgcolor: 'grey.800' }} width="100%" height="100%" />
-
                         </div>
                         :
                         <>

@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from "@mui/material";
 import classNames from "classnames/bind";
 import { useEffect, useRef, useState } from "react";
+import { useInView } from 'react-intersection-observer';
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Outlet, useLocation, useParams } from "react-router-dom";
 import 'tippy.js/dist/tippy.css';
@@ -13,30 +14,90 @@ import img_slide3 from "../../assets/images/3.jpg";
 import WidgetAlbum from "../../components/WidgetAlbum/WidgetAlbum";
 import { setListSong } from "../../components/store/listSongReducer";
 import styles from "./Discover.module.scss";
+
 const cx = classNames.bind(styles);
 
 function Discover() {
-    const [songOutstanding, setSongOutstanding] = useState([]);
+    // const [songOutstanding, setSongOutstanding] = useState([]);
     const [songVN, setSongVN] = useState([]);
-    const [songAsean, setSongAsean] = useState([]);
+    const [songAsian, setSongAsian] = useState([]);
     const [songUsuk, setSongUsuk] = useState([]);
     const [artists, setArtists] = useState([]);
+
+    const [loading1, setLoading1] = useState(true);
+    const [loading2, setLoading2] = useState(true);
+    const [loading3, setLoading3] = useState(true);
+    const [loading4, setLoading4] = useState(true);
+    const [loading5, setLoading5] = useState(true);
+    const [loading6, setLoading6] = useState(true);
+
+
     const location = useLocation();
     const params = useParams();
-    const refOrther1 = useRef();
-    const refOrther2 = useRef();
-    const refOrther3 = useRef();
+    const refOther1 = useRef();
+    const refOther2 = useRef();
+    const refOther3 = useRef();
 
     const defaultParamsDiscover = {
         "vietnam": "vpop",
         "thegioi": "notVpop",
         "all": "",
     }
-
     const dispatch = useDispatch();
     const listSong = useSelector(state => state.listSong.listSong);
-    // const user = useSelector(state => state.user.user);
-    const { get, loading } = useFetch(import.meta.env.VITE_API_BASE_URL);
+    const { get } = useFetch(import.meta.env.VITE_API_BASE_URL);
+
+    const { ref: refArtist, inView: inViewArtist } = useInView({ triggerOnce: true });
+    const { ref: refSongOutstanding, inView: inViewSongOutStanding } = useInView({ triggerOnce: true });
+    const { ref: refVn, inView: inViewVN } = useInView({ triggerOnce: true });
+    const { ref: refAsian, inView: inViewAsian } = useInView({ triggerOnce: true });
+    const { ref: refUsuk, inView: inViewUsuk } = useInView({ triggerOnce: true });
+    useEffect(() => {
+        // if (inViewSongOutStanding) {
+        //     console.log("inViewSongOutStanding");
+        //     get("musics?top=5")
+        //         .then(data => {
+        //             setLoading1(false)
+        //             setSongOutstanding(data)
+        //         })
+        //         .catch(err => {
+        //             setLoading1(true)
+        //             console.log(err)
+        //         })
+        // }
+        if (inViewVN) {
+            console.log("inViewVN");
+            get("musics?nation=vpop")
+                .then(data => { setLoading2(false); setSongVN(data) })
+                .catch(err => { setLoading2(true); console.log(err) });
+        }
+        if (inViewAsian) {
+            console.log("inViewAsian");
+
+            get("musics?nation=notUsuk")
+                .then(data => { setLoading3(false); setSongAsian(data) })
+                .catch(err => { setLoading3(true); console.log(err) });
+
+        }
+        if (inViewUsuk) {
+            console.log("inViewUsuk");
+            get("musics?nation=usuk")
+                .then(data => { setLoading4(false); setSongUsuk(data) })
+                .catch(err => { setLoading4(true); console.log(err) });
+        }
+        if (inViewArtist) {
+            console.log("inViewArtist");
+            get("artist?limit=5")
+                .then(data => {
+                    setArtists(data)
+                    setLoading5(false)
+                })
+                .catch(err => {
+                    setLoading5(true)
+                    console.log(err)
+                })
+        }
+    }, [inViewArtist, inViewSongOutStanding, inViewVN, inViewAsian, inViewUsuk]);
 
     useEffect(() => {
         let query = `musics?limit=9`;
@@ -45,37 +106,11 @@ function Discover() {
         }
         get(query)
             .then((data) => {
+                setLoading6(false);
                 dispatch(setListSong(data));
             })
-            .catch((error) => console.log("Goi API không thành công.", error));
+            .catch((error) => { setLoading6(true); console.log(error) });
     }, [params.filter]);
-
-    useEffect(() => {
-        get("musics?top=5")
-            .then(data => setSongOutstanding(data))
-            .catch(err => console.log(err))
-        // get("musics?nation=vpop")
-        //     .then(data => setSongVN(data))
-        //     .catch(err => console.log(err))
-        // get("musics?nation=notUsuk")
-        //     .then(data => setSongAsean(data))
-        //     .catch(err => console.log(err))
-        // get("musics?nation=usuk")
-        //     .then(data => setSongUsuk(data))
-        //     .catch(err => console.log(err))
-        get("artist?limit=5")
-            .then(data => setArtists(data))
-            .catch(err => console.log(err))
-        get("musics?limit=20")
-            .then(data => {
-                if (data && Array.isArray(data)) {
-                    setSongVN(data.filter(song => song.nation === "vpop"));
-                    setSongAsean(data.filter(song => song.nation !== "usuk"));
-                    setSongUsuk(data.filter(song => song.nation === "usuk"));
-                }
-            })
-            .catch(err => console.log(err))
-    }, [])
 
     useEffect(() => {
 
@@ -86,10 +121,10 @@ function Discover() {
             array.push(firstElement);
             const secondElement = array.shift();
             array.unshift(secondElement);
-            if (refOrther1.current && refOrther2.current && refOrther3.current) {
-                refOrther1.current.dataset.order = array[0];
-                refOrther2.current.dataset.order = array[1];
-                refOrther3.current.dataset.order = array[2];
+            if (refOther1.current && refOther2.current && refOther3.current) {
+                refOther1.current.dataset.order = array[0];
+                refOther2.current.dataset.order = array[1];
+                refOther3.current.dataset.order = array[2];
             }
         }, 5000)
         return () => clearInterval(interval);
@@ -103,13 +138,13 @@ function Discover() {
     return (<>
         <div id={cx("discover")}>
             <div className={cx("all-slides")}>
-                <div className={cx("single-slide")} data-order="3" ref={refOrther3}>
+                <div className={cx("single-slide")} data-order="3" ref={refOther3}>
                     <img src={img_slide3} alt="1" />
                 </div>
-                <div className={cx("single-slide")} data-order="2" ref={refOrther2}>
+                <div className={cx("single-slide")} data-order="2" ref={refOther2}>
                     <img src={img_slide2} alt="2" />
                 </div>
-                <div className={cx("single-slide")} data-order="1" ref={refOrther1}>
+                <div className={cx("single-slide")} data-order="1" ref={refOther1}>
                     <img src={img_slide1} alt="3" />
                 </div>
             </div>
@@ -132,7 +167,7 @@ function Discover() {
                     </li>
                 </ul>
                 {/* {loading ? <Loader4Doc /> : <Outlet context={listSong} />} */}
-                <Outlet context={{ listSong, loading }} />
+                <Outlet context={{ listSong, loading6 }} />
 
                 <div className={cx("showAll_mobile")}>
                     <NavLink to="/new-release/song/all" >
@@ -144,37 +179,37 @@ function Discover() {
 
 
             </div >
-            <div className={cx("topSong")} id={cx("outStanding")}>
+            {/* <div className={cx("topSong")} id={cx("outStanding")} ref={refSongOutstanding}>
                 <div className={cx("title")}> Nổi bật</div>
-                <WidgetAlbum data={songOutstanding} loading={loading} />
-            </div>
+                <WidgetAlbum data={songOutstanding} loading={loading1} />
+            </div> */}
 
-            <div className={cx("topSong")} id={cx("vn_music")}>
+            <div className={cx("topSong")} id={cx("vn_music")} ref={refVn}>
                 <div className={cx("title")}>
                     Nhạc Việt Nam
                 </div>
-                <WidgetAlbum data={songVN} loading={loading} />
+                <WidgetAlbum data={songVN} loading={loading2} />
             </div>
 
-            <div className={cx("topSong")} id={cx("asia_music")}>
+            <div className={cx("topSong")} id={cx("asia_music")} ref={refAsian}>
                 <div className={cx("title")}>
                     Nhạc Châu Á
                 </div>
-                <WidgetAlbum data={songAsean} loading={loading} />
+                <WidgetAlbum data={songAsian} loading={loading3} />
             </div>
 
-            <div className={cx("topSong")} id={cx("uk_music")}>
+            <div className={cx("topSong")} id={cx("uk_music")} ref={refUsuk}>
                 <div className={cx("title")}>
                     Nhạc Âu Mỹ
                 </div>
-                <WidgetAlbum data={songUsuk} loading={loading} />
+                <WidgetAlbum data={songUsuk} loading={loading4} />
             </div>
-            <div className={cx("topSong")} id={cx("uk_music")}>
+            <div className={cx("topSong")} id={cx("uk_music")} ref={refArtist}>
                 <div className={cx("title")}>
                     Ca sĩ/ Nhạc sĩ
                 </div>
             </div>
-            <WidgetAlbum artistWidget={true} data={artists} loading={loading} />
+            <WidgetAlbum artistWidget={true} data={artists} loading={loading5} />
         </div >
     </>);
 }
