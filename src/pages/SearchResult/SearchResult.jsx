@@ -4,7 +4,6 @@ import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import Song from "../../components/SongItem/Song/Song";
-import SongOptions from "../../components/SongItem/SongOptions/SongOptions";
 import WidgetAlbum from "../../components/WidgetAlbum/WidgetAlbum";
 import useFetch from "../../Custom hooks/useFetch";
 import { formatPathname } from "../../utils/formatPatnameFunction";
@@ -136,8 +135,8 @@ function SearchResult() {
                     <ul className={cx("music", "list_music")} >
                         {/* {value?.musics?.length > 0 && value?.musics?.map((item, index) => <Song key={item.id} classNames={cx("custom")} songId={item.id} indexSong={index} dataSong={item} />)} */}
                         <Song key={1} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} />
-                        <Song key={1} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} />
-                        <Song key={1} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} />
+                        <Song key={2} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} />
+                        <Song key={3} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} />
                     </ul>
                 </div>
 
@@ -145,10 +144,15 @@ function SearchResult() {
                     <h3>Bài hát</h3>
                     <div className={cx("listSong")}>
                         <ul className={cx("music")}>
+                            {/* <SongOptions key={1} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} />
                             <SongOptions key={1} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} />
                             <SongOptions key={1} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} />
-                            <SongOptions key={1} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} />
-                            <SongOptions key={1} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} />
+                            <SongOptions key={1} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} /> */}
+
+                            {
+                                value?.artists?.songs?.length > 0 && value?.musics?.map((item, index) => {
+                                    return <Song key={item.id} classNames={cx("custom")} songId={item.id} indexSong={index} dataSong={item} />
+                                })}
                         </ul>
                     </div>
                 </div>

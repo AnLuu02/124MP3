@@ -1,9 +1,11 @@
-import { faArrowTrendUp, faSearch, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faArrowTrendUp, faSearch, faSpinner, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
+import useDebounce from '../../Custom hooks/useDebounce';
+import useFetch from '../../Custom hooks/useFetch';
 import ScrollToTop from '../ScrollToTop/ScrollToTop';
 import { setStateSearchBox } from '../store/mobileReducer';
 import styles from './Search.module.scss';
@@ -11,8 +13,11 @@ import styles from './Search.module.scss';
 const cx = classNames.bind(styles);
 
 function Search() {
+    const [hintSearch, setHintSearch] = useState([]);
     const [searchValue, setSearchValue] = useState('');
     const [showListSearch, setShowListSearch] = useState(false);
+    const [spinner, setSpinner] = useState(false);
+
     const dispatch = useDispatch();
 
     //mobile
@@ -34,16 +39,7 @@ function Search() {
         currentInputValue.blur();
 
     }
-
-    // const { get }  = useFetch(import.meta.env.VITE_API_BASE_URL);
-
-    // const fetchApiHintSearch = async () => {
-    //     const result = await get("posts");
-    //     setHintSearch(result);
-    // };
-
     const handleFocusInput = () => {
-        // fetchApiHintSearch();
         setShowListSearch(true)
     }
 
@@ -62,6 +58,28 @@ function Search() {
             currentInputValue?.removeEventListener("keydown", handleEnterSearch);
         }
     })
+
+
+    const { get, loading } = useFetch(import.meta.env.VITE_API_BASE_URL);
+
+    let debouncedValue = useDebounce(searchValue, 800);
+    useEffect(() => {
+        if (debouncedValue) {
+            setSpinner(true);
+            get(`/search?q=${debouncedValue}`)
+                .then(data => {
+                    if (data) {
+                        setSpinner(false);
+                        console.log(data);
+
+                    }
+                })
+                .catch(e => console.log(e)
+                )
+
+
+        }
+    }, [debouncedValue])
 
 
     return (
@@ -84,14 +102,18 @@ function Search() {
                             <FontAwesomeIcon style={{ fontSize: 23 }} icon={faSearch} />
                         </label>
                         {
-                            searchValue
+                            loading
                                 ?
-                                <div className={cx("icon_delete_input")}>
-
-                                    <FontAwesomeIcon onClick={() => { setSearchValue(''); inputRef.current.focus() }} className={cx("icon")} icon={faXmark} />
+                                <div className={cx("icon_delete_input", "spinner")}>
+                                    <FontAwesomeIcon onClick={() => { setSearchValue(''); inputRef.current.focus() }} className={cx("icon")} icon={faSpinner} />
                                 </div>
-                                :
-                                ""
+                                : searchValue
+                                    ?
+                                    <div className={cx("icon_delete_input")}>
+                                        <FontAwesomeIcon onClick={() => { setSearchValue(''); inputRef.current.focus() }} className={cx("icon")} icon={faXmark} />
+                                    </div>
+                                    : ""
+
                         }
                     </div>
                     <div onMouseDown={chooseItemSearch} className={cx("listSearch")} style={{ display: (showListSearch ? "block" : "none") }}>
@@ -139,25 +161,25 @@ function Search() {
                                         #124Mp3chart
                                     </li>
                                 </NavLink>
-                                {/* {searchValue
-                    ?
-                    <li>
-                        <FontAwesomeIcon className={cx("icon")} icon={faSearch} />
-                        Tìm kiếm <q>{searchValue}</q>
-                    </li>
-                    :
-                    hintSearch.length ? hintSearch.map((item, index) => {
-                        return (
-                            <NavLink key={index} to={`/tim-kiem/tat-ca?q=nhạc tết`} style={{ color: "#fff" }}>
+                                {searchValue
+                                    ?
+                                    <li>
+                                        <FontAwesomeIcon className={cx("icon")} icon={faSearch} />
+                                        Tìm kiếm <q>{searchValue}</q>
+                                    </li>
+                                    :
+                                    hintSearch.length ? hintSearch.map((item, index) => {
+                                        return (
+                                            <NavLink key={index} to={`/tim-kiem/tat-ca?q=nhạc tết`} style={{ color: "#fff" }}>
 
-                                <li>
-                                    <FontAwesomeIcon className={cx("icon")} icon={faArrowTrendUp} />
-                                    nhạc tết
-                                </li>
+                                                <li>
+                                                    <FontAwesomeIcon className={cx("icon")} icon={faArrowTrendUp} />
+                                                    nhạc tết
+                                                </li>
 
-                            </NavLink>)
-                    }) : ""
-                } */}
+                                            </NavLink>)
+                                    }) : ""
+                                }
 
                             </ul>
                         </div>

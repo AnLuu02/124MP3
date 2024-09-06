@@ -6,4 +6,12 @@ ul.listWidget {
     margin-bottom: 50px;
     overflow-x: hidden !important;
     color: white;
+
+    &.wrapFlexBox {
+        flex-wrap: wrap !important;
+
+        li.wrapFlexBoxItem {
+            margin-bottom: 30px;
+        }
+    }
 }

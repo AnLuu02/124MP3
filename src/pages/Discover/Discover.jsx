@@ -24,7 +24,7 @@ function Discover() {
     const [songUsuk, setSongUsuk] = useState([]);
     const [artists, setArtists] = useState([]);
 
-    const [loading1, setLoading1] = useState(true);
+    // const [loading1, setLoading1] = useState(true);
     const [loading2, setLoading2] = useState(true);
     const [loading3, setLoading3] = useState(true);
     const [loading4, setLoading4] = useState(true);
@@ -48,7 +48,7 @@ function Discover() {
     const { get } = useFetch(import.meta.env.VITE_API_BASE_URL);
 
     const { ref: refArtist, inView: inViewArtist } = useInView({ triggerOnce: true });
-    const { ref: refSongOutstanding, inView: inViewSongOutStanding } = useInView({ triggerOnce: true });
+    // const { ref: refSongOutstanding, inView: inViewSongOutStanding } = useInView({ triggerOnce: true });
     const { ref: refVn, inView: inViewVN } = useInView({ triggerOnce: true });
     const { ref: refAsian, inView: inViewAsian } = useInView({ triggerOnce: true });
     const { ref: refUsuk, inView: inViewUsuk } = useInView({ triggerOnce: true });
@@ -66,27 +66,22 @@ function Discover() {
         //         })
         // }
         if (inViewVN) {
-            console.log("inViewVN");
             get("musics?nation=vpop")
                 .then(data => { setLoading2(false); setSongVN(data) })
                 .catch(err => { setLoading2(true); console.log(err) });
         }
         if (inViewAsian) {
-            console.log("inViewAsian");
-
             get("musics?nation=notUsuk")
                 .then(data => { setLoading3(false); setSongAsian(data) })
                 .catch(err => { setLoading3(true); console.log(err) });
 
         }
         if (inViewUsuk) {
-            console.log("inViewUsuk");
             get("musics?nation=usuk")
                 .then(data => { setLoading4(false); setSongUsuk(data) })
                 .catch(err => { setLoading4(true); console.log(err) });
         }
         if (inViewArtist) {
-            console.log("inViewArtist");
             get("artist?limit=5")
                 .then(data => {
                     setArtists(data)
@@ -97,7 +92,7 @@ function Discover() {
                     console.log(err)
                 })
         }
-    }, [inViewArtist, inViewSongOutStanding, inViewVN, inViewAsian, inViewUsuk]);
+    }, [inViewArtist, inViewVN, inViewAsian, inViewUsuk]);
 
     useEffect(() => {
         let query = `musics?limit=9`;
@@ -167,8 +162,7 @@ function Discover() {
                     </li>
                 </ul>
                 {/* {loading ? <Loader4Doc /> : <Outlet context={listSong} />} */}
-                <Outlet context={{ listSong, loading6 }} />
-
+                <Outlet context={{ listSong, loading: loading6 }} />
                 <div className={cx("showAll_mobile")}>
                     <NavLink to="/new-release/song/all" >
                         <Button sx={{ color: "white" }} variant="outlined">

@@ -12,7 +12,7 @@ import { playSong } from "../../store/songReducer";
 import styles from "./AlbumItem.module.scss";
 const cx = classNames.bind(styles);
 
-function AlbumItem({ data, indexSong, isAlbum, q, loading }) {
+function AlbumItem({ data, indexSong, isAlbum, q, loading, classNames }) {
 
     const dispatch = useDispatch();
     const isPlay = useSelector(state => state.song.isPlay);
@@ -29,7 +29,7 @@ function AlbumItem({ data, indexSong, isAlbum, q, loading }) {
     };
 
     return (
-        <li className={cx("widgetItem")}>
+        <li className={cx("widgetItem", classNames)}>
             <div className={cx("content", (isPlay || song.name) && data?.id == song.id ? "active" : "")} onClick={() => !loading && handleNavigate()}>
                 {
                     loading
@@ -77,7 +77,8 @@ AlbumItem.propTypes = {
     indexSong: PropTypes.number,
     isAlbum: PropTypes.bool,
     q: PropTypes.string,
-    loading: PropTypes.bool
+    loading: PropTypes.bool,
+    classNames: PropTypes.string
 };
 
 export default AlbumItem;

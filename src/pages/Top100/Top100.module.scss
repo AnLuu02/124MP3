@@ -3,6 +3,11 @@
     color: white !important;
     overflow: hidden;
 
+    span {
+        max-width: unset;
+        max-height: unset;
+    }
+
     &.active ul {
         flex-wrap: wrap !important;
     }

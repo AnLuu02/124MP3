@@ -47,34 +47,42 @@ function Top() {
                 <div className={cx("title_main")} >
                     Nổi bật
                 </div>
-                <WidgetAlbum />
+                <WidgetAlbum loading={true} isWrapFlexBox={true} />
             </div >
 
             <div className={cx("top_music")} >
                 <div className={cx("title_main")} >
                     Nhạc Việt Nam
                 </div >
-                <WidgetAlbum />
+
+                <WidgetAlbum loading={true} />
+
             </div >
 
             <div className={cx("top_music")} >
                 <div className={cx("title_main")}>
                     Nhạc Châu Á
-                </div>  <WidgetAlbum />
+                </div>
+                <WidgetAlbum loading={true} />
+
             </div >
 
             <div className={cx("top_music")} >
                 <div className={cx("title_main")}>
                     Nhạc Âu Mỹ
                 </div>
-                <WidgetAlbum />
+
+                <WidgetAlbum loading={true} />
+
             </div>
 
             <div className={cx("top_music")} >
                 <div className={cx("title_main")}>
                     Nhạc Hòa Tấu
                 </div>
-                <WidgetAlbum />
+
+                <WidgetAlbum loading={true} />
+
             </div>
         </div >
     </>);

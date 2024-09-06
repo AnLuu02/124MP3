@@ -7,9 +7,7 @@ import { NavLink } from 'react-router-dom';
 import styles from "./AlbumItemCircle.module.scss";
 const cx = classNames.bind(styles);
 
-function AlbumItemCircle({ data, loading }) {
-    console.log(data);
-
+function AlbumItemCircle({ data, loading, isFollowed }) {
     return (
         <>
             <li key={data?.id} className={cx("widgetItemCircle")}>
@@ -41,22 +39,26 @@ function AlbumItemCircle({ data, loading }) {
                         <div className={cx("name_artist")}>{data?.name}</div>
                     </NavLink>}
 
-                {loading
-                    ?
-                    <Skeleton variant="text" width={70} height={30} sx={{ bgcolor: 'grey.700' }} />
-                    :
-                    <div className={cx("care_artist")} >
-                        <div className={cx("quantityCare")}>{data?.followers}</div>
-                        <div> quan tâm</div>
-                    </div>}
-
-                {loading ?
-                    <Skeleton variant="text" width={120} height={30} sx={{ bgcolor: 'grey.700' }} />
-
-                    : <div className={cx("follow_artist")} >
-                        <FontAwesomeIcon icon={faUserPlus} className={cx("icon")} />
-                        <div>QUAN TÂM</div>
-                    </div>}
+                {!isFollowed ?
+                    loading
+                        ?
+                        <Skeleton variant="text" width={70} height={30} sx={{ bgcolor: 'grey.700' }
+                        } />
+                        :
+                        <div className={cx("care_artist")} >
+                            <div className={cx("quantityCare")}>{data?.followers}</div>
+                            <div> quan tâm</div>
+                        </div>
+                    : ""
+                }
+                {!isFollowed ?
+                    loading ?
+                        <Skeleton variant="text" width={120} height={30} sx={{ bgcolor: 'grey.700' }} />
+                        : <div className={cx("follow_artist")} >
+                            <FontAwesomeIcon icon={faUserPlus} className={cx("icon")} />
+                            <div>QUAN TÂM</div>
+                        </div>
+                    : ""}
             </li>
         </>
     );

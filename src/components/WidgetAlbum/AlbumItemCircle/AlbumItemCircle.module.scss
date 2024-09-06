@@ -79,11 +79,10 @@ li.widgetItemCircle {
 
             span {
                 max-height: unset;
+                width: 100%;
             }
 
-            span {
-                max-width: unset;
-            }
+
         }
 
         img {
@@ -142,6 +141,10 @@ li.widgetItemCircle {
             img {
                 height: calc((100vw - 42px) / 2) !important;
             }
+
+            .thumbnail_skeleton {
+                height: calc((100vw - 42px) / 2) !important;
+            }
         }
     }
 }
@@ -155,6 +158,10 @@ li.widgetItemCircle {
         .content {
 
             img {
+                height: calc((100vw - 132px) / 4) !important;
+            }
+
+            .thumbnail_skeleton {
                 height: calc((100vw - 132px) / 4) !important;
             }
         }
@@ -173,6 +180,10 @@ li.widgetItemCircle {
         .content {
 
             img {
+                height: calc((100vw - 132px) / 4) !important;
+            }
+
+            .thumbnail_skeleton {
                 height: calc((100vw - 132px) / 4) !important;
             }
         }
@@ -194,6 +205,10 @@ li.widgetItemCircle {
         .content {
 
             img {
+                height: calc((100vw - 318px) / 4) !important;
+            }
+
+            .thumbnail_skeleton {
                 height: calc((100vw - 318px) / 4) !important;
             }
         }

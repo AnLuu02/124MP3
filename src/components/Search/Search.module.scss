@@ -63,6 +63,15 @@
                 cursor: pointer;
             }
 
+            &.spinner {
+                animation: spinner 1s ease-in-out infinite;
+            }
+
+            @keyframes spinner {
+                100% {
+                    transform: translateY(-50%) rotate(360deg);
+                }
+            }
         }
 
 
