@@ -66,7 +66,7 @@ function AlbumItem({ data, indexSong, isAlbum, q, loading, classNames }) {
                         data?.name
                 }
             </div>
-            {loading ? <Skeleton variant="text" animation="wave" sx={{ bgcolor: 'grey.700' }} width="70%" /> : <RenderArtist dataArtist={data?.artist} />}
+            {loading ? <Skeleton variant="text" animation="wave" sx={{ bgcolor: 'grey.700' }} width="70%" /> : <RenderArtist dataArtist={data?.artists} />}
 
         </li>
     );

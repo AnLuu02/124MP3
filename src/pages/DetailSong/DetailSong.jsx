@@ -176,7 +176,7 @@ function DetailSong() {
                     <div className={cx("releaseDate")} >Cập nhật:  {playlists?.[0]?.timestamp ? formatTimestamp(playlists?.[0]?.timestamp) : song?.releaseDate ? song?.releaseDate : <Skeleton className={cx("skeleton")} />}
                     </div>
                     <div className={cx("artist")}>
-                        {song?.name ? <RenderArtist dataArtist={song?.artist} /> : user.displayName}
+                        {song?.name ? <RenderArtist dataArtist={song?.artists} /> : user.displayName}
                     </div>
                     <div className={cx("loveSong")}>
                         {song?.name ? `${formatNumberToString(song.like_count)} lượt yêu thích` : ""}

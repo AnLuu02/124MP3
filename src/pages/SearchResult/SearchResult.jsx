@@ -85,7 +85,7 @@ function SearchResult() {
 
     const location = useLocation();
 
-    const { get, loading } = useFetch(import.meta.env.VITE_API_BASE_URL);
+    const { get } = useFetch(import.meta.env.VITE_API_BASE_URL);
     useEffect(() => {
         const searchParams = new URLSearchParams(location.search);
         setQuery(searchParams.get('q'));
@@ -150,9 +150,10 @@ function SearchResult() {
                             <SongOptions key={1} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} /> */}
 
                             {
-                                value?.artists?.songs?.length > 0 && value?.musics?.map((item, index) => {
+                                value?.musics?.length > 0 && value?.musics?.map((item, index) => {
                                     return <Song key={item.id} classNames={cx("custom")} songId={item.id} indexSong={index} dataSong={item} />
-                                })}
+                                })
+                            }
                         </ul>
                     </div>
                 </div>

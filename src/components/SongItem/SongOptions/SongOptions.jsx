@@ -89,7 +89,7 @@ function SongOptions({
                     </div>
                     <div className={cx("desSong")}>
                         <div className={cx("nameSong")}>{dataSong.name || "Chúng ta của hiện tại"}</div>
-                        <RenderArtist dataArtist={dataSong.artist} />
+                        <RenderArtist dataArtist={dataSong.artists} />
                     </div>
                     {showTimeUpLoad && <div className={cx("timeUpLoad")}>  {dataSong?.releaseDate} </div>}
                     <div className={cx("durationSong")}>{dataSong.duration || "03:42"}</div>

@@ -25,13 +25,13 @@ function Artist() {
 
     let params = useParams();
 
-    const { get } = useFetch(import.meta.env.VITE_API_URL);
+    const { get } = useFetch(import.meta.env.VITE_API_BASE_URL);
 
     useEffect(() => {
         get(`artist?name=${params.artist}`)
             .then((data) => {
                 if (data) {
-                    setArtist(data[0]);
+                    setArtist(data);
                 }
 
             })
@@ -40,7 +40,9 @@ function Artist() {
     }, [params.artist])
 
     useEffect(() => {
-        get(`artist?limit=10&except=${params.artist}`)
+
+        let nameArtist = params.artist;
+        get(`artist?limit=10&except=${nameArtist}`)
             .then((data) => {
                 if (data) {
                     setArtistSuggest(data);
@@ -49,6 +51,7 @@ function Artist() {
             .catch((error) => console.log("Goi API không được.", error));
 
     }, [])
+
     useEffect(() => {
         get(`musics?artistId=${artist?.id}`)
             .then((data) => {
@@ -58,7 +61,7 @@ function Artist() {
             })
             .catch((error) => console.log("Goi API không được.", error));
 
-    }, [params.artist, artist?.id])
+    }, [artist?.id])
 
 
 
@@ -72,6 +75,7 @@ function Artist() {
     const showAllDes = () => {
         dispatch(handleShowModal("SHOW_ALL_DESCRIPTION_ARTIST", artist));
     }
+
     return (
         <div className={cx("view_artist", song.name ? "hasBottomMusicFixed" : "")}>
             <div className={cx("header_view_artist")}>
@@ -154,23 +158,23 @@ function Artist() {
 
             <div className={cx("top_music", "about_artist")} >
                 <div className={cx("title")}>
-                    Về {artist.name}
+                    Về {artist?.name}
                 </div>
                 <ul className={cx("main_list")}>
                     <li>
-                        <img src={artist.profileImage ?? default_avatar} alt="" />
+                        <img src={artist?.profileImage ?? default_avatar} alt="" />
                     </li>
                     <li>
                         <div className={cx("des")}>
                             <div>
-                                {renderDesArtist(artist.biography)}
+                                {renderDesArtist(artist?.biography)}
                                 {artist?.biography?.length > 350 ? <i className={cx("moreDes")} onClick={showAllDes}>Xem thêm</i> : "Không có thông tin."}
                             </div>
                         </div>
                         <div className={cx("des_other")}>
                             <ul className={cx("sub_list")}>
                                 <li>
-                                    <div className={cx("quantity")}>{artist.followers}</div>
+                                    <div className={cx("quantity")}>{artist?.followers}</div>
                                     <div className={cx("category")}>Người quan tâm</div>
                                 </li>
                                 <li>

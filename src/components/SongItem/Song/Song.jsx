@@ -68,7 +68,7 @@ function Song({ songId, indexSong, dataSong, classNames }) {
                     </div>
                     <div className={cx("desSong")}>
                         <div className={cx("nameSong")}>{dataSong.name}</div>
-                        <RenderArtist dataArtist={dataSong.artist} />
+                        <RenderArtist dataArtist={dataSong.artists} />
                         <div className={cx("timeUpLoad")}>{dataSong?.release} </div>
                     </div>
                     <div className={cx("boxOption")} ref={refBoxOptions}>
