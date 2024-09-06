@@ -10,8 +10,8 @@ function SongSkeleton() {
                 <div className={cx("contentSong")}>
                     <div className={cx("skeleton_image")}></div>
                     <div className={cx("desSong")}>
-                        <Skeleton sx={{ bgcolor: 'grey.400' }} />
-                        <Skeleton width="60%" sx={{ bgcolor: 'grey.400' }} />
+                        <Skeleton animation="wave" sx={{ bgcolor: 'grey.600' }} />
+                        <Skeleton animation="wave" width="60%" sx={{ bgcolor: 'grey.600' }} />
                     </div>
                 </div>
             </li >
@@ -20,8 +20,8 @@ function SongSkeleton() {
                     <div className={cx("skeleton_image")}></div>
                     <div className={cx("desSong")}>
 
-                        <Skeleton sx={{ bgcolor: 'grey.400' }} />
-                        <Skeleton width="60%" sx={{ bgcolor: 'grey.400' }} />
+                        <Skeleton animation="wave" sx={{ bgcolor: 'grey.600' }} />
+                        <Skeleton animation="wave" width="60%" sx={{ bgcolor: 'grey.600' }} />
                     </div>
                 </div>
             </li >
@@ -30,8 +30,8 @@ function SongSkeleton() {
                     <div className={cx("skeleton_image")}></div>
                     <div className={cx("desSong")}>
 
-                        <Skeleton sx={{ bgcolor: 'grey.400' }} />
-                        <Skeleton width="60%" sx={{ bgcolor: 'grey.400' }} />
+                        <Skeleton animation="wave" sx={{ bgcolor: 'grey.600' }} />
+                        <Skeleton animation="wave" width="60%" sx={{ bgcolor: 'grey.600' }} />
                     </div>
                 </div>
             </li >
@@ -40,8 +40,8 @@ function SongSkeleton() {
                     <div className={cx("skeleton_image")}></div>
                     <div className={cx("desSong")}>
 
-                        <Skeleton sx={{ bgcolor: 'grey.400' }} />
-                        <Skeleton width="60%" sx={{ bgcolor: 'grey.400' }} />
+                        <Skeleton animation="wave" sx={{ bgcolor: 'grey.600' }} />
+                        <Skeleton animation="wave" width="60%" sx={{ bgcolor: 'grey.600' }} />
                     </div>
                 </div>
             </li >
@@ -50,8 +50,8 @@ function SongSkeleton() {
                     <div className={cx("skeleton_image")}></div>
                     <div className={cx("desSong")}>
 
-                        <Skeleton sx={{ bgcolor: 'grey.400' }} />
-                        <Skeleton width="60%" sx={{ bgcolor: 'grey.400' }} />
+                        <Skeleton animation="wave" sx={{ bgcolor: 'grey.600' }} />
+                        <Skeleton animation="wave" width="60%" sx={{ bgcolor: 'grey.600' }} />
                     </div>
                 </div>
             </li >
@@ -60,8 +60,8 @@ function SongSkeleton() {
                     <div className={cx("skeleton_image")}></div>
                     <div className={cx("desSong")}>
 
-                        <Skeleton sx={{ bgcolor: 'grey.400' }} />
-                        <Skeleton width="60%" sx={{ bgcolor: 'grey.400' }} />
+                        <Skeleton animation="wave" sx={{ bgcolor: 'grey.600' }} />
+                        <Skeleton animation="wave" width="60%" sx={{ bgcolor: 'grey.600' }} />
                     </div>
                 </div>
             </li >
@@ -70,8 +70,8 @@ function SongSkeleton() {
                     <div className={cx("skeleton_image")}></div>
                     <div className={cx("desSong")}>
 
-                        <Skeleton sx={{ bgcolor: 'grey.400' }} />
-                        <Skeleton width="60%" sx={{ bgcolor: 'grey.400' }} />
+                        <Skeleton animation="wave" sx={{ bgcolor: 'grey.600' }} />
+                        <Skeleton animation="wave" width="60%" sx={{ bgcolor: 'grey.600' }} />
                     </div>
                 </div>
             </li >
@@ -80,8 +80,8 @@ function SongSkeleton() {
                     <div className={cx("skeleton_image")}></div>
                     <div className={cx("desSong")}>
 
-                        <Skeleton sx={{ bgcolor: 'grey.400' }} />
-                        <Skeleton width="60%" sx={{ bgcolor: 'grey.400' }} />
+                        <Skeleton animation="wave" sx={{ bgcolor: 'grey.600' }} />
+                        <Skeleton animation="wave" width="60%" sx={{ bgcolor: 'grey.600' }} />
                     </div>
                 </div>
             </li >
@@ -89,9 +89,8 @@ function SongSkeleton() {
                 <div className={cx("contentSong")}>
                     <div className={cx("skeleton_image")}></div>
                     <div className={cx("desSong")}>
-
-                        <Skeleton sx={{ bgcolor: 'grey.400' }} />
-                        <Skeleton width="60%" sx={{ bgcolor: 'grey.400' }} />
+                        <Skeleton animation="wave" sx={{ bgcolor: 'grey.600' }} />
+                        <Skeleton animation="wave" width="60%" sx={{ bgcolor: 'grey.600' }} />
                     </div>
                 </div>
             </li >

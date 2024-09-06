@@ -1,5 +1,5 @@
 import classNames from "classnames/bind";
-import empty_album_dark from "../../../../../public/images/empty-album-dark.png";
+import empty_album_dark from "../../../../assets/images/empty-album-dark.png";
 import styles from "./AlbumLibrary.module.scss";
 const cx = classNames.bind(styles);
 function AlbumLibrary() {

@@ -1,5 +1,5 @@
 import classNames from "classnames/bind";
-import empty_upload_dark from "../../../../../../public/images/empty-upload-dark.png";
+import empty_upload_dark from "../../../../../assets/images/empty-upload-dark.png";
 import styles from "./Upload.module.scss";
 const cx = classNames.bind(styles);
 function Upload() {

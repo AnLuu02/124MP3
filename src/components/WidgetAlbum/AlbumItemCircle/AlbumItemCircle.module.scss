@@ -8,6 +8,7 @@ li.widgetItemCircle {
     scroll-snap-align: start;
     z-index: 1 !important;
     position: relative;
+    overflow: hidden;
 
 
     &:not(:nth-child(1)) {
@@ -71,13 +72,26 @@ li.widgetItemCircle {
         position: relative;
         overflow: hidden;
 
+        .thumbnail_skeleton {
+            width: 100%;
+            height: calc((100vw - 400px) / 5);
+            overflow: hidden;
+
+            span {
+                max-height: unset;
+            }
+
+            span {
+                max-width: unset;
+            }
+        }
+
         img {
             width: 100%;
             height: calc((100vw - 400px) / 5);
             transition: all 0.5s;
             object-fit: cover;
             background-position: center;
-
         }
 
         .hover_playlist {

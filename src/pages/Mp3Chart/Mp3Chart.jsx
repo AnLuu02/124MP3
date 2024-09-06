@@ -14,10 +14,7 @@ const cx = classNames.bind(styles);
 function Mp3Chart() {
     const dispatch = useDispatch();
     const listSong = useSelector(state => state.listSong.listSong);
-    const { get } = useFetch(
-        "http://localhost:3000/api/"
-    );
-
+    const { get } = useFetch(import.meta.env.VITE_API_BASE_URL);
     useEffect(() => {
         get("musics?limit=12")
             .then((data) => {

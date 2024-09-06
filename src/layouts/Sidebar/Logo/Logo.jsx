@@ -3,7 +3,7 @@ import classNames from "classnames/bind";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import default_avatar from "../../../../public/images/default_avatar.png";
+import default_avatar from "../../../assets/images/default_avatar.png";
 import styles from "./Logo.module.scss";
 
 const cx = classNames.bind(styles);

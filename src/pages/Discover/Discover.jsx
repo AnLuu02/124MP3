@@ -6,10 +6,10 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Outlet, useLocation, useParams } from "react-router-dom";
 import 'tippy.js/dist/tippy.css';
-import img_slide1 from "../../../public/images/1.jpg";
-import img_slide2 from "../../../public/images/2.jpg";
-import img_slide3 from "../../../public/images/3.jpg";
 import useFetch from "../../Custom hooks/useFetch";
+import img_slide1 from "../../assets/images/1.jpg";
+import img_slide2 from "../../assets/images/2.jpg";
+import img_slide3 from "../../assets/images/3.jpg";
 import WidgetAlbum from "../../components/WidgetAlbum/WidgetAlbum";
 import { setListSong } from "../../components/store/listSongReducer";
 import styles from "./Discover.module.scss";
@@ -20,8 +20,7 @@ function Discover() {
     const [songVN, setSongVN] = useState([]);
     const [songAsean, setSongAsean] = useState([]);
     const [songUsuk, setSongUsuk] = useState([]);
-    const [artist, setArtist] = useState([]);
-
+    const [artists, setArtists] = useState([]);
     const location = useLocation();
     const params = useParams();
     const refOrther1 = useRef();
@@ -37,9 +36,7 @@ function Discover() {
     const dispatch = useDispatch();
     const listSong = useSelector(state => state.listSong.listSong);
     // const user = useSelector(state => state.user.user);
-    const { get, loading } = useFetch(
-        "http://localhost:3000/api/"
-    );
+    const { get, loading } = useFetch(import.meta.env.VITE_API_BASE_URL);
 
     useEffect(() => {
         let query = `musics?limit=9`;
@@ -57,17 +54,26 @@ function Discover() {
         get("musics?top=5")
             .then(data => setSongOutstanding(data))
             .catch(err => console.log(err))
-        get("musics?nation=vpop")
-            .then(data => setSongVN(data))
-            .catch(err => console.log(err))
-        get("musics?nation=notUsuk")
-            .then(data => setSongAsean(data))
-            .catch(err => console.log(err))
-        get("musics?nation=usuk")
-            .then(data => setSongUsuk(data))
-            .catch(err => console.log(err))
+        // get("musics?nation=vpop")
+        //     .then(data => setSongVN(data))
+        //     .catch(err => console.log(err))
+        // get("musics?nation=notUsuk")
+        //     .then(data => setSongAsean(data))
+        //     .catch(err => console.log(err))
+        // get("musics?nation=usuk")
+        //     .then(data => setSongUsuk(data))
+        //     .catch(err => console.log(err))
         get("artist?limit=5")
-            .then(data => setArtist(data))
+            .then(data => setArtists(data))
+            .catch(err => console.log(err))
+        get("musics?limit=20")
+            .then(data => {
+                if (data && Array.isArray(data)) {
+                    setSongVN(data.filter(song => song.nation === "vpop"));
+                    setSongAsean(data.filter(song => song.nation !== "usuk"));
+                    setSongUsuk(data.filter(song => song.nation === "usuk"));
+                }
+            })
             .catch(err => console.log(err))
     }, [])
 
@@ -140,35 +146,35 @@ function Discover() {
             </div >
             <div className={cx("topSong")} id={cx("outStanding")}>
                 <div className={cx("title")}> Nổi bật</div>
-                <WidgetAlbum data={songOutstanding} />
+                <WidgetAlbum data={songOutstanding} loading={loading} />
             </div>
 
             <div className={cx("topSong")} id={cx("vn_music")}>
                 <div className={cx("title")}>
                     Nhạc Việt Nam
                 </div>
-                <WidgetAlbum data={songVN} />
+                <WidgetAlbum data={songVN} loading={loading} />
             </div>
 
             <div className={cx("topSong")} id={cx("asia_music")}>
                 <div className={cx("title")}>
                     Nhạc Châu Á
                 </div>
-                <WidgetAlbum data={songAsean} />
+                <WidgetAlbum data={songAsean} loading={loading} />
             </div>
 
             <div className={cx("topSong")} id={cx("uk_music")}>
                 <div className={cx("title")}>
                     Nhạc Âu Mỹ
                 </div>
-                <WidgetAlbum data={songUsuk} />
+                <WidgetAlbum data={songUsuk} loading={loading} />
             </div>
             <div className={cx("topSong")} id={cx("uk_music")}>
                 <div className={cx("title")}>
                     Ca sĩ/ Nhạc sĩ
                 </div>
             </div>
-            <WidgetAlbum artistWidget={true} data={artist} />
+            <WidgetAlbum artistWidget={true} data={artists} loading={loading} />
         </div >
     </>);
 }

@@ -7,8 +7,8 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
-import album_default from "../../../public/images/album_default.png";
-import avatar_default from "../../../public/images/avata_default.jpg";
+import album_default from "../../assets/images/album_default.png";
+import default_avatar from "../../assets/images/default_avatar.png";
 import { db } from "../../components/FireBase/firebaseConfig";
 import Loader4Doc from "../../components/Loader1/Loader4Doc";
 import AudioRun from "../../components/SongItem/AudioRun/AudioRun";
@@ -38,9 +38,7 @@ function DetailSong() {
     const params = useParams();
     const { pathname } = useLocation();
     const disPatch = useDispatch();
-    const { get } = useFetch(
-        "http://localhost:3000/api/"
-    )
+    const { get } = useFetch(import.meta.env.VITE_API_BASE_URL);
     useEffect(() => {
         get(`musics?top=5`)
             .then((data) => {
@@ -320,7 +318,7 @@ function DetailSong() {
             <div className={cx("playSong", "mobile")} >
                 <div className={cx("layoutLeft")}>
                     <div className={cx("header")}>
-                        <img src={avatar_default} />
+                        <img src={default_avatar} />
                         <div className={cx("infoSong")}>
                             <h3>Yêu em thật đấy</h3>
                             <p>Đinh Tùng Huy, ACV</p>
@@ -374,7 +372,7 @@ function DetailSong() {
 
                     <div className={cx("infoArtist")}>
                         <div>
-                            <img src={avatar_default} />
+                            <img src={default_avatar} />
                         </div>
                         <div className={cx("info")}>
                             <h3>Đinh Tùng Huy</h3>

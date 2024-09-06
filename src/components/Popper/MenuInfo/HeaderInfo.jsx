@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import default_avatar from '../../../../public/images/default_avatar.png';
+import default_avatar from '../../../assets/images/default_avatar.png';
 import SignInwithGoogle from '../../FireBase/signInWIthGoogle';
 import styles from './MenuInfo.module.scss';
 const cx = classNames.bind(styles);

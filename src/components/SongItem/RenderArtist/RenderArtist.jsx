@@ -13,7 +13,7 @@ export default function RenderArtist({ dataArtist, classNames }) {
                         <p>{a.name}{index == dataArtist?.length - 1 ? "" : ","} </p>
                     </NavLink>
                 )
-            }) : "Sơn Từng MaaaaaaaaaaaaaaaaaaaaaaaaTP.dddddddddd"}
+            }) : ""}
         </div>
     )
 }

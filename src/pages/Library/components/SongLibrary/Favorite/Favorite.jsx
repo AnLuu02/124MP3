@@ -1,5 +1,5 @@
 import classNames from "classnames/bind";
-import empty_fav_song_dark from "../../../../../../public/images/empty-fav-song-dark.png";
+import empty_fav_song_dark from "../../../../../assets/images/empty-fav-song-dark.png";
 import styles from "./Favorite.module.scss";
 const cx = classNames.bind(styles);
 function Favorite() {

@@ -32,9 +32,7 @@ function NewRelease() {
 
     const dispath = useDispatch();
     const listSong = useSelector(state => state.listSong.listSong);
-    const { get, loading } = useFetch(
-        "http://localhost:3000/api/"
-    );
+    const { get, loading } = useFetch(import.meta.env.VITE_API_BASE_URL);
 
     useEffect(() => {
         let query = `musics?limit=9`;

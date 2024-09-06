@@ -6,7 +6,7 @@ import { useRef, useState } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useDispatch, useSelector } from "react-redux";
 import 'tippy.js/dist/tippy.css';
-import avatar_default from "../../../../public/images/avata_default.jpg";
+import default_avatar from "../../../assets/images/default_avatar.png";
 import { playSong } from "../../../components/store/songReducer";
 import MenuSongOptions from "../../Popper/MenuSongOptions/MenuSongOptions";
 import AudioRun from "../AudioRun/AudioRun";
@@ -47,9 +47,9 @@ function Song({ songId, indexSong, dataSong, classNames }) {
             >
                 <div className={cx("contentSong")}>
                     <div className={cx("thumbnailSong")}>
-                        {/* <img src={dataSong.thumbnailUrl ?? avatar_default} alt="" /> */}
+                        {/* <img src={dataSong.thumbnailUrl ?? default_avatar} alt="" /> */}
                         <LazyLoadImage
-                            src={dataSong.thumbnailUrl ?? avatar_default}
+                            src={dataSong.thumbnailUrl ?? default_avatar}
                             alt=""
                             effect="blur"
                             className={cx("imgSong")}

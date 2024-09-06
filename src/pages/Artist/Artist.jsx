@@ -4,7 +4,7 @@ import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import default_avatar from "../../../public/images/default_avatar.png";
+import default_avatar from "../../assets/images/default_avatar.png";
 import SongOptions from "../../components/SongItem/SongOptions/SongOptions";
 import { handleShowModal } from "../../components/store/ModalReducer/modalReducer";
 import AlbumItemCircle from "../../components/WidgetAlbum/AlbumItemCircle/AlbumItemCircle";

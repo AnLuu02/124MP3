@@ -22,10 +22,7 @@ export default function HeardRecently() {
         setQuery(searchParams.get('q'));
     }, [location.search]);
 
-    // const { get } = useFetch(
-    //     "http://localhost:8080/API_Servlet/api/"
-    // );
-
+    // const { get }  = useFetch(import.meta.env.VITE_API_BASE_URL);
     return (
         <div className={cx("myMusicHeardRecently")}>
             <div className={cx("searchHeader")}>

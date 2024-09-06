@@ -1,5 +1,5 @@
 import classNames from "classnames/bind";
-import empty_mv_dark from "../../../../../public/images/empty-mv-dark.png";
+import empty_mv_dark from "../../../../assets/images/empty-mv-dark.png";
 import styles from "./MvLibrary.module.scss";
 const cx = classNames.bind(styles);
 function MvLibrary() {

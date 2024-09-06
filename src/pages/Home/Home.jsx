@@ -1,8 +1,7 @@
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import banner from "../../../public/images/banner.d40c4ec4.png";
-import Loader4Doc from "../../components/Loader1/Loader4Doc";
+import banner from "../../assets/images/banner.d40c4ec4.png";
 import WidgetAlbum from "../../components/WidgetAlbum/WidgetAlbum";
 import useFetch from "../../Custom hooks/useFetch";
 import styles from "./Home.module.scss";
@@ -12,7 +11,8 @@ function Home() {
     const [showBanner, setShowBanner] = useState(false);
     const [outStandingSong, setOutStandingSong] = useState([]);
     const [trendingSong, setTrendingSong] = useState([]);
-
+    const [loadingOutStandingSong, setLoadingOutStandingSong] = useState(true);
+    const [loadingTrendingSong, setLoadingTrendingSong] = useState(true);
 
     const { pathname } = useLocation();
     useEffect(() => {
@@ -26,15 +26,27 @@ function Home() {
     }, [showBanner, pathname])
 
 
-    const { get, loading } = useFetch("http://localhost:3000/api/");
+    const { get } = useFetch(import.meta.env.VITE_API_BASE_URL);
 
     useEffect(() => {
         get("musics?top=5")
-            .then(data => setOutStandingSong(data))
-            .catch(err => console.log(err))
+            .then(data => {
+                setLoadingOutStandingSong(false)
+                setOutStandingSong(data)
+            })
+            .catch(err => {
+                console.log(err)
+                setLoadingOutStandingSong(true)
+            })
         get("musics?topStart=21&topEnd=25")
-            .then(data => setTrendingSong(data))
-            .catch(err => console.log(err))
+            .then(data => {
+                setTrendingSong(data)
+                setLoadingTrendingSong(false)
+            })
+            .catch(err => {
+                console.log(err)
+                setLoadingTrendingSong(true)
+            })
     }, [])
 
     return (<>
@@ -55,14 +67,14 @@ function Home() {
                     Nổi bật
                     {/* <NavLink to={"/album/noi-bat"}>Hiện tất cả</NavLink> */}
                 </div>
-                {loading ? <Loader4Doc /> : <WidgetAlbum data={outStandingSong} q={"noi-bat"} />}
+                <WidgetAlbum data={outStandingSong} q={"noi-bat"} loading={loadingOutStandingSong} />
             </div>
             <div className={cx("widget2", "widget")}>
                 <div className={cx("title")}>
                     Thịnh hành
                     {/* <NavLink to={"/album/thinh-hanh"}>Hiện tất cả</NavLink> */}
                 </div>
-                {loading ? <Loader4Doc /> : <WidgetAlbum data={trendingSong} q={"thinh-hanh"} />}
+                <WidgetAlbum data={trendingSong} q={"thinh-hanh"} loading={loadingTrendingSong} />
 
 
             </div>

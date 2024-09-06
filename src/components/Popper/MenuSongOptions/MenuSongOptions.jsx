@@ -6,9 +6,9 @@ import Tippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
 import { collection, getDocs, query, where } from "firebase/firestore";
 import PropTypes from 'prop-types';
-import { forwardRef, useEffect, useState } from "react";
+import { forwardRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import create_playlist_SVG from '../../../../public/images/create_playlist_SVG.svg';
+import create_playlist_SVG from '../../../assets/images/create_playlist_SVG.svg';
 import { db } from "../../FireBase/firebaseConfig";
 import LoadingText from "../../Loader1/LoadingText";
 import stylesSong from "../../SongItem/Song/Song.module.scss";
@@ -64,30 +64,32 @@ const MenuSongOptions = forwardRef(
         const dispatch = useDispatch();
         const user = useSelector(state => state.user.user);
 
-        useEffect(() => {
-            const getAllPlaylist = async () => {
-                if (user?.uid) {
-                    const q = query(collection(db, 'playlistCollection'), where('userId', '==', user.uid));
-                    try {
-                        const querySnapshot = await getDocs(q);
-                        const documents = [];
-                        querySnapshot.forEach((doc) => {
-                            documents.push({ id: doc.id, ...doc.data() });
-                        });
-                        setPlaylists(documents);
-                    } catch (e) {
-                        console.error('Error getting documents:', e);
-                        serError(e);
-                    } finally {
-                        setLoading(false);
-                    }
-                } else {
+        const getAllPlaylist = async () => {
+            console.log("Callll");
+
+            if (user?.uid) {
+                const q = query(collection(db, 'playlistCollection'), where('userId', '==', user.uid));
+                try {
+                    const querySnapshot = await getDocs(q);
+                    const documents = [];
+                    querySnapshot.forEach((doc) => {
+                        documents.push({ id: doc.id, ...doc.data() });
+                    });
+                    setPlaylists(documents);
+                } catch (e) {
+                    console.error('Error getting documents:', e);
+                    serError(e);
+                } finally {
                     setLoading(false);
                 }
-            };
-
+            } else {
+                setLoading(false);
+            }
+        };
+        const handleGetPlaylist = () => {
             getAllPlaylist();
-        }, []);
+
+        }
         const onShow = () => {
             dispatch(handleShowModal("CREATE_PLAYLIST"));
 
@@ -163,6 +165,7 @@ const MenuSongOptions = forwardRef(
                             render={renderAddPlaylist}
                             offset={[0, -10]}
                             hideOnClick={false}
+                            onShow={handleGetPlaylist}
                         >
                             <div className={cx("menu-item")}>
                                 <FontAwesomeIcon className={cx("icon")} icon={faPlus} />

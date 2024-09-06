@@ -86,7 +86,7 @@ function SearchResult() {
 
     const location = useLocation();
 
-    const { get, loading } = useFetch("http://localhost:3000/api/");
+    const { get, loading } = useFetch(import.meta.env.VITE_API_BASE_URL);
     useEffect(() => {
         const searchParams = new URLSearchParams(location.search);
         setQuery(searchParams.get('q'));

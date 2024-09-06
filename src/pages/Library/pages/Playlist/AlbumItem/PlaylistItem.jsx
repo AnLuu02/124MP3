@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import album_default from "../../../../../../public/images/album_default.png";
+import album_default from "../../../../../assets/images/album_default.png";
 import AlertDialog from '../../../../../components/AlertDialog/AlertDialog';
 import { db } from "../../../../../components/FireBase/firebaseConfig";
 import { notifyError, notifySuccess } from "../../../../../utils/toastifyMessage";

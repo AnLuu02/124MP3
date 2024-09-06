@@ -35,9 +35,7 @@ function Search() {
 
     }
 
-    // const { get } = useFetch(
-    //     "https://jsonplaceholder.typicode.com/"
-    // );
+    // const { get }  = useFetch(import.meta.env.VITE_API_BASE_URL);
 
     // const fetchApiHintSearch = async () => {
     //     const result = await get("posts");

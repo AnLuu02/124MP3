@@ -5,7 +5,7 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import avatar_default from "../../../public/images/avata_default.jpg";
+import default_avatar from "../../assets/images/default_avatar.png";
 import { db } from "../../components/FireBase/firebaseConfig";
 import MenuSongOptions from "../../components/Popper/MenuSongOptions/MenuSongOptions";
 import AudioRun from "../../components/SongItem/AudioRun/AudioRun";
@@ -150,7 +150,7 @@ function Footer() {
                 <div className={cx("leftMusicFixed")}>
                     <NavLink to={`/album/noi-bat`}>
                         <div className={cx("imgMusicFixed", isPlay && zoomOut ? "zoomOut" : "")}>
-                            <img src={song.thumbnailUrl ?? avatar_default} alt="" />
+                            <img src={song.thumbnailUrl ?? default_avatar} alt="" />
                             {isPlay && zoomOut && <AudioRun isPlay={isPlay} songId={song.id} currentSongId={song.id} />}
                         </div>
                     </NavLink>
