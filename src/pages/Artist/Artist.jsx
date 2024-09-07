@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 import default_avatar from "../../assets/images/default_avatar.png";
 import SongOptions from "../../components/SongItem/SongOptions/SongOptions";
 import { handleShowModal } from "../../components/store/ModalReducer/modalReducer";
-import AlbumItemCircle from "../../components/WidgetAlbum/AlbumItemCircle/AlbumItemCircle";
+import WidgetAlbum from "../../components/WidgetAlbum/WidgetAlbum";
 import useFetch from "../../Custom hooks/useFetch";
 import styles from "./Artist.module.scss";
 const cx = classNames.bind(styles);
@@ -18,6 +18,7 @@ function Artist() {
     const [songOwner, setSongOwner] = useState([]);
     const [artistSuggest, setArtistSuggest] = useState([]);
 
+    const [loadingArtistSuggest, setLoadingArtistSuggest] = useState(true);
 
     const song = useSelector(state => state.song.song);
 
@@ -31,7 +32,7 @@ function Artist() {
         get(`artist?name=${params.artist}`)
             .then((data) => {
                 if (data) {
-                    setArtist(data);
+                    setArtist(data[0]);
                 }
 
             })
@@ -45,12 +46,16 @@ function Artist() {
         get(`artist?limit=10&except=${nameArtist}`)
             .then((data) => {
                 if (data) {
+                    setLoadingArtistSuggest(false)
                     setArtistSuggest(data);
                 }
             })
-            .catch((error) => console.log("Goi API không được.", error));
+            .catch((error) => {
+                setLoadingArtistSuggest(true)
+                console.log("Goi API không được.", error)
+            });
 
-    }, [])
+    }, [params.artist])
 
     useEffect(() => {
         get(`musics?artistId=${artist?.id}`)
@@ -139,19 +144,9 @@ function Artist() {
                 </div>
 
                 <ul className={cx("list_artist_other")}>
-                    {artistSuggest.length > 0
-                        ?
-                        artistSuggest.map((item) => {
-                            return (
-                                <AlbumItemCircle key={item?.id} data={item} />
-                            )
-                        })
-
-
-                        :
-                        "Đang cập nhật"
+                    {
+                        <WidgetAlbum data={artistSuggest} q={"gợi-ý-nghệ-sĩ"} artistWidget={true} loading={loadingArtistSuggest} />
                     }
-
                 </ul >
             </div >
 

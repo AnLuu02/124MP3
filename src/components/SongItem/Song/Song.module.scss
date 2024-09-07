@@ -1,18 +1,10 @@
 .song {
-    span {
-        all: unset !important;
-    }
 
     &:hover,
     &.active {
         background: rgba(256, 256, 256, 0.1) !important;
         border-radius: 6px !important;
         z-index: 104;
-
-        .thumbnailSong .imgSong {
-            opacity: 0.4;
-        }
-
     }
 
 
@@ -36,18 +28,19 @@
         .playSong.pause {
             opacity: 1 !important;
         }
+
+        .thumbnailSong {
+            .imgSong {
+                opacity: .4;
+                border-radius: 4px;
+            }
+        }
     }
-
-
 
     &:not(.showMenu) {
         z-index: 104 !important;
     }
 
-    &.active .thumbnailSong .imgSong {
-        opacity: .4;
-        border-radius: 4px;
-    }
 
     .contentSong {
         width: 100%;
@@ -55,6 +48,10 @@
         align-items: center;
         color: white;
 
+        span {
+            max-width: unset;
+            max-height: unset;
+        }
 
         .thumbnailSong {
             position: relative;
@@ -65,6 +62,7 @@
             align-items: center;
 
             &>span {
+                all: unset;
                 width: 100% !important;
                 height: 100% !important;
 
@@ -90,6 +88,16 @@
                 opacity: 0;
                 cursor: pointer;
             }
+
+            .skeleton_image {
+                position: relative;
+                width: 60px !important;
+                height: 60px !important;
+                border-radius: 4px;
+                display: flex;
+                align-items: center;
+                background-color: gray;
+            }
         }
 
         .desSong {
@@ -105,9 +113,6 @@
                 font-size: 12px;
                 color: white;
             }
-
-
-
         }
 
     }

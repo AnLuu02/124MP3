@@ -80,10 +80,25 @@
     .searchBody {
         margin-top: 40px;
 
+        .title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            a {
+                color: rgba(255, 255, 255, 0.4);
+                font-size: 14px;
+
+                &:hover {
+                    color: rgba(255, 255, 255, 0.8);
+                }
+            }
+
+        }
+
         h3 {
             font-size: 20px;
             font-weight: bold;
-            margin-bottom: 20px;
         }
 
         .hotSong {

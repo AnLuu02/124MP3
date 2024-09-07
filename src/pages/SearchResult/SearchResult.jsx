@@ -3,10 +3,11 @@ import { faBars, faCompactDisc, faIcons } from "@fortawesome/free-solid-svg-icon
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import Song from "../../components/SongItem/Song/Song";
+import SongOptions from "../../components/SongItem/SongOptions/SongOptions";
 import WidgetAlbum from "../../components/WidgetAlbum/WidgetAlbum";
 import useFetch from "../../Custom hooks/useFetch";
 import { formatPathname } from "../../utils/formatPatnameFunction";
+import WidgetHot from "./ArtistWidget/WidgetHot";
 import CustomizedMenus from "./Mobile/Menu";
 import styles from "./SearchResult.module.scss";
 const cx = classNames.bind(styles);
@@ -90,7 +91,7 @@ function SearchResult() {
         const searchParams = new URLSearchParams(location.search);
         setQuery(searchParams.get('q'));
 
-        get(`search?q=${searchParams.get('q')}`)
+        get(`search?q=${searchParams.get('q')}&limit=4`)
             .then((data) => {
                 console.log(data)
                 setValue(data)
@@ -134,24 +135,25 @@ function SearchResult() {
                     <h3>Nổi bật </h3>
                     <ul className={cx("music", "list_music")} >
                         {/* {value?.musics?.length > 0 && value?.musics?.map((item, index) => <Song key={item.id} classNames={cx("custom")} songId={item.id} indexSong={index} dataSong={item} />)} */}
-                        <Song key={1} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} />
-                        <Song key={2} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} />
-                        <Song key={3} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} />
+                        {/* <Song key={1} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} /> */}
+                        {/* <Song key={2} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} /> */}
+                        {/* <Song key={3} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} /> */}
+                        <WidgetHot loading={true} />
+                        <WidgetHot loading={true} />
+                        <WidgetHot loading={true} />
                     </ul>
                 </div>
 
                 <div className={cx("widget", "songResult")}>
-                    <h3>Bài hát</h3>
+                    <div className={cx("title")}>
+                        <h3>Bài hát</h3>
+                        <NavLink to={`/tim-kiem/bai-hat?q=${query}`} className={cx("seeAll")}>Xem thêm</NavLink>
+                    </div>
                     <div className={cx("listSong")}>
                         <ul className={cx("music")}>
-                            {/* <SongOptions key={1} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} />
-                            <SongOptions key={1} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} />
-                            <SongOptions key={1} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} />
-                            <SongOptions key={1} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} /> */}
-
                             {
                                 value?.musics?.length > 0 && value?.musics?.map((item, index) => {
-                                    return <Song key={item.id} classNames={cx("custom")} songId={item.id} indexSong={index} dataSong={item} />
+                                    return <SongOptions key={item.id} classNames={cx("custom")} songId={item.id} indexSong={index} dataSong={item} />
                                 })
                             }
                         </ul>
@@ -160,11 +162,11 @@ function SearchResult() {
 
                 <div className={cx("widget", "playlist")}>
                     <h3>Playlist/Album</h3>
-                    <WidgetAlbum />
+                    <WidgetAlbum loading={true} />
                 </div>
                 <div className={cx("widget", "mv", "playlist")}>
                     <h3>MV</h3>
-                    <WidgetAlbum />
+                    <WidgetAlbum loading={true} />
                 </div>
             </div>
         </div>

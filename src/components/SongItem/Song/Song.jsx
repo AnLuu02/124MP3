@@ -1,5 +1,6 @@
 import { faEllipsis, faPlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Skeleton } from "@mui/material";
 import classNames from "classnames/bind";
 import PropTypes, { object } from 'prop-types';
 import { useRef, useState } from "react";
@@ -14,7 +15,7 @@ import RenderArtist from "../RenderArtist/RenderArtist";
 import styles from "./Song.module.scss";
 const cx = classNames.bind(styles);
 
-function Song({ songId, indexSong, dataSong, classNames }) {
+function Song({ songId, indexSong, dataSong, classNames, loading }) {
     const [valueMenu, setValueMenu] = useState({});
     const dispatch = useDispatch();
     const isPlay = useSelector(state => state.song.isPlay);
@@ -47,40 +48,62 @@ function Song({ songId, indexSong, dataSong, classNames }) {
             >
                 <div className={cx("contentSong")}>
                     <div className={cx("thumbnailSong")}>
-                        {/* <img src={dataSong.thumbnailUrl ?? default_avatar} alt="" /> */}
-                        <LazyLoadImage
-                            src={dataSong.thumbnailUrl ?? default_avatar}
-                            alt=""
-                            effect="blur"
-                            className={cx("imgSong")}
-                        />
-                        <div
-                            className={
-                                cx(
-                                    "playSong",
-                                    isPlay && songId == song.id ? "active" : "pause"
-                                )
-                            }
-                            onClick={() => handleSong(dataSong)} >
-                            <FontAwesomeIcon className={cx("iconSong")} icon={faPlay} />
-                        </div>
-                        <AudioRun isPlay={isPlay} songId={songId} currentSongId={song.id} />
+                        {
+                            loading ?
+                                <div className={cx("skeleton_image")}>
+                                    <Skeleton variant="rectangular" animation="wave" sx={{ bgcolor: 'grey.600' }} />
+                                </div>
+                                :
+                                <>
+                                    <LazyLoadImage
+                                        src={dataSong.thumbnailUrl ?? default_avatar}
+                                        alt=""
+                                        effect="blur"
+                                        className={cx("imgSong")}
+                                    />
+                                    <div
+                                        className={
+                                            cx(
+                                                "playSong",
+                                                isPlay && songId == song.id ? "active" : "pause"
+                                            )
+                                        }
+                                        onClick={() => handleSong(dataSong)} >
+                                        <FontAwesomeIcon className={cx("iconSong")} icon={faPlay} />
+                                    </div>
+                                    <AudioRun isPlay={isPlay} songId={songId} currentSongId={song.id} />
+                                </>
+                        }
+
                     </div>
                     <div className={cx("desSong")}>
-                        <div className={cx("nameSong")}>{dataSong.name}</div>
-                        <RenderArtist dataArtist={dataSong.artists} />
-                        <div className={cx("timeUpLoad")}>{dataSong?.release} </div>
+                        {
+                            loading ?
+                                <>
+                                    <Skeleton animation="wave" sx={{ bgcolor: 'grey.600' }} />
+                                    <Skeleton animation="wave" width="60%" sx={{ bgcolor: 'grey.600' }} />
+                                    <Skeleton animation="wave" width="60%" sx={{ bgcolor: 'grey.600' }} />
+
+                                </>
+                                : <>
+                                    <div className={cx("nameSong")}>{dataSong.name}</div>
+                                    <RenderArtist dataArtist={dataSong.artists} />
+                                    <div className={cx("timeUpLoad")}>{dataSong?.releaseDate} </div>
+                                </>
+                        }
                     </div>
-                    <div className={cx("boxOption")} ref={refBoxOptions}>
-                        <MenuSongOptions valueMenu={valueMenu} ref={[refBoxOptions, refSong]}>
-                            <div
-                                className={cx("options")}
-                                onClick={handleClickShowMenu}
-                            >
-                                <FontAwesomeIcon className={cx("iconSong")} icon={faEllipsis} />
-                            </div>
-                        </MenuSongOptions>
-                    </div>
+                    {
+                        !loading && <div className={cx("boxOption")} ref={refBoxOptions}>
+                            <MenuSongOptions valueMenu={valueMenu} ref={[refBoxOptions, refSong]}>
+                                <div
+                                    className={cx("options")}
+                                    onClick={handleClickShowMenu}
+                                >
+                                    <FontAwesomeIcon className={cx("iconSong")} icon={faEllipsis} />
+                                </div>
+                            </MenuSongOptions>
+                        </div>
+                    }
                 </div>
             </li >
         </>
@@ -90,7 +113,8 @@ Song.propTypes = {
     dataSong: object,
     songId: PropTypes.number.isRequired,
     indexSong: PropTypes.number.isRequired,
-    classNames: PropTypes.string
+    classNames: PropTypes.string,
+    loading: PropTypes.bool
 };
 
 export default Song;
