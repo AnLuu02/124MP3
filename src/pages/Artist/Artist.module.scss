@@ -12,6 +12,7 @@ li:hover {
         padding: 0;
     }
 
+
     .header_view_artist {
         min-height: 300px;
         background: linear-gradient(to right, #6431d9, #546674);
@@ -27,18 +28,49 @@ li:hover {
             bottom: 0 !important;
 
             .left_view_header {
+                width: 140px;
+                height: 140px;
+                margin-right: 30px;
+
+                // span {
+                //     max-width: unset !important;
+                //     max-height: unset !important;
+
+                // }
+                span {
+                    max-width: unset !important;
+                    max-height: unset !important;
+                    width: 100% !important;
+                    height: 100% !important;
+
+                    img {
+                        width: 100% !important;
+                        height: 100% !important;
+                    }
+
+                }
+
                 img {
-                    width: 140px;
-                    height: 140px;
+                    width: 100%;
+                    height: 100%;
                     border: 1px solid white;
                     border-radius: 50%;
                     object-fit: cover;
-                    margin-right: 30px;
                 }
+
             }
 
+
             .right_view_header {
+                flex: 1;
                 color: white;
+
+                span {
+                    max-width: unset !important;
+                    max-height: unset !important;
+
+                }
+
 
                 .name_artist_profile {
                     display: flex;
@@ -52,6 +84,11 @@ li:hover {
 
                 }
 
+                .skeleton_name {
+                    width: 30%;
+                    height: 100px;
+                }
+
 
                 .more_info_artist {
                     display: flex;
@@ -62,6 +99,7 @@ li:hover {
                         display: flex;
                         align-items: center;
                         margin-right: 24px;
+                        width: 200px;
                     }
                 }
 

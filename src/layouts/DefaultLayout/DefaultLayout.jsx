@@ -21,6 +21,7 @@ function DefaultLayout({ children }) {
     const dispatch = useDispatch();
     const song = useSelector(state => state.song.song);
     const currentVolume = useSelector(state => state.song.volume);
+    const currentTimeSong = useSelector(state => state.song.currentTimeSong);
     const listSong = useSelector(state => state.listSong.listSong);
     const indexSong = useSelector(state => state.song.indexSong);
     const isPlay = useSelector(state => state.song.isPlay)
@@ -28,6 +29,7 @@ function DefaultLayout({ children }) {
     const isRandom = useSelector(state => state.song.isRandom)
     const typeModal = useSelector(state => state.modal.type);
     const objData = useSelector(state => state.modal.objData);
+    const tuanhac = useSelector(state => state.song.tuanhac);
     const [loading, setLoading] = useState(true);
 
 
@@ -80,6 +82,11 @@ function DefaultLayout({ children }) {
     }, [dispatch, isRepeat, isRandom, listSong, song, indexSong]);
 
 
+    useEffect(() => {
+        if (tuanhac != 0) {
+            videoRef.current.currentTime = tuanhac;
+        }
+    }, [tuanhac]);
 
     const handleTimeUpDateSong = useCallback(() => {
         if (videoRef.current) {

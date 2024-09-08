@@ -10,7 +10,7 @@ import { db } from "../../components/FireBase/firebaseConfig";
 import MenuSongOptions from "../../components/Popper/MenuSongOptions/MenuSongOptions";
 import AudioRun from "../../components/SongItem/AudioRun/AudioRun";
 import RenderArtist from "../../components/SongItem/RenderArtist/RenderArtist";
-import { changeVolume, minuteTimeSong, nextSong, pauseSong, playSong, prevSong, randomSong, repeatSong, secondTimeSong, timeProgress, timeUpdateSong } from "../../components/store/songReducer";
+import { changeTimeSong, changeVolume, minuteTimeSong, nextSong, pauseSong, playSong, prevSong, randomSong, repeatSong, secondTimeSong, timeProgress, timeUpdateSong } from "../../components/store/songReducer";
 import { notifyError, notifySuccess } from "../../utils/toastifyMessage";
 import styles from "./Footer.module.scss";
 const cx = classNames.bind(styles);
@@ -61,9 +61,11 @@ function Footer() {
 
 
     const handleChangeTimeSong = useCallback((e) => {
-        if (currentTimeSong.current && currentTimeSong.current.duration) {
-            const seekTime = (currentTimeSong.current.duration / 100) * Number(e.target.value);
-            disPatch(timeUpdateSong({ currentTime: seekTime.toFixed(0), durationTime: currentTimeSong.current.duration }));
+        if (currentTimeSong.currentTime && currentTimeSong.durationTime) {
+            const seekTime = (currentTimeSong.durationTime / 100) * Number(e.target.value);
+            disPatch(timeUpdateSong({ currentTime: seekTime.toFixed(0), durationTime: currentTimeSong.durationTime }));
+            disPatch(changeTimeSong(seekTime.toFixed(0)));
+
         }
     }, [currentTimeSong, disPatch]);
 
@@ -75,7 +77,7 @@ function Footer() {
     }, [disPatch]);
 
     const handleNextSong = useCallback(() => {
-        let currentIndex = indexSong + 1;
+        let currentIndex = !isRandom ? indexSong + 1 : indexSong + Math.floor(Math.random() * listSong.length);
         if (listSong.length && currentIndex > listSong.length - 1) {
             currentIndex = 0;
         }
@@ -83,7 +85,7 @@ function Footer() {
     }, [indexSong, listSong, disPatch]);
 
     const handlePrevSong = useCallback(() => {
-        let currentIndex = indexSong - 1;
+        let currentIndex = !isRandom ? indexSong - 1 : indexSong - Math.floor(Math.random() * listSong.length);
         if (listSong.length && currentIndex < 0) {
             currentIndex = listSong.length - 1;
         }
@@ -156,7 +158,7 @@ function Footer() {
                     </NavLink>
                     <div className={cx("desMusicFixed")}>
                         <div className={cx("nameMusicFixed")}><a>{song.name}</a></div>
-                        <RenderArtist classNames={cx("nameArtistFixed")} dataArtist={song.artist} />
+                        <RenderArtist classNames={cx("nameArtistFixed")} dataArtist={song.artists} />
 
                     </div>
                     <div className={cx("AnotherChoiceFixed")}>
@@ -212,7 +214,15 @@ function Footer() {
                     <div className={cx("sliderMusic")}>
                         <div className={cx("runTime")} ref={runTimeSongRef}>00:00</div>
                         <div className={cx("slider")}>
-                            <input onChange={handleChangeTimeSong} ref={progressRef} id={cx("progress")} className={cx("progress")} type="range" value={0} step="1" min="0" max="100" />
+                            <input
+                                onChange={handleChangeTimeSong}
+                                value={currentTimeSong}
+                                ref={progressRef} id={cx("progress")}
+                                className={cx("progress")}
+                                type="range"
+                                step="1" min="0" max="100"
+
+                            />
                             <div className={cx("progressColor")} ref={progressColorRef}></div>
                         </div>
                         <div className={cx("sumTime")} ref={totalTimeSongRef}>{song?.duration}</div>

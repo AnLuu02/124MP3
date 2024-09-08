@@ -8,6 +8,7 @@ const initialStateSong = {
     song: {},
     indexSong: -1,
     currentTimeSong: {},
+    tuanhac: 0,
     volume: 0.5,
 };
 
@@ -57,6 +58,9 @@ const musicSlice = createSlice({
         changeVolume: (state, action) => {
             state.volume = action.payload;
         },
+        changeTimeSong: (state, action) => {
+            state.tuanhac = action.payload;
+        }
 
     },
 });
@@ -83,9 +87,9 @@ const minuteTimeSong = state => {
 }
 
 //actions
-const { playSong, pauseSong, endedSong, timeUpdateSong, repeatSong, nextSong, prevSong, changeVolume, randomSong } = musicSlice.actions;
+const { playSong, pauseSong, endedSong, timeUpdateSong, repeatSong, nextSong, prevSong, changeVolume, randomSong, changeTimeSong } = musicSlice.actions;
 
-export { changeVolume, endedSong, minuteTimeSong, nextSong, pauseSong, playSong, prevSong, randomSong, repeatSong, secondTimeSong, timeProgress, timeUpdateSong };
+export { changeTimeSong, changeVolume, endedSong, minuteTimeSong, nextSong, pauseSong, playSong, prevSong, randomSong, repeatSong, secondTimeSong, timeProgress, timeUpdateSong };
 
 //reducer
 export const sliceSongReducer = musicSlice.reducer;

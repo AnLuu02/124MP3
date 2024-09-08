@@ -1,7 +1,7 @@
 import { faPlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from "classnames/bind";
-import { useCallback, useEffect } from "react";
+import { useCallback, useLayoutEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import useFetch from "../../Custom hooks/useFetch";
@@ -12,13 +12,15 @@ import styles from "./BXH.module.scss";
 
 const cx = classNames.bind(styles);
 function BXH() {
+    const [songBXH, setSongBXH] = useState([{}, {}, {}, {}, {}, {}, {}, {}, {}]);
     const dispatch = useDispatch();
     const listSong = useSelector(state => state.listSong.listSong);
-    const { get } = useFetch(import.meta.env.VITE_API_BASE_URL);
+    const { get, loading } = useFetch(import.meta.env.VITE_API_BASE_URL);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         get("musics?limit=12")
             .then((data) => {
+                setSongBXH(data);
                 dispatch(setListSong(data));
             })
             .catch((error) => console.log("Could not load products", error));
@@ -48,12 +50,9 @@ function BXH() {
             </div>
             <div className={cx("listSong")}>
                 <ul className={cx("music")}>
-                    {listSong.length <= 0
-                        ?
-                        <li>Không có bài hát nào</li>
-                        :
-                        listSong.map((song, index) => {
-                            return <SongOptions key={song.id} songId={song.id} indexSong={index} dataSong={song} isRank={true} />
+                    {
+                        Array.isArray(songBXH) && songBXH?.map((song, index) => {
+                            return <SongOptions key={song.id} songId={song.id} indexSong={index} dataSong={song} isRank={true} loading={loading} />
                         })
                     }
                 </ul>

@@ -83,51 +83,59 @@
 
     .rank {
 
-        width: 60px;
+        max-width: 7%;
+        min-width: 40px;
         height: 100%;
         position: relative;
-        font-size: 18px;
+        font-size: 24px;
         display: flex;
         justify-content: start;
         align-items: center;
-        margin-right: 20px;
+
 
         .indexRank {
             margin-right: 10px;
+            -webkit-text-fill-color: transparent;
+            /* Will override color (regardless of order) */
+            -webkit-text-stroke-width: 1px;
+            -webkit-text-stroke-color: white;
+            font-weight: bold;
 
             &[data-index="1"] {
-                color: lightblue;
-                font-size: 30px;
+                font-size: 32px;
                 font-size: bold;
+                -webkit-text-stroke-color: lightblue;
+
             }
 
             &[data-index="2"] {
-                font-size: 28px;
+                font-size: 32px;
                 font-size: bold;
-                color: lightgreen;
+                -webkit-text-stroke-color: lightgreen;
             }
 
             &[data-index="3"] {
-                font-size: 26px;
+                font-size: 32px;
                 font-size: bold;
-                color: red;
-            }
-        }
-
-        .stateRank {
-            position: absolute;
-            right: 5px;
-
-            .iconSong.up {
-                color: greenyellow;
-            }
-
-            .iconSong.down {
-                color: red;
+                -webkit-text-stroke-color: red;
             }
         }
 
 
+
+    }
+
+    .stateRank {
+        width: 20px;
+        margin-right: 20px;
+
+        .iconSong.up {
+            color: greenyellow;
+        }
+
+        .iconSong.down {
+            color: red;
+        }
     }
 
     .contentSong {
@@ -234,6 +242,46 @@
 
         }
 
+
+        &.skeleton {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            span {
+                max-width: unset !important;
+                max-height: unset !important;
+            }
+
+            .desSong {
+                width: 50% !important;
+            }
+
+            .skeleton1,
+            .skeleton2 {
+                display: flex;
+            }
+
+            .skeleton1 {
+                width: 10%;
+            }
+
+            .skeleton2 {
+                width: 40%;
+                justify-content: flex-end;
+                align-items: center;
+
+                span {
+                    max-width: unset !important;
+                    max-height: unset !important;
+                    width: 30px !important;
+                    height: 30px !important;
+                    border-radius: 50% !important;
+                    margin-left: 10px !important;
+                }
+            }
+        }
 
     }
 

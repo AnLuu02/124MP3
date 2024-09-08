@@ -82,7 +82,12 @@ const dataMenuMobile = [
 function SearchResult() {
     // const [SearchResult, setSearchResult] = useState([]);
     const [query, setQuery] = useState("");
-    const [value, setValue] = useState([]);
+    // const [value, setValue] = useState([]);
+    const [songs, setSongs] = useState([{}, {}, {}, {}]);
+    const [loadingSongs, setLoadingSongs] = useState(false);
+
+    const [artists, setArtists] = useState([{}, {}, {}, {}]);
+
 
     const location = useLocation();
 
@@ -94,9 +99,17 @@ function SearchResult() {
         get(`search?q=${searchParams.get('q')}&limit=4`)
             .then((data) => {
                 console.log(data)
-                setValue(data)
+                // setValue(data)
+                if (data && data.musics.length > 0) {
+                    setSongs(data.musics)
+                }
+                if (data && data.artists.length > 0) {
+                    setArtists(data.artists)
+                }
+                setLoadingSongs(false)
             })
             .catch(e => {
+                setLoadingSongs(true)
                 console.log(e)
             })
 
@@ -151,9 +164,10 @@ function SearchResult() {
                     </div>
                     <div className={cx("listSong")}>
                         <ul className={cx("music")}>
+                            {console.log(loadingSongs)}
                             {
-                                value?.musics?.length > 0 && value?.musics?.map((item, index) => {
-                                    return <SongOptions key={item.id} classNames={cx("custom")} songId={item.id} indexSong={index} dataSong={item} />
+                                Array.isArray(songs) && songs?.map((item, index) => {
+                                    return <SongOptions key={item.id} classNames={cx("custom")} songId={item.id} indexSong={index} dataSong={item} loading={loadingSongs} />
                                 })
                             }
                         </ul>

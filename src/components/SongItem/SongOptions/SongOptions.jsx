@@ -43,15 +43,23 @@ function SongOptions({
             {loading ?
                 <li key={songId} ref={refSong} className={cx("song", classNames,)}>
 
-                    <div className={cx("contentSong")}>
+                    <div className={cx("contentSong", "skeleton")}>
                         <div className={cx("thumbnailSong")}>
                             <div className={cx("skeleton_image")}>
                                 <Skeleton variant="rectangular" animation="wave" sx={{ bgcolor: 'grey.600' }} />
                             </div>
                         </div>
                         <div className={cx("desSong")}>
-                            <Skeleton animation="wave" sx={{ bgcolor: 'grey.600' }} />
+                            <Skeleton animation="wave" sx={{ bgcolor: 'grey.600' }} width={"80%"} />
                             <Skeleton animation="wave" width="60%" sx={{ bgcolor: 'grey.600' }} />
+                        </div>
+                        <div className={cx("skeleton1")}>
+                            <Skeleton animation="wave" sx={{ bgcolor: 'grey.600' }} width={"40%"} />
+                        </div>
+                        <div className={cx("skeleton2")}>
+                            <Skeleton animation="wave" sx={{ bgcolor: 'grey.600' }} height={"100%"} />
+                            <Skeleton animation="wave" sx={{ bgcolor: 'grey.600' }} height={"100%"} />
+                            <Skeleton animation="wave" sx={{ bgcolor: 'grey.600' }} height={"100%"} />
                         </div>
                     </div>
                 </li>
@@ -70,18 +78,21 @@ function SongOptions({
                         <div className={cx('idSong')}>
                             <FontAwesomeIcon className={cx("iconSong")} icon={faMusic} />
                         </div>}
-                    {isRank && <div className={cx('rank')}>
-                        <div className={cx('indexRank')} data-index={indexSong + 1}>{indexSong + 1}</div>
-                        <div className={cx('stateRank')}>
-                            {
-                                indexSong % 2 === 0 ?
-                                    <FontAwesomeIcon className={cx("iconSong", "up")} icon={faCaretUp} />
-                                    :
-                                    <FontAwesomeIcon className={cx("iconSong", "down")} icon={faCaretDown} />
-                            }
-
+                    {isRank &&
+                        <> <div className={cx('rank')}>
+                            <div className={cx('indexRank')} data-index={indexSong + 1}>{indexSong + 1}</div>
                         </div>
-                    </div>}
+                            <div className={cx('stateRank')}>
+                                {
+                                    indexSong % 2 === 0 ?
+                                        <FontAwesomeIcon className={cx("iconSong", "up")} icon={faCaretUp} />
+                                        :
+                                        <FontAwesomeIcon className={cx("iconSong", "down")} icon={faCaretDown} />
+                                }
+
+                            </div>
+                        </>
+                    }
                     <div className={cx("contentSong")}>
                         <div className={cx("thumbnailSong")}>
                             <LazyLoadImage

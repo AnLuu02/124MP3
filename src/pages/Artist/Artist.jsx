@@ -1,7 +1,9 @@
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Skeleton } from "@mui/material";
 import classNames from "classnames/bind";
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import default_avatar from "../../assets/images/default_avatar.png";
@@ -15,32 +17,47 @@ const cx = classNames.bind(styles);
 function Artist() {
     const dispatch = useDispatch();
     const [artist, setArtist] = useState({});
-    const [songOwner, setSongOwner] = useState([]);
+    const [songOwner, setSongOwner] = useState([{}, {}, {}, {}]);
     const [artistSuggest, setArtistSuggest] = useState([]);
 
+    const [loadingArtist, setLoadingArtist] = useState(true);
+    const [loadingSongOwner, setLoadingSongOwner] = useState(true);
     const [loadingArtistSuggest, setLoadingArtistSuggest] = useState(true);
-
     const song = useSelector(state => state.song.song);
-
-
-
     let params = useParams();
 
     const { get } = useFetch(import.meta.env.VITE_API_BASE_URL);
 
-    useEffect(() => {
-        get(`artist?name=${params.artist}`)
-            .then((data) => {
-                if (data) {
-                    setArtist(data[0]);
+    useLayoutEffect(() => {
+        const fetchDataArtist = async () => {
+            let artist = await get(`artist?name=${params.artist}`);
+            if (artist) {
+                setLoadingArtist(false)
+                setArtist(artist[0]);
+                let songOwner = await get(`musics?artistId=${artist[0].id}`);
+                if (songOwner) {
+                    setLoadingSongOwner(false)
+                    setSongOwner(songOwner);
                 }
+            }
+        }
 
-            })
-            .catch((error) => console.log("Goi API không được.", error));
+        fetchDataArtist();
 
+        // get(`artist?name=${params.artist}`)
+        //     .then((data) => {
+        //         if (data) {
+        //             setLoadingArtist(false)
+        //             setArtist(data[0]);
+        //         }
+        //     })
+        //     .catch((error) => {
+        //         setLoadingArtist(true)
+        //         console.log("Goi API không là.", error)
+        //     });
     }, [params.artist])
 
-    useEffect(() => {
+    useLayoutEffect(() => {
 
         let nameArtist = params.artist;
         get(`artist?limit=10&except=${nameArtist}`)
@@ -57,18 +74,20 @@ function Artist() {
 
     }, [params.artist])
 
-    useEffect(() => {
-        get(`musics?artistId=${artist?.id}`)
-            .then((data) => {
-                if (data) {
-                    setSongOwner(data);
-                }
-            })
-            .catch((error) => console.log("Goi API không được.", error));
+    // useLayoutEffect(() => {
+    //     get(`musics?artistId=${artist?.id}`)
+    //         .then((data) => {
+    //             if (data) {
+    //                 setLoadingSongOwner(false)
+    //                 setSongOwner(data);
+    //             }
+    //         })
+    //         .catch((error) => {
+    //             setLoadingSongOwner(true)
+    //             console.log("Goi API không là.", error)
+    //         });
 
-    }, [artist?.id])
-
-
+    // }, [artist?.id])
 
     function renderDesArtist(des) {
         if (des?.split("")?.length > 350) {
@@ -87,21 +106,52 @@ function Artist() {
                 {/*rgba(41, 21, 71, 0.8)*/}
                 <div className={cx("content_header")}>
                     <div className={cx("left_view_header")}>
-                        <img src={artist?.profileImage ?? default_avatar} alt="" className={cx("avatar_artist")} />
+                        {loadingArtist
+                            ?
+                            <Skeleton variant="circular" animation="wave" sx={{ bgcolor: 'grey.600' }} width="100%" height="100%" />
+                            :
+                            <LazyLoadImage
+                                src={artist?.profileImage}
+                                alt="avatar"
+                                effect="blur"
+                                className={cx("avatar_artist_profile")}
+                            />
+                            /* <img src={artist?.profileImage ?? default_avatar} alt="" className={cx("avatar_artist")} /> */
+                        }
                     </div>
                     <div className={cx("right_view_header")}>
-                        <div className={cx("name_artist_profile")}>
-                            <h1>{artist?.name} </h1>
-                        </div>
+                        {loadingArtist
+                            ?
+                            <div className={cx("skeleton_name")}>
+                                <Skeleton variant="text" animation="wave" sx={{ bgcolor: 'grey.600' }} width="100%" height="100%" />
+                            </div>
+                            :
+                            <div className={cx("name_artist_profile")}>
+                                <h1>{artist?.name} </h1>
+                            </div>
+                        }
                         <div className={cx("more_info_artist")}>
                             <div className={cx("care_artist")}>
-                                <div style={{ marginRight: "4px" }}>{artist?.followers || "19.952"}</div>
-                                người quan tâm
+                                {loadingArtist
+                                    ?
+                                    <Skeleton variant="text" animation="wave" sx={{ bgcolor: 'grey.600' }} width="100%" height="100%" />
+                                    :
+                                    <><div style={{ marginRight: "4px" }}>{artist?.followers || "19.952"}</div>
+                                        người quan tâm</>
+                                }
                             </div>
-                            <button className={cx("follow_artist")}>
-                                <FontAwesomeIcon icon={faUserPlus} className={cx("icon")} />
-                                QUAN TÂM
-                            </button>
+
+                            {loadingArtist
+                                ?
+                                <Skeleton variant="text" animation="wave" sx={{ bgcolor: 'grey.600' }} width="20%" height="100%" />
+                                :
+                                <button className={cx("follow_artist")}>
+                                    <FontAwesomeIcon icon={faUserPlus} className={cx("icon")} />
+                                    QUAN TÂM
+                                </button>
+                            }
+
+
                         </div>
                     </div>
                 </div>
@@ -127,8 +177,8 @@ function Artist() {
                         <div className={cx("listSong")}>
                             <ul className={cx("music")}>
                                 {
-                                    songOwner?.length > 0 ? songOwner?.map((song, index) => {
-                                        return <SongOptions key={song?.id} classNames={cx("custom")} songId={song?.id} indexSong={index} dataSong={song} showIdSong={false} showTimeUpLoad={false} />
+                                    Array.isArray(songOwner) ? songOwner?.map((song, index) => {
+                                        return <SongOptions key={song?.id} classNames={cx("custom")} songId={song?.id} indexSong={index} dataSong={song} showIdSong={false} showTimeUpLoad={false} loading={loadingSongOwner} />
                                     }) : ""
                                 }
                             </ul>
@@ -149,8 +199,6 @@ function Artist() {
                     }
                 </ul >
             </div >
-
-
             <div className={cx("top_music", "about_artist")} >
                 <div className={cx("title")}>
                     Về {artist?.name}
