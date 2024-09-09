@@ -84,9 +84,10 @@ function SearchResult() {
     const [query, setQuery] = useState("");
     // const [value, setValue] = useState([]);
     const [songs, setSongs] = useState([{}, {}, {}, {}]);
-    const [loadingSongs, setLoadingSongs] = useState(false);
+    const [loadingSongs, setLoadingSongs] = useState(true);
 
     const [artists, setArtists] = useState([{}, {}, {}, {}]);
+    const [loadingArtists, setLoadingArtists] = useState(true);
 
 
     const location = useLocation();
@@ -95,21 +96,24 @@ function SearchResult() {
     useEffect(() => {
         const searchParams = new URLSearchParams(location.search);
         setQuery(searchParams.get('q'));
-
+        setLoadingSongs(true)
+        setSongs([{}, {}, {}, {}]);
         get(`search?q=${searchParams.get('q')}&limit=4`)
             .then((data) => {
-                console.log(data)
-                // setValue(data)
+                // setValue(data)   
                 if (data && data.musics.length > 0) {
                     setSongs(data.musics)
+                    setLoadingSongs(false)
                 }
                 if (data && data.artists.length > 0) {
+
                     setArtists(data.artists)
+                    setLoadingArtists(false)
                 }
-                setLoadingSongs(false)
             })
             .catch(e => {
                 setLoadingSongs(true)
+                setLoadingArtists(true)
                 console.log(e)
             })
 
@@ -151,9 +155,26 @@ function SearchResult() {
                         {/* <Song key={1} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} /> */}
                         {/* <Song key={2} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} /> */}
                         {/* <Song key={3} classNames={cx("custom")} songId={1} indexSong={1} dataSong={{ src: "123.mp3", name: "456" }} /> */}
-                        <WidgetHot loading={true} />
-                        <WidgetHot loading={true} />
-                        <WidgetHot loading={true} />
+
+                        {
+                            Array.isArray(artists) && artists.length > 0
+                            &&
+                            <WidgetHot
+                                data={artists[0]}
+                                q={query}
+                                loading={loadingArtists}
+                                isArtist={true}
+                            />
+                        }
+
+
+
+                        {/* <WidgetHot loading={true} /> */}
+                        {/* <WidgetHot loading={true} /> */}
+                        {/* <WidgetHot loading={true} /> */}
+
+
+
                     </ul>
                 </div>
 
@@ -164,7 +185,6 @@ function SearchResult() {
                     </div>
                     <div className={cx("listSong")}>
                         <ul className={cx("music")}>
-                            {console.log(loadingSongs)}
                             {
                                 Array.isArray(songs) && songs?.map((item, index) => {
                                     return <SongOptions key={item.id} classNames={cx("custom")} songId={item.id} indexSong={index} dataSong={item} loading={loadingSongs} />

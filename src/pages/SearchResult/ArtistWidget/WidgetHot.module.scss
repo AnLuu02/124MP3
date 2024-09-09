@@ -5,12 +5,9 @@
     padding: 10px;
     border-radius: 4px;
     transition: 0.1s;
-    width: 32%;
+    width: 32% !important;
     background: rgba(255, 255, 255, 0.1) !important;
 
-    span {
-        all: unset;
-    }
 
     &::after {
         content: "";
@@ -87,6 +84,37 @@
         color: white;
         overflow: hidden;
 
+        &.skeleton {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            span {
+                max-width: unset !important;
+                max-height: unset !important;
+            }
+
+            .desSong {
+                width: 60% !important;
+            }
+
+            .skeleton2 {
+                width: 20%;
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+
+                span {
+                    max-width: unset !important;
+                    max-height: unset !important;
+                    width: 30px !important;
+                    height: 30px !important;
+                    border-radius: 50% !important;
+                    margin-left: 10px !important;
+                }
+            }
+        }
 
         .thumbnailSong {
             position: relative;
@@ -102,6 +130,8 @@
             }
 
             span {
+                max-width: unset !important;
+                max-height: unset !important;
                 position: absolute;
                 width: 100% !important;
                 height: 100% !important;
@@ -112,6 +142,17 @@
                     height: 100% !important;
                     border-radius: 4px;
                 }
+            }
+
+            .skeleton_image {
+                position: relative;
+                overflow: hidden;
+                width: 84px !important;
+                height: 84px !important;
+                border-radius: 4px;
+                display: flex;
+                align-items: center;
+                background-color: gray;
             }
 
 
@@ -131,6 +172,7 @@
 
         .desSong {
             flex: 1;
+            margin-right: 20%;
             padding-left: 10px;
             font-size: 14px;
             white-space: nowrap;
@@ -149,8 +191,8 @@
             }
 
             .name {
-                width: max-content;
                 max-width: 80% !important;
+                width: max-content;
                 color: white;
                 font-weight: bold;
                 white-space: nowrap;
@@ -159,6 +201,14 @@
                 position: relative;
                 text-overflow: ellipsis;
                 font-size: 14px;
+
+                &:hover {
+                    &:hover {
+                        cursor: pointer;
+                        text-decoration: underline;
+                        color: aqua;
+                    }
+                }
             }
 
 

@@ -10,7 +10,7 @@ import { useLocation, useParams } from "react-router-dom";
 import album_default from "../../assets/images/album_default.png";
 import default_avatar from "../../assets/images/default_avatar.png";
 import { db } from "../../components/FireBase/firebaseConfig";
-import Loader4Doc from "../../components/Loader1/Loader4Doc";
+import LoadingText from "../../components/Loader1/LoadingText";
 import AudioRun from "../../components/SongItem/AudioRun/AudioRun";
 import RenderArtist from "../../components/SongItem/RenderArtist/RenderArtist";
 import SongOptions from "../../components/SongItem/SongOptions/SongOptions";
@@ -228,7 +228,7 @@ function DetailSong() {
 
 
                 <div className={cx("layoutRight")}>
-                    {loading ? <div className={cx("loader")}><Loader4Doc /></div>
+                    {loading ? <div className={cx("loader")}><LoadingText /></div>
                         :
                         songs?.length > 0 ? (
                             <>

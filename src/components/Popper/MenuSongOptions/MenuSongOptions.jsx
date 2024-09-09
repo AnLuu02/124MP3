@@ -4,13 +4,14 @@ import { faAngleRight, faCode, faLink, faPlus, faShare, faTowerBroadcast, faWave
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Tippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { arrayUnion, collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
 import PropTypes from 'prop-types';
-import { forwardRef, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import create_playlist_SVG from '../../../assets/images/create_playlist_SVG.svg';
+import add_playlist from "../../../assets/images/SVG/playlist_add.svg";
+import { notifyError, notifySuccess, notifyWarning } from "../../../utils/toastifyMessage";
 import { db } from "../../FireBase/firebaseConfig";
-import LoadingText from "../../Loader1/LoadingText";
 import stylesSong from "../../SongItem/Song/Song.module.scss";
 import stylesSongOptions from "../../SongItem/SongOptions/SongOptions.module.scss";
 import { handleShowModal } from "../../store/ModalReducer/modalReducer";
@@ -59,10 +60,13 @@ const MenuSongOptions = forwardRef(
     function MenuSongOptions({ children, valueMenu, placement = "auto-end" }, ref) {
         const [inputValue, setInputValue] = useState("");
         const [playlists, setPlaylists] = useState([]);
+        const [playlistsConst, setPlaylistsConst] = useState([]);
+
         const [loading, setLoading] = useState(true);
         const [error, serError] = useState(null);
         const dispatch = useDispatch();
         const user = useSelector(state => state.user.user);
+
 
         const getAllPlaylist = async () => {
             console.log("Callll");
@@ -76,6 +80,7 @@ const MenuSongOptions = forwardRef(
                         documents.push({ id: doc.id, ...doc.data() });
                     });
                     setPlaylists(documents);
+                    setPlaylistsConst(documents);
                 } catch (e) {
                     console.error('Error getting documents:', e);
                     serError(e);
@@ -84,6 +89,59 @@ const MenuSongOptions = forwardRef(
                 }
             } else {
                 setLoading(false);
+            }
+        };
+
+
+        // const handleAddSongToPlaylist = async (docId, dataSong) => {
+        //     try {
+        //         const docRef = doc(db, 'playlistCollection', docId);
+        //         // Cập nhật tài liệu bằng cách thêm trường mới
+        //         await updateDoc(docRef, {
+        //             Song: arrayUnion({
+        //                 ...dataSong
+        //             })
+        //         });
+        //         notifySuccess({ message: "Thêm bài hát thành công!" });
+
+        //     } catch (error) {
+        //         console.error('Error adding/updating field: ', error);
+        //         notifyError({ message: "Đã có lỗi xảy ra!" });
+        //     }
+        // };
+
+        const handleAddSongToPlaylist = async (e, docId, dataSong) => {
+            const targetElement = e.target;
+
+            targetElement.style.pointerEvents = "none";
+
+            setTimeout(() => {
+                targetElement.style.pointerEvents = "auto";
+            }, 1500);
+            try {
+                const docRef = doc(db, 'playlistCollection', docId);
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    const playlistData = docSnap.data();
+                    const existingSongs = playlistData.Song || [];
+
+                    const songExists = existingSongs.some(song => song.id === dataSong.id);
+
+                    if (songExists) {
+                        notifyWarning({ message: "Bài hát đã tồn tại trong playlist!" });
+                    } else {
+                        await updateDoc(docRef, {
+                            Song: arrayUnion(dataSong)
+                        });
+                        notifySuccess({ message: "Thêm bài hát thành công!" });
+                    }
+                } else {
+                    notifyError({ message: "Playlist không tồn tại!" });
+                }
+            } catch (error) {
+                console.error('Error adding/updating field: ', error);
+                notifyError({ message: "Đã có lỗi xảy ra!" });
             }
         };
         const handleGetPlaylist = () => {
@@ -108,7 +166,9 @@ const MenuSongOptions = forwardRef(
                 </div>
             </div>
         );
-
+        useEffect(() => {
+            setPlaylists(playlistsConst.filter(item => item.namePlaylist.includes(inputValue)))
+        }, [inputValue])
         const renderAddPlaylist = (attrs) => (
             <div className={cx('menu-list', 'customAddPlaylist')} tabIndex="-1" {...attrs}>
                 <div className={cx('wrapper', 'menu-popper')}>
@@ -117,7 +177,6 @@ const MenuSongOptions = forwardRef(
                     </div>
                     <div className={cx("menu")}>
                         <div className={cx("menu-item", "createPlaylist")} onClick={onShow}>
-                            {/* <FontAwesomeIcon className={cx("icon")} icon={faPlus} /> */}
                             <div className={cx("icon")}>
                                 <img src={create_playlist_SVG} />
                             </div>
@@ -126,22 +185,27 @@ const MenuSongOptions = forwardRef(
                         <ul className={cx("listPlaylist")}>
                             {loading
                                 ?
-                                <LoadingText />
+                                <div className={cx("loadingText")}>Loading...</div>
                                 :
-                                Array.isArray(playlists) && playlists.map((item, index) => (
-                                    <li key={index} className={cx("itemPlaylist")}>
-                                        <div className={cx("icon")}>
-                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                height="24px"
-                                                viewBox="0 -960 960 960"
-                                                width="24px"
-                                                fill="#e8eaed">
-                                                <path d="M400-240q50 0 85-35t35-85v-280h120v-80H460v256q-14-8-29-12t-31-4q-50 0-85 35t-35 85q0 50 35 85t85 35Zm80 160q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
-                                            </svg>
-                                        </div>
-                                        <div className={cx("title")}>{item?.namePlaylist}</div>
-                                    </li>
-                                ))
+                                Array.isArray(playlists) && playlists.length > 0
+                                    ?
+                                    playlists.map((item, index) => (
+                                        <li key={index} className={cx("itemPlaylist")} onClick={(e) => handleAddSongToPlaylist(e, item.id, valueMenu)}>
+                                            <div className={cx("icon")}>
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                    height="24px"
+                                                    viewBox="0 -960 960 960"
+                                                    width="24px"
+                                                    fill="#e8eaed">
+                                                    <path d="M400-240q50 0 85-35t35-85v-280h120v-80H460v256q-14-8-29-12t-31-4q-50 0-85 35t-35 85q0 50 35 85t85 35Zm80 160q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
+                                                </svg>
+                                            </div>
+                                            <div className={cx("title")}>{item?.namePlaylist}</div>
+                                            <img src={add_playlist} />
+                                        </li>
+                                    ))
+                                    :
+                                    <div className={cx("loadingText")}>Danh sách rỗng</div>
                             }
                         </ul>
 

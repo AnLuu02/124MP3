@@ -5,6 +5,9 @@ import { useCallback, useLayoutEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import useFetch from "../../Custom hooks/useFetch";
+import pause_song_svg from "../../assets/images/SVG/pause_song_circle.svg";
+import play_song_svg from "../../assets/images/SVG/play_song_circle.svg";
+
 import SongOptions from "../../components/SongItem/SongOptions/SongOptions";
 import { setListSong } from "../../components/store/listSongReducer";
 import { playSong } from "../../components/store/songReducer";
@@ -15,6 +18,7 @@ function BXH() {
     const [songBXH, setSongBXH] = useState([{}, {}, {}, {}, {}, {}, {}, {}, {}]);
     const dispatch = useDispatch();
     const listSong = useSelector(state => state.listSong.listSong);
+    const isPlay = useSelector(state => state.song.isPlay);
     const { get, loading } = useFetch(import.meta.env.VITE_API_BASE_URL);
 
     useLayoutEffect(() => {
@@ -36,7 +40,14 @@ function BXH() {
         <div className={cx("bxh")} id={cx("bxh")}>
             <h1 onCopy={e => e.preventDefault()} className={cx("header")}>
                 BXH Nhạc Mới
-                <FontAwesomeIcon icon={faPlay} id={cx("randomSong")} onClick={handleRandomSong} />
+                {/* <FontAwesomeIcon icon={faPlay} id={cx("randomSong")} onClick={handleRandomSong} /> */}
+                {
+                    !isPlay
+                        ?
+                        <img src={play_song_svg} alt="" onClick={handleRandomSong} />
+                        :
+                        <img src={pause_song_svg} alt="" onClick={handleRandomSong} />
+                }
             </h1>
             <div className={cx("header", "mobile")}>
                 <h2>Nhạc mới phát hành</h2>

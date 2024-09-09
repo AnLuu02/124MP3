@@ -2,7 +2,7 @@ import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Skeleton } from "@mui/material";
 import classNames from "classnames/bind";
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -15,20 +15,25 @@ import styles from "./Artist.module.scss";
 const cx = classNames.bind(styles);
 
 function Artist() {
-    const dispatch = useDispatch();
     const [artist, setArtist] = useState({});
     const [songOwner, setSongOwner] = useState([{}, {}, {}, {}]);
     const [artistSuggest, setArtistSuggest] = useState([]);
-
     const [loadingArtist, setLoadingArtist] = useState(true);
     const [loadingSongOwner, setLoadingSongOwner] = useState(true);
     const [loadingArtistSuggest, setLoadingArtistSuggest] = useState(true);
+    const dispatch = useDispatch();
     const song = useSelector(state => state.song.song);
     let params = useParams();
 
     const { get } = useFetch(import.meta.env.VITE_API_BASE_URL);
 
-    useLayoutEffect(() => {
+    useEffect(() => {
+        setArtist({})
+        setArtistSuggest([])
+        setSongOwner([{}, {}, {}, {}])
+        setLoadingArtist(true)
+        setLoadingArtistSuggest(true)
+        setLoadingSongOwner(true)
         const fetchDataArtist = async () => {
             let artist = await get(`artist?name=${params.artist}`);
             if (artist) {
@@ -43,21 +48,9 @@ function Artist() {
         }
 
         fetchDataArtist();
-
-        // get(`artist?name=${params.artist}`)
-        //     .then((data) => {
-        //         if (data) {
-        //             setLoadingArtist(false)
-        //             setArtist(data[0]);
-        //         }
-        //     })
-        //     .catch((error) => {
-        //         setLoadingArtist(true)
-        //         console.log("Goi API không là.", error)
-        //     });
     }, [params.artist])
 
-    useLayoutEffect(() => {
+    useEffect(() => {
 
         let nameArtist = params.artist;
         get(`artist?limit=10&except=${nameArtist}`)
@@ -73,22 +66,6 @@ function Artist() {
             });
 
     }, [params.artist])
-
-    // useLayoutEffect(() => {
-    //     get(`musics?artistId=${artist?.id}`)
-    //         .then((data) => {
-    //             if (data) {
-    //                 setLoadingSongOwner(false)
-    //                 setSongOwner(data);
-    //             }
-    //         })
-    //         .catch((error) => {
-    //             setLoadingSongOwner(true)
-    //             console.log("Goi API không là.", error)
-    //         });
-
-    // }, [artist?.id])
-
     function renderDesArtist(des) {
         if (des?.split("")?.length > 350) {
             const temp = des?.split("")?.slice(0, 350)?.join("");
@@ -103,7 +80,6 @@ function Artist() {
     return (
         <div className={cx("view_artist", song.name ? "hasBottomMusicFixed" : "")}>
             <div className={cx("header_view_artist")}>
-                {/*rgba(41, 21, 71, 0.8)*/}
                 <div className={cx("content_header")}>
                     <div className={cx("left_view_header")}>
                         {loadingArtist
@@ -116,7 +92,6 @@ function Artist() {
                                 effect="blur"
                                 className={cx("avatar_artist_profile")}
                             />
-                            /* <img src={artist?.profileImage ?? default_avatar} alt="" className={cx("avatar_artist")} /> */
                         }
                     </div>
                     <div className={cx("right_view_header")}>
@@ -158,7 +133,7 @@ function Artist() {
             </div>
             <div className={cx("content_view_artist")}>
                 <div className={cx("song_artist")}>
-                    {/* <div className={cx("new_song_artist")}>
+                    <div className={cx("new_song_artist")}>
                         <h2 className={cx("title")}>Mới Phát Hành</h2>
                         <div className={cx("content_new_song")}>
                             <img src="https://photo-resize-zmp3.zmdcdn.me/w320_r1x1_jpeg/cover/c/7/c/d/c7cd466614cd89b9db048804dad367a4.jpg" alt="" />
@@ -171,7 +146,7 @@ function Artist() {
                                 <span>31/07/2023</span>
                             </div>
                         </div>
-                    </div> */}
+                    </div>
                     <div className={cx("hot_song_artist")}>
                         <span className={cx("title")}> Bài Hát Nổi Bật</span>
                         <div className={cx("listSong")}>

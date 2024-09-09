@@ -104,16 +104,16 @@
         .hotSong {
             .list_music {
                 width: 100%;
-                // max-height: 300px;
+                overflow: hidden !important;
                 height: max-content;
                 display: flex;
                 align-items: center;
-                flex-wrap: wrap;
+                flex-wrap: nowrap;
                 justify-content: space-between;
                 margin-bottom: 30px;
 
                 .custom {
-                    width: 32%;
+                    width: 32% !important;
                     padding: 10px;
                     border-radius: 4px;
                     background-color: rgba(255, 255, 255, 0.03);
