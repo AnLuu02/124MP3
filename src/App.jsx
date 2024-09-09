@@ -26,6 +26,9 @@ import AlbumNewRelease from './pages/New-release/SubNewRelease/Album/AlbumNewRel
 import SongNewRelease from './pages/New-release/SubNewRelease/Song/SongNewRelease.jsx';
 import NotFound from './pages/NotFound/NotFound.jsx';
 import SearchResult from './pages/SearchResult/SearchResult.jsx';
+import All from './pages/SearchResult/pages/All/All.jsx';
+import ArtistsLayout from './pages/SearchResult/pages/ArtistsLayout/ArtistsLayout.jsx';
+import SongLayout from './pages/SearchResult/pages/SongLayout/SongLayout.jsx';
 import Top from "./pages/Top100/Top100";
 
 function App() {
@@ -101,7 +104,14 @@ function App() {
             </Route>
           </Route>
 
-          <Route path="/tim-kiem/:filter" element={<DefaultLayout>< SearchResult /></DefaultLayout>}></Route>
+          <Route path="/tim-kiem" element={<DefaultLayout><SearchResult /></DefaultLayout>}>
+
+            <Route path="/tim-kiem/tat-ca" element={<All />}></Route>
+            <Route path="/tim-kiem/bai-hat" element={<SongLayout />}></Route>
+            <Route path="/tim-kiem/artist" element={<ArtistsLayout />}></Route>
+
+
+          </Route>
           {/*page not found*/}
           <Route path="*" element={<NotFound />}></Route>
         </Routes>

@@ -1,0 +1,87 @@
+div.searchBody {
+    margin-top: 40px;
+
+    .title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        a {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 14px;
+
+            &:hover {
+                color: rgba(255, 255, 255, 0.8);
+            }
+        }
+
+    }
+
+    h3 {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .hotSong {
+        .list_music {
+            width: 100%;
+            overflow: hidden !important;
+            height: max-content;
+            display: flex;
+            align-items: center;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            margin-bottom: 30px;
+
+            .custom {
+                width: 32% !important;
+                padding: 10px;
+                border-radius: 4px;
+                background-color: rgba(255, 255, 255, 0.03);
+                position: relative;
+            }
+        }
+    }
+
+
+    .songResult {
+
+        .listSong {
+            ul {
+                width: 100%;
+                // max-height: 300px;
+                height: max-content;
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap !important;
+                justify-content: space-between;
+                margin-bottom: 30px;
+
+                .custom {
+                    width: 49%;
+                    border-radius: 4px;
+                    margin: 1px 0;
+                    padding: 10px;
+                    transition: 0.1s;
+                    position: relative;
+                    backdrop-filter: blur(30px);
+                }
+
+                &.music .custom::after {
+                    content: "";
+                    width: 100%;
+                    height: 0.6px;
+                    background-color: rgba(256, 256, 256, 0.1);
+                    position: absolute;
+                    bottom: 0;
+                    left: 50%;
+                    transform: translateX(-50%);
+                }
+            }
+
+
+
+
+        }
+    }
+}

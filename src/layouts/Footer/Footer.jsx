@@ -1,5 +1,6 @@
-import { faBackwardStep, faCompactDisc, faEllipsis, faForwardStep, faHeadphones, faMicrophone, faPause, faPlay, faRepeat, faShuffle, faVolumeHigh, faVolumeMute } from "@fortawesome/free-solid-svg-icons";
+import { faBackwardStep, faChevronDown, faCompactDisc, faEllipsis, faForwardStep, faGear, faHeadphones, faMicrophone, faPause, faPlay, faRepeat, faShuffle, faUpRightAndDownLeftFromCenter, faVolumeHigh, faVolumeMute } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Tippy from "@tippyjs/react";
 import classNames from "classnames/bind";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -16,6 +17,9 @@ import styles from "./Footer.module.scss";
 const cx = classNames.bind(styles);
 
 function Footer() {
+    const [navLyricLayout, setNavLyricLayout] = useState(3);
+    const [showLayoutLyric, setShowLayoutLyric] = useState(false);
+
     const [playlists, setPlaylists] = useState([]);
     const [loading, setLoading] = useState(true);
     const [zoomOut, setZoomOut] = useState(false);
@@ -142,6 +146,23 @@ function Footer() {
         setZoomOut(!zoomOut);
     }
 
+
+    let lyric = `Nắng của trời, tiếng của người Gần bên nhau làm em thấy vui Muốn theo chân người đi khắp nơi Từ khi anh tới lòng thấy vui lên Đối với đầu, ngả với nghiêng Thật nhiều điều làm anh phát điên Muốn tha anh về đây để làm của riêng Và cho anh thấy miền đất hứa kia Không cầm tinh con ngựa Nhưng mà vẫn bất kham Không muốn bay lên trời Nên không cần nấc thang Anh sẽ gánh tất cả những điều Làm em bất an Tình yêu tạo nên miền đất hứa Từ nơi đất hoang vu Đen Vâu không đẹp trai Nhưng mà không sao Anh không đăng ký thi Để xem ai là triệu phú Khi em bên cạnh anh Biết người ấy là ai Người ta không tin anh Biết cách để xem tinh tú Nhìn em anh thấy ngày mai Thay vì nói với anh nơi nào là miền đất hứa Hãy cho anh biết em đang ở đâu Nếu phải viết ra hết tất cả Nỗi niềm chất chứa, Nó sẽ bán chạy hàng đầu Em là người khiến anh Bớt hao mòn tâm trí Anh không thích những cuộc chuyện trò Mà cứ phải dồn thâm ý Quá nhiều thứ mà anh giấu đi Nó vẫn còn âm ỉ Em lại khiến cho nó bùng lên Bằng những ngón đòn tâm lý Em và kim cương PNJ, không biệt được.`
+
+
+    const converStringToArray = (lyric) => {
+        return lyric.split(/(?=[A-Z])/);
+    }
+
+
+    const handleShowLayoutLiric = () => {
+        console.log(1);
+        setShowLayoutLyric(!showLayoutLyric);
+    }
+
+
+
+
     return (
         <>
             <footer className={cx("footer")}>
@@ -189,7 +210,116 @@ function Footer() {
                     </div>
 
                 </div>
-                <div className={cx("centerMusicFixed")}>
+                {!showLayoutLyric &&
+                    <div className={cx("centerMusicFixed")}>
+                        <ul className={cx("navMusicFixed")}>
+                            <li className={cx("randomMusic", isRandom ? "active" : "")} onClick={() => handleRandomSong()}>
+                                <FontAwesomeIcon className={cx("iconFixed")} icon={faShuffle} />
+                            </li>
+                            <li className={cx("prevMusic")} onClick={() => handlePrevSong(indexSong)}>
+                                <FontAwesomeIcon className={cx("iconFixed")} icon={faBackwardStep} />
+
+                            </li>
+                            <li className={cx("controlsMusic")} onClick={() => handleSong(song)}>
+                                <FontAwesomeIcon className={cx("iconFixed", !isPlay ? "active" : "")} icon={faPlay} />
+                                <FontAwesomeIcon icon={faPause} className={cx("iconFixed", isPlay ? "active" : "")} />
+
+                            </li>
+                            <li className={cx("nextMusic")} onClick={() => handleNextSong(indexSong)}>
+                                <FontAwesomeIcon className={cx("iconFixed")} icon={faForwardStep} />
+                            </li>
+                            <li className={cx("repeatMusic", isRepeat ? "active" : "")} onClick={handleRepeatSong}>
+                                <FontAwesomeIcon className={cx("iconFixed")} icon={faRepeat} />
+                            </li>
+                        </ul>
+
+                        <div className={cx("sliderMusic")}>
+                            <div className={cx("runTime")} ref={runTimeSongRef}>00:00</div>
+                            <div className={cx("slider")}>
+                                <input
+                                    onChange={handleChangeTimeSong}
+                                    value={currentTimeSong}
+                                    ref={progressRef} id={cx("progress")}
+                                    className={cx("progress")}
+                                    type="range"
+                                    step="1" min="0" max="100"
+
+                                />
+                                <div className={cx("progressColor")} ref={progressColorRef}></div>
+                            </div>
+                            <div className={cx("sumTime")} ref={totalTimeSongRef}>{song?.duration}</div>
+                        </div>
+                    </div>}
+
+                <div className={cx("rightMusicFixed")}>
+                    <FontAwesomeIcon className={cx("iconFixed")} icon={faCompactDisc} />
+
+                    <FontAwesomeIcon className={cx("iconFixed")} icon={faHeadphones} onClick={handleShowLayoutLiric} />
+
+                    <FontAwesomeIcon className={cx("iconFixed")} icon={faMicrophone} />
+                    <div className={cx("volumeMusic")} >
+                        <FontAwesomeIcon icon={faVolumeHigh} onClick={handleOnVolumeSong} className={cx("iconFixed", "high", currentVolume > 0 ? "active" : "")} />
+                        <FontAwesomeIcon icon={faVolumeMute} onClick={handleOffVolumeSong} className={cx("iconFixed", "mute", currentVolume <= 0 ? "active" : "")} />
+
+                        <div className={cx("sliderMusic")}>
+                            <div className={cx("slider")}>
+                                <input id={cx("volumn")} onChange={handleChangeVolumeSong} className={cx("progress")} type="range" value={50} min="0" max="100" />
+                                <div ref={progressColorVolumeRef} className={cx("progressColor")}></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className={cx("line")}></div>
+                    <div className={cx("iconZoomOut")} onClick={handleZoom}>
+                        {/* <FontAwesomeIcon className={cx("iconFixed")} icon={faExpand} /> */}
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m156-100-56-56 124-124H120v-80h240v240h-80v-104L156-100Zm648 0L680-224v104h-80v-240h240v80H736l124 124-56 56ZM120-600v-80h104L100-804l56-56 124 124v-104h80v240H120Zm480 0v-240h80v104l124-124 56 56-124 124h104v80H600Z" /></svg>
+
+                    </div>
+                </div>
+            </div>
+            <div className={cx("showLyric", showLayoutLyric ? "active" : "")}>
+                <div className={cx("header")}>
+                    <div className={cx("nav")}>
+                        <div className={cx("navItem", navLyricLayout == 1 ? "active" : "")} onClick={() => setNavLyricLayout(1)}>
+                            Danh sách phát
+                        </div>
+                        <div className={cx("navItem", navLyricLayout == 2 ? "active" : "")} onClick={() => setNavLyricLayout(2)}>
+                            Karaoke
+                        </div>
+                        <div className={cx("navItem", navLyricLayout == 3 ? "active" : "")} onClick={() => setNavLyricLayout(3)}>
+                            Lời bài hát
+                        </div>
+                    </div >
+                    <div className={cx("otherOptions")}>
+                        <Tippy content="Toàn màn hình">
+                            <div className={cx("boxIcon")}>
+                                <FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} className={cx("icon")} />
+                            </div>
+                        </Tippy>
+                        <Tippy content="Cài đặt">
+                            <div className={cx("boxIcon")}>
+                                <FontAwesomeIcon icon={faGear} className={cx("icon")} />
+                            </div>
+                        </Tippy>
+                        <Tippy content="Đóng">
+                            <div className={cx("boxIcon")}>
+                                <FontAwesomeIcon icon={faChevronDown} className={cx("icon")} onClick={handleShowLayoutLiric} />
+                            </div>
+                        </Tippy>
+                    </div>
+                </div >
+
+                <div className={cx("content")}>
+                    <div className={cx("thumbnail")}>
+                        <img src={song.thumbnailUrl ?? default_avatar} alt="" />
+                    </div>
+                    <div className={cx("lyric_run")}>
+                        <ul>
+                            {Array.isArray(converStringToArray(lyric)) ? converStringToArray(lyric).map((item, index) => <li key={index}>{item}</li>) : <li>{lyric}</li>}
+                        </ul>
+                    </div>
+                </div>
+
+                {showLayoutLyric && <div className={cx("centerMusicFixed")}>
                     <ul className={cx("navMusicFixed")}>
                         <li className={cx("randomMusic", isRandom ? "active" : "")} onClick={() => handleRandomSong()}>
                             <FontAwesomeIcon className={cx("iconFixed")} icon={faShuffle} />
@@ -227,33 +357,8 @@ function Footer() {
                         </div>
                         <div className={cx("sumTime")} ref={totalTimeSongRef}>{song?.duration}</div>
                     </div>
-                </div>
-
-                <div className={cx("rightMusicFixed")}>
-                    <FontAwesomeIcon className={cx("iconFixed")} icon={faCompactDisc} />
-
-                    <FontAwesomeIcon className={cx("iconFixed")} icon={faHeadphones} />
-
-                    <FontAwesomeIcon className={cx("iconFixed")} icon={faMicrophone} />
-                    <div className={cx("volumeMusic")} >
-                        <FontAwesomeIcon icon={faVolumeHigh} onClick={handleOnVolumeSong} className={cx("iconFixed", "high", currentVolume > 0 ? "active" : "")} />
-                        <FontAwesomeIcon icon={faVolumeMute} onClick={handleOffVolumeSong} className={cx("iconFixed", "mute", currentVolume <= 0 ? "active" : "")} />
-
-                        <div className={cx("sliderMusic")}>
-                            <div className={cx("slider")}>
-                                <input id={cx("volumn")} onChange={handleChangeVolumeSong} className={cx("progress")} type="range" value={50} min="0" max="100" />
-                                <div ref={progressColorVolumeRef} className={cx("progressColor")}></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={cx("line")}></div>
-                    <div className={cx("iconZoomOut")} onClick={handleZoom}>
-                        {/* <FontAwesomeIcon className={cx("iconFixed")} icon={faExpand} /> */}
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m156-100-56-56 124-124H120v-80h240v240h-80v-104L156-100Zm648 0L680-224v104h-80v-240h240v80H736l124 124-56 56ZM120-600v-80h104L100-804l56-56 124 124v-104h80v240H120Zm480 0v-240h80v104l124-124 56 56-124 124h104v80H600Z" /></svg>
-
-                    </div>
-                </div>
-            </div>
+                </div>}
+            </div >
         </>
     );
 }
