@@ -13,9 +13,9 @@ function ModalShowLyricSong({ objData }) {
 
     function splitTextByCapitalLetters(text) {
         const regex = /([A-Z][^A-Z]*)/g;
-        const matches = text.match(regex);
+        const matches = text?.match(regex);
         if (!matches) return [];
-        return matches.map(part => part.trim()).filter(part => part.length > 0);
+        return matches?.map(part => part?.trim())?.filter(part => part.length > 0);
     }
 
 
