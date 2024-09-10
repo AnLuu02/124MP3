@@ -9,6 +9,12 @@
     position: relative;
     text-overflow: ellipsis;
 
+    &.customInfoSongMenuHeader {
+        font-size: 14px !important;
+        color: white !important;
+        opacity: 1 !important;
+    }
+
     p {
         width: max-content;
         display: inline;

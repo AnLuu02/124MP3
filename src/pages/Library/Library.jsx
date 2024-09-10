@@ -67,8 +67,6 @@ function Library() {
                 THƯ VIỆN
                 <FontAwesomeIcon className={cx("iconLibrary")} icon={faPlay} />
             </h1>
-            {/* <ul className={cx("music", "artistLibraryCared")}>
-            </ul> */}
             <ul className={cx("navCountry")}>
                 <h2 className={cx("headerLibraryH2")}>
                     <div>PLAYLIST</div>

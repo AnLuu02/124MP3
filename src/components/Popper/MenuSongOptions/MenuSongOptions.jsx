@@ -67,7 +67,6 @@ const MenuSongOptions = forwardRef(
         const dispatch = useDispatch();
         const user = useSelector(state => state.user.user);
 
-
         const getAllPlaylist = async () => {
             console.log("Callll");
 
@@ -91,24 +90,6 @@ const MenuSongOptions = forwardRef(
                 setLoading(false);
             }
         };
-
-
-        // const handleAddSongToPlaylist = async (docId, dataSong) => {
-        //     try {
-        //         const docRef = doc(db, 'playlistCollection', docId);
-        //         // Cập nhật tài liệu bằng cách thêm trường mới
-        //         await updateDoc(docRef, {
-        //             Song: arrayUnion({
-        //                 ...dataSong
-        //             })
-        //         });
-        //         notifySuccess({ message: "Thêm bài hát thành công!" });
-
-        //     } catch (error) {
-        //         console.error('Error adding/updating field: ', error);
-        //         notifyError({ message: "Đã có lỗi xảy ra!" });
-        //     }
-        // };
 
         const handleAddSongToPlaylist = async (e, docId, dataSong) => {
             const targetElement = e.target;
@@ -167,7 +148,7 @@ const MenuSongOptions = forwardRef(
             </div>
         );
         useEffect(() => {
-            setPlaylists(playlistsConst.filter(item => item.namePlaylist.includes(inputValue)))
+            setPlaylists(playlistsConst.filter(item => item.namePlaylist.trim().toLowerCase().includes(inputValue.trim().toLowerCase())));
         }, [inputValue])
         const renderAddPlaylist = (attrs) => (
             <div className={cx('menu-list', 'customAddPlaylist')} tabIndex="-1" {...attrs}>

@@ -4,21 +4,27 @@ import { NavLink } from "react-router-dom";
 import styles from "./RenderArtist.module.scss";
 const cx = classNames.bind(styles);
 
-export default function RenderArtist({ dataArtist, classNames }) {
+export default function RenderArtist({ dataArtist, role, classNames }) {
+    console.log(classNames);
+    const dataArtistsFilter = () => {
+        return role ? dataArtist?.filter((a) => a.role === role) : dataArtist
+    }
     return (
         <div className={cx("nameArtist", classNames)} >
-            {dataArtist?.length > 0 ? dataArtist?.map((a, index) => {
-                return (
-                    <NavLink key={index} to={`/artist/${a.name}`} style={{ color: 'unset' }}>
-                        <p>{a.name}{index == dataArtist?.length - 1 ? "" : ","} </p>
-                    </NavLink>
-                )
-            }) : ""}
+            {
+                dataArtistsFilter()?.length > 0 ? dataArtistsFilter()?.map((a, index) => {
+                    return (
+                        <NavLink key={index} to={`/artist/${a.name}`} style={{ color: 'unset' }}>
+                            <p>{a.name}{index == dataArtistsFilter()?.length - 1 ? "" : ","} </p>
+                        </NavLink>
+                    )
+                }) : ""}
         </div>
     )
 }
 
 RenderArtist.propTypes = {
     dataArtist: PropTypes.array,
-    classNames: PropTypes.string
+    classNames: PropTypes.string,
+    role: PropTypes.string
 };

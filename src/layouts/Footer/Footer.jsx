@@ -7,6 +7,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import default_avatar from "../../assets/images/default_avatar.png";
+import play_song_circle from "../../assets/images/SVG/play_song_circle.svg";
 import { db } from "../../components/FireBase/firebaseConfig";
 import MenuSongOptions from "../../components/Popper/MenuSongOptions/MenuSongOptions";
 import AudioRun from "../../components/SongItem/AudioRun/AudioRun";
@@ -147,17 +148,18 @@ function Footer() {
     }
 
 
-    let lyric = `Nắng của trời, tiếng của người Gần bên nhau làm em thấy vui Muốn theo chân người đi khắp nơi Từ khi anh tới lòng thấy vui lên Đối với đầu, ngả với nghiêng Thật nhiều điều làm anh phát điên Muốn tha anh về đây để làm của riêng Và cho anh thấy miền đất hứa kia Không cầm tinh con ngựa Nhưng mà vẫn bất kham Không muốn bay lên trời Nên không cần nấc thang Anh sẽ gánh tất cả những điều Làm em bất an Tình yêu tạo nên miền đất hứa Từ nơi đất hoang vu Đen Vâu không đẹp trai Nhưng mà không sao Anh không đăng ký thi Để xem ai là triệu phú Khi em bên cạnh anh Biết người ấy là ai Người ta không tin anh Biết cách để xem tinh tú Nhìn em anh thấy ngày mai Thay vì nói với anh nơi nào là miền đất hứa Hãy cho anh biết em đang ở đâu Nếu phải viết ra hết tất cả Nỗi niềm chất chứa, Nó sẽ bán chạy hàng đầu Em là người khiến anh Bớt hao mòn tâm trí Anh không thích những cuộc chuyện trò Mà cứ phải dồn thâm ý Quá nhiều thứ mà anh giấu đi Nó vẫn còn âm ỉ Em lại khiến cho nó bùng lên Bằng những ngón đòn tâm lý Em và kim cương PNJ, không biệt được.`
 
 
-    const converStringToArray = (lyric) => {
-        return lyric.split(/(?=[A-Z])/);
+
+    const handleShowLayoutLyrics = () => {
+        setShowLayoutLyric(!showLayoutLyric);
     }
 
-
-    const handleShowLayoutLiric = () => {
-        console.log(1);
-        setShowLayoutLyric(!showLayoutLyric);
+    function splitTextByCapitalLetters(text) {
+        const regex = /([A-Z][^A-Z]*)/g;
+        const matches = text?.match(regex);
+        if (!matches) return [];
+        return matches.map(part => part.trim()).filter(part => part.length > 0);
     }
 
 
@@ -254,7 +256,7 @@ function Footer() {
                 <div className={cx("rightMusicFixed")}>
                     <FontAwesomeIcon className={cx("iconFixed")} icon={faCompactDisc} />
 
-                    <FontAwesomeIcon className={cx("iconFixed")} icon={faHeadphones} onClick={handleShowLayoutLiric} />
+                    <FontAwesomeIcon className={cx("iconFixed")} icon={faHeadphones} onClick={handleShowLayoutLyrics} />
 
                     <FontAwesomeIcon className={cx("iconFixed")} icon={faMicrophone} />
                     <div className={cx("volumeMusic")} >
@@ -277,6 +279,7 @@ function Footer() {
                 </div>
             </div>
             <div className={cx("showLyric", showLayoutLyric ? "active" : "")}>
+
                 <div className={cx("header")}>
                     <div className={cx("nav")}>
                         <div className={cx("navItem", navLyricLayout == 1 ? "active" : "")} onClick={() => setNavLyricLayout(1)}>
@@ -302,23 +305,216 @@ function Footer() {
                         </Tippy>
                         <Tippy content="Đóng">
                             <div className={cx("boxIcon")}>
-                                <FontAwesomeIcon icon={faChevronDown} className={cx("icon")} onClick={handleShowLayoutLiric} />
+                                <FontAwesomeIcon icon={faChevronDown} className={cx("icon")} onClick={handleShowLayoutLyrics} />
                             </div>
                         </Tippy>
                     </div>
                 </div >
-
-                <div className={cx("content")}>
-                    <div className={cx("thumbnail")}>
-                        <img src={song.thumbnailUrl ?? default_avatar} alt="" />
+                {navLyricLayout == 3
+                    ?
+                    <div className={cx("content")}>
+                        <div className={cx("thumbnail")}>
+                            <img src={song.thumbnailUrl ?? default_avatar} alt="" />
+                        </div>
+                        <div className={cx("lyric_run")}>
+                            <ul>
+                                {Array.isArray(splitTextByCapitalLetters(song?.lyrics)) ? splitTextByCapitalLetters(song?.lyrics).map((item, index) => <li key={index}>{item}</li>) : ""}
+                            </ul>
+                        </div>
                     </div>
-                    <div className={cx("lyric_run")}>
-                        <ul>
-                            {Array.isArray(converStringToArray(lyric)) ? converStringToArray(lyric).map((item, index) => <li key={index}>{item}</li>) : <li>{lyric}</li>}
-                        </ul>
-                    </div>
-                </div>
+                    :
+                    navLyricLayout == 2
+                        ?
+                        <>
 
+                        </>
+                        :
+                        <>
+                            <div className={cx("danhsachphat")}>
+                                <ul>
+                                    <li >
+                                        <div className={cx("imgBox")}>
+                                            <img src={song.thumbnailUrl ?? default_avatar} alt="" />
+                                        </div>
+                                        <div className={cx("hoverOptions")}>
+                                            <Tippy content="Thêm vào thư viện">
+                                                <div className={cx("iconWidget")} onClick={e => e.stopPropagation()}>
+                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                        height="24px"
+                                                        viewBox="0 -960 960 960"
+                                                        width="24px"
+                                                        fill="#e8eaed">
+                                                        <path
+                                                            d="m480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Zm0-108q96-86 158-147.5t98-107q36-45.5 50-81t14-70.5q0-60-40-100t-100-40q-47 0-87 26.5T518-680h-76q-15-41-55-67.5T300-774q-60 0-100 40t-40 100q0 35 14 70.5t50 81q36 45.5 98 107T480-228Zm0-273Z" />
+                                                    </svg>
+                                                </div>
+                                            </Tippy>
+                                            {/* <FontAwesomeIcon className={cx("iconWidget")} icon={faPlay} /> */}
+                                            <div className={cx("iconWidget")} onClick={e => e.stopPropagation()}>
+                                                <img src={play_song_circle} alt="" />
+                                            </div>
+                                            <Tippy content="Khác">
+                                                <div onClick={e => e.stopPropagation()} >
+                                                    <FontAwesomeIcon className={cx("iconWidget")} icon={faEllipsis} />
+                                                </div>
+                                            </Tippy>
+                                        </div>
+                                        <div className={cx("info")}>
+                                            <div className={cx("title")}>
+                                                {song?.name}
+                                            </div>
+                                            <RenderArtist dataArtist={song?.artists} />
+                                        </div>
+
+                                    </li>
+
+                                    <li>
+                                        <div className={cx("imgBox")}>
+                                            <img src={song.thumbnailUrl ?? default_avatar} alt="" />
+                                        </div>
+                                        <div className={cx("hoverOptions")}>
+                                            <Tippy content="Thêm vào thư viện">
+                                                <div className={cx("iconWidget")} onClick={e => e.stopPropagation()}>
+                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                        height="24px"
+                                                        viewBox="0 -960 960 960"
+                                                        width="24px"
+                                                        fill="#e8eaed">
+                                                        <path
+                                                            d="m480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Zm0-108q96-86 158-147.5t98-107q36-45.5 50-81t14-70.5q0-60-40-100t-100-40q-47 0-87 26.5T518-680h-76q-15-41-55-67.5T300-774q-60 0-100 40t-40 100q0 35 14 70.5t50 81q36 45.5 98 107T480-228Zm0-273Z" />
+                                                    </svg>
+                                                </div>
+                                            </Tippy>
+                                            {/* <FontAwesomeIcon className={cx("iconWidget")} icon={faPlay} /> */}
+                                            <div className={cx("iconWidget")} onClick={e => e.stopPropagation()}>
+                                                <img src={play_song_circle} alt="" />
+                                            </div>
+                                            <Tippy content="Khác">
+                                                <div onClick={e => e.stopPropagation()} >
+                                                    <FontAwesomeIcon className={cx("iconWidget")} icon={faEllipsis} />
+                                                </div>
+                                            </Tippy>
+                                        </div>
+                                        <div className={cx("info")}>
+                                            <div className={cx("title")}>
+                                                {song?.name}
+                                            </div>
+                                            <RenderArtist dataArtist={song?.artists} />
+                                        </div>
+
+                                    </li>
+
+                                    <li className={cx("center")}>
+                                        <div className={cx("imgBox")}>
+                                            <img src={song.thumbnailUrl ?? default_avatar} alt="" />
+                                        </div>
+                                        <div className={cx("hoverOptions")}>
+                                            <Tippy content="Thêm vào thư viện">
+                                                <div className={cx("iconWidget")} onClick={e => e.stopPropagation()}>
+                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                        height="24px"
+                                                        viewBox="0 -960 960 960"
+                                                        width="24px"
+                                                        fill="#e8eaed">
+                                                        <path
+                                                            d="m480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Zm0-108q96-86 158-147.5t98-107q36-45.5 50-81t14-70.5q0-60-40-100t-100-40q-47 0-87 26.5T518-680h-76q-15-41-55-67.5T300-774q-60 0-100 40t-40 100q0 35 14 70.5t50 81q36 45.5 98 107T480-228Zm0-273Z" />
+                                                    </svg>
+                                                </div>
+                                            </Tippy>
+                                            {/* <FontAwesomeIcon className={cx("iconWidget")} icon={faPlay} /> */}
+                                            <div className={cx("iconWidget")} onClick={e => e.stopPropagation()}>
+                                                <img src={play_song_circle} alt="" />
+                                            </div>
+                                            <Tippy content="Khác">
+                                                <div onClick={e => e.stopPropagation()} >
+                                                    <FontAwesomeIcon className={cx("iconWidget")} icon={faEllipsis} />
+                                                </div>
+                                            </Tippy>
+                                        </div>
+                                        <div className={cx("info")}>
+                                            <div className={cx("title")}>
+                                                {song?.name}
+                                            </div>
+                                            <RenderArtist dataArtist={song?.artists} />
+                                        </div>
+
+                                    </li>
+
+                                    <li>
+                                        <div className={cx("imgBox")}>
+                                            <img src={song.thumbnailUrl ?? default_avatar} alt="" />
+                                        </div>
+                                        <div className={cx("hoverOptions")}>
+                                            <Tippy content="Thêm vào thư viện">
+                                                <div className={cx("iconWidget")} onClick={e => e.stopPropagation()}>
+                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                        height="24px"
+                                                        viewBox="0 -960 960 960"
+                                                        width="24px"
+                                                        fill="#e8eaed">
+                                                        <path
+                                                            d="m480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Zm0-108q96-86 158-147.5t98-107q36-45.5 50-81t14-70.5q0-60-40-100t-100-40q-47 0-87 26.5T518-680h-76q-15-41-55-67.5T300-774q-60 0-100 40t-40 100q0 35 14 70.5t50 81q36 45.5 98 107T480-228Zm0-273Z" />
+                                                    </svg>
+                                                </div>
+                                            </Tippy>
+                                            {/* <FontAwesomeIcon className={cx("iconWidget")} icon={faPlay} /> */}
+                                            <div className={cx("iconWidget")} onClick={e => e.stopPropagation()}>
+                                                <img src={play_song_circle} alt="" />
+                                            </div>
+                                            <Tippy content="Khác">
+                                                <div onClick={e => e.stopPropagation()} >
+                                                    <FontAwesomeIcon className={cx("iconWidget")} icon={faEllipsis} />
+                                                </div>
+                                            </Tippy>
+                                        </div>
+                                        <div className={cx("info")}>
+                                            <div className={cx("title")}>
+                                                {song?.name}
+                                            </div>
+                                            <RenderArtist dataArtist={song?.artists} />
+                                        </div>
+
+                                    </li>
+
+                                    <li>
+                                        <div className={cx("imgBox")}>
+                                            <img src={song.thumbnailUrl ?? default_avatar} alt="" />
+                                        </div>
+                                        <div className={cx("hoverOptions")}>
+                                            <Tippy content="Thêm vào thư viện">
+                                                <div className={cx("iconWidget")} onClick={e => e.stopPropagation()}>
+                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                        height="24px"
+                                                        viewBox="0 -960 960 960"
+                                                        width="24px"
+                                                        fill="#e8eaed">
+                                                        <path
+                                                            d="m480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Zm0-108q96-86 158-147.5t98-107q36-45.5 50-81t14-70.5q0-60-40-100t-100-40q-47 0-87 26.5T518-680h-76q-15-41-55-67.5T300-774q-60 0-100 40t-40 100q0 35 14 70.5t50 81q36 45.5 98 107T480-228Zm0-273Z" />
+                                                    </svg>
+                                                </div>
+                                            </Tippy>
+                                            {/* <FontAwesomeIcon className={cx("iconWidget")} icon={faPlay} /> */}
+                                            <div className={cx("iconWidget")} onClick={e => e.stopPropagation()}>
+                                                <img src={play_song_circle} alt="" />
+                                            </div>
+                                            <Tippy content="Khác">
+                                                <div onClick={e => e.stopPropagation()} >
+                                                    <FontAwesomeIcon className={cx("iconWidget")} icon={faEllipsis} />
+                                                </div>
+                                            </Tippy>
+                                        </div>
+                                        <div className={cx("info")}>
+                                            <div className={cx("title")}>
+                                                {song?.name}
+                                            </div>
+                                            <RenderArtist dataArtist={song?.artists} />
+                                        </div>
+
+                                    </li>
+                                </ul>
+                            </div>
+                        </>
+                }
                 {showLayoutLyric && <div className={cx("centerMusicFixed")}>
                     <ul className={cx("navMusicFixed")}>
                         <li className={cx("randomMusic", isRandom ? "active" : "")} onClick={() => handleRandomSong()}>
@@ -358,6 +554,7 @@ function Footer() {
                         <div className={cx("sumTime")} ref={totalTimeSongRef}>{song?.duration}</div>
                     </div>
                 </div>}
+
             </div >
         </>
     );

@@ -34,3 +34,4 @@ ModalShowDescriptionArtist.PropTypes = {
     objData: PropTypes.object
 }
 export default ModalShowDescriptionArtist;
+

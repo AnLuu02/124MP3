@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CreatePlaylist from "../../components/Modal/ModalCreatePlaylist/CreatePlaylist.jsx";
 import ModalShowDescriptionArtist from "../../components/Modal/ModalShowDescriptionArtist/ModalShowDescriptionArtist.jsx";
+import ModalShowLyricSong from "../../components/Modal/ModalShowLyricSong/ModalShowLyricSong.jsx";
 import PrivateRoute from "../../components/PrivateRoute/PrivateRoute.jsx";
 import Video from "../../components/Video/Video.jsx";
 import { endedSong, playSong, timeUpdateSong } from "../../components/store/songReducer.js";
@@ -103,6 +104,8 @@ function DefaultLayout({ children }) {
                 return <CreatePlaylist />;
             case "SHOW_ALL_DESCRIPTION_ARTIST":
                 return <ModalShowDescriptionArtist objData={objData} />;
+            case "SHOW_LYRICS_SONG":
+                return <ModalShowLyricSong objData={objData} />;
             default:
                 return null;
         }

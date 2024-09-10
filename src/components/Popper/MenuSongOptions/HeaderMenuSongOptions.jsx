@@ -4,24 +4,49 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Tippy from "@tippyjs/react/headless";
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
+import { useDispatch } from "react-redux";
 import default_avatar from '../../../assets/images/default_avatar.png';
 import formatNumberToString from "../../../utils/formatNumberToString";
+import RenderArtist from "../../SongItem/RenderArtist/RenderArtist";
+import { handleShowModal } from "../../store/ModalReducer/modalReducer";
 import styles from './MenuSongOptions.module.scss';
 const cx = classNames.bind(styles);
 
 function HeaderMenuSongOptions({ valueMenu }) {
+
+    const dispatch = useDispatch();
+    const onShowModalLyricsSong = () => {
+        dispatch(handleShowModal("SHOW_LYRICS_SONG", valueMenu));
+    }
     const renderInfoOwnSong = (attrs) => (
-        <div className={cx('menu-list')} tabIndex="-1" {...attrs}>
+        <div className={cx('menu-list', 'custom')} tabIndex="-1" {...attrs}>
             <div className={cx('wrapper', 'menu-popper')}>
                 <div className={cx("menu")}>
-                    <div className={cx("menu-item")}>
-                        <span>Facebook</span>
-                    </div>
-                    <div className={cx("menu-item")}>
-                        <span>Discord</span>
-                    </div>
-                    <div className={cx("menu-item")}>
-                        <span>Zalo</span>
+                    <div className={cx("info")}>
+                        <div className={cx("lineInfo")}>
+                            <span>NGHỆ SĨ</span>
+                            <span>
+                                <RenderArtist dataArtist={valueMenu?.artists} classNames={"customInfoSongMenuHeader"} />
+                            </span>
+                        </div>
+                        <div className={cx("lineInfo")}>
+                            <span>ALBUM</span>
+                            <span>{valueMenu?.name}</span>
+                        </div>
+                        <div className={cx("lineInfo")}>
+                            <span>SÁNG TÁC</span>
+                            <span>
+                                <RenderArtist dataArtist={valueMenu?.artists} role={"Tác giả"} classNames={"customInfoSongMenuHeader"} />
+                            </span>
+                        </div>
+                        <div className={cx("lineInfo")}>
+                            <span>THỂ LOẠI</span>
+                            <span>{valueMenu?.genre}</span>
+                        </div>
+                        <div className={cx("lineInfo")}>
+                            <span>CUNG CẤP BỞI</span>
+                            <span>124Mp3 Media</span>
+                        </div>
                     </div>
 
                 </div>
@@ -61,7 +86,7 @@ function HeaderMenuSongOptions({ valueMenu }) {
 
                 </div>
                 <nav className={cx("nav")}>
-                    <div className={cx("nav-item")}>
+                    <div className={cx("nav-item")} onClick={onShowModalLyricsSong}>
                         <FontAwesomeIcon className={cx("icon")} icon={faIcons} />
                         <span>Lời bài hát</span>
                     </div>
