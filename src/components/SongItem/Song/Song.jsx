@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Skeleton } from "@mui/material";
 import classNames from "classnames/bind";
 import PropTypes, { object } from 'prop-types';
-import { useRef, useState } from "react";
+import { memo, useRef, useState } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useDispatch, useSelector } from "react-redux";
 import 'tippy.js/dist/tippy.css';
@@ -32,6 +32,9 @@ function Song({ songId, indexSong, dataSong, classNames, loading }) {
             ...dataSong
         })
     }
+
+    console.log("song");
+
 
     return (
         <>
@@ -117,4 +120,7 @@ Song.propTypes = {
     loading: PropTypes.bool
 };
 
-export default Song;
+const memoSong = memo(Song);
+memoSong.displayName = 'Song';
+
+export default memoSong;
