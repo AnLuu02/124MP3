@@ -1,25 +1,3 @@
-.wrapper {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-height: min((100vh - 96px) - 60px, 734px);
-    min-height: 100px;
-    color: white;
-    border-radius: 8px;
-    background-color: #1b2039;
-    box-shadow: rgb(0 0 0 / 12%) 0px 2px 12px;
-    overflow: hidden;
-    z-index: 105 !important;
-
-    .requiredLogin {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-}
-
 // Menu wrapper
 span {
     display: block;
@@ -34,6 +12,32 @@ span {
     width: 280px;
     min-height: 100px;
 
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-height: min((100vh - 96px) - 60px, 734px);
+        min-height: 100px;
+        color: white;
+        border-radius: 8px;
+        background-color: #1b2039;
+        box-shadow: rgb(0 0 0 / 12%) 0px 2px 12px;
+        overflow: hidden;
+        z-index: 105 !important;
+
+        .requiredLogin {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        &.shared_box {
+            max-width: 160px !important;
+        }
+    }
+
     &.custom {
         width: 230px;
     }
@@ -47,9 +51,6 @@ span {
 
         .wrapper {
             height: 100%;
-
-
-
         }
 
         .createPlaylist {
@@ -199,6 +200,12 @@ span {
 
 .menu {
     font-size: 13px;
+
+
+
+    .menu-item-shared {
+        width: 100%;
+    }
 
     .info {
         padding: 15px;

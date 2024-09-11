@@ -24,7 +24,9 @@ function MenuSongOptionsItem({ item, dataSong }) {
     return (
         <>
             <div className={cx("menu-item")}
-                onClick={() => item?.type === "copyLink" && handleCopy(`${baseUrl}album/${dataSong?.name}`)}
+                onClick={
+                    () => item?.type === "copyLink" && handleCopy(`${baseUrl}album/${dataSong?.name}`)
+                }
             >
                 {item?.leftIcon && <FontAwesomeIcon className={cx("icon")} icon={item?.leftIcon} />}
                 <span>{item?.title}</span>

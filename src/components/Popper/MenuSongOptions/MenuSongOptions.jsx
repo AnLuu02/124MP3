@@ -1,6 +1,6 @@
-import { faDiscord, faFacebook } from "@fortawesome/free-brands-svg-icons";
+import { faFacebook, faTelegram, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faCirclePlay, faHeart } from "@fortawesome/free-regular-svg-icons";
-import { faAngleRight, faCode, faLink, faPlus, faShare, faTowerBroadcast, faWaveSquare } from "@fortawesome/free-solid-svg-icons";
+import { faAngleRight, faLink, faPlus, faShare, faTowerBroadcast, faWaveSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from "@mui/material";
 import Tippy from '@tippyjs/react/headless';
@@ -9,6 +9,7 @@ import { arrayUnion, collection, doc, getDoc, getDocs, query, updateDoc, where }
 import PropTypes from 'prop-types';
 import { forwardRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { FacebookShareButton, TelegramShareButton, TwitterShareButton } from "react-share";
 import create_playlist_SVG from '../../../assets/images/create_playlist_SVG.svg';
 import add_playlist from "../../../assets/images/SVG/playlist_add.svg";
 import { notifyError, notifySuccess, notifyWarning } from "../../../utils/toastifyMessage";
@@ -29,11 +30,11 @@ const subMenuSongOptionsItemData = [
         leftIcon: faFacebook,
         title: "Facebook"
     }, {
-        leftIcon: faDiscord,
-        title: "Discord"
+        leftIcon: faTelegram,
+        title: "Telegram"
     }, {
-        leftIcon: faCode,
-        title: "Mã nhúng"
+        leftIcon: faTwitter,
+        title: "Twitter"
     }
 ]
 const MenuSongOptionsItemData = [
@@ -68,12 +69,12 @@ const MenuSongOptions = forwardRef(
         const [inputValue, setInputValue] = useState("");
         const [playlists, setPlaylists] = useState([]);
         const [playlistsConst, setPlaylistsConst] = useState([]);
-
         const [loading, setLoading] = useState(true);
         const [error, serError] = useState(null);
         const dispatch = useDispatch();
         const user = useSelector(state => state.user.user);
         const isLogin = useSelector(state => state.user.isLogin);
+        const baseUrl = import.meta.env.VITE_BASE_URL;
 
         const getAllPlaylist = async () => {
             console.log("Callll");
@@ -98,7 +99,6 @@ const MenuSongOptions = forwardRef(
                 setLoading(false);
             }
         };
-
         const handleAddSongToPlaylist = async (e, docId, dataSong) => {
             const targetElement = e.target;
 
@@ -141,20 +141,6 @@ const MenuSongOptions = forwardRef(
             dispatch(handleShowModal("CREATE_PLAYLIST"));
 
         }
-
-        const renderShare = (attrs) => (
-            <div className={cx('menu-list')} tabIndex="-1" {...attrs}>
-                <div className={cx('wrapper', 'menu-popper')}>
-                    <div className={cx("menu")}>
-                        {subMenuSongOptionsItemData.map((item, index) => (
-                            <MenuSongOptionsItem key={index} data={item} />
-                        ))}
-
-                    </div>
-
-                </div>
-            </div>
-        );
         useEffect(() => {
             setPlaylists(playlistsConst.filter(item => item.namePlaylist.trim().toLowerCase().includes(inputValue.trim().toLowerCase())));
         }, [inputValue])
@@ -216,6 +202,30 @@ const MenuSongOptions = forwardRef(
                 </div>
             </div >
         );
+
+
+        const renderShare = (attrs) => (
+            <div className={cx('menu-list')} tabIndex="-1" {...attrs}>
+                <div className={cx('wrapper', 'menu-popper', "shared_box")}>
+                    <div className={cx("menu")}>
+                        <FacebookShareButton url={`${baseUrl}album/${valueMenu?.name}`} className={cx("menu-item-shared")}>
+                            <MenuSongOptionsItem item={subMenuSongOptionsItemData[0]} dataSong={valueMenu} />
+                        </FacebookShareButton>
+
+                        <TelegramShareButton url={`${baseUrl}album/${valueMenu?.name}`} className={cx("menu-item-shared")}>
+                            <MenuSongOptionsItem item={subMenuSongOptionsItemData[1]} dataSong={valueMenu} />
+                        </TelegramShareButton>
+
+                        <TwitterShareButton url={`${baseUrl}album/${valueMenu?.name}`} className={cx("menu-item-shared")}>
+                            <MenuSongOptionsItem item={subMenuSongOptionsItemData[2]} dataSong={valueMenu} />
+                        </TwitterShareButton>
+
+                    </div>
+
+                </div>
+            </div>
+        );
+
         const renderResult = (attrs) => (
             <div className={cx('menu-list')} tabIndex="-1" {...attrs}>
                 <div className={cx('wrapper', 'menu-popper')}>
