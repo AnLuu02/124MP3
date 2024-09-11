@@ -13,7 +13,7 @@
 
 // export default forwardRef(Video);
 
-import React, { forwardRef } from 'react';
+import { forwardRef, memo } from 'react';
 
 const Video = forwardRef((props, ref) => {
     return (
@@ -27,7 +27,7 @@ const Video = forwardRef((props, ref) => {
 
 Video.displayName = 'Video';
 
-const MemoizedVideo = React.memo(Video);
+const MemoizedVideo = memo(Video);
 MemoizedVideo.displayName = 'Video';
 
 export default MemoizedVideo;

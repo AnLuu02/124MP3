@@ -2,6 +2,7 @@ import { faDiscord, faFacebook } from "@fortawesome/free-brands-svg-icons";
 import { faCirclePlay, faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faAngleRight, faCode, faLink, faPlus, faShare, faTowerBroadcast, faWaveSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Button } from "@mui/material";
 import Tippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
 import { arrayUnion, collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
@@ -12,6 +13,7 @@ import create_playlist_SVG from '../../../assets/images/create_playlist_SVG.svg'
 import add_playlist from "../../../assets/images/SVG/playlist_add.svg";
 import { notifyError, notifySuccess, notifyWarning } from "../../../utils/toastifyMessage";
 import { db } from "../../FireBase/firebaseConfig";
+import SignInwithGoogle from "../../FireBase/signInWIthGoogle";
 import stylesSong from "../../SongItem/Song/Song.module.scss";
 import stylesSongOptions from "../../SongItem/SongOptions/SongOptions.module.scss";
 import { handleShowModal } from "../../store/ModalReducer/modalReducer";
@@ -37,23 +39,28 @@ const subMenuSongOptionsItemData = [
 const MenuSongOptionsItemData = [
     {
         leftIcon: faHeart,
-        title: "Thêm vào thư viện"
+        title: "Thêm vào thư viện",
+        type: "addToLibrary"
     },
     {
         leftIcon: faCirclePlay,
-        title: "Thêm vào danh sách phát"
+        title: "Thêm vào danh sách phát",
+        type: "addToList"
     },
     {
         leftIcon: faWaveSquare,
-        title: "Phát tiếp theo"
+        title: "Phát tiếp theo",
+        type: "next"
     },
     {
         leftIcon: faTowerBroadcast,
-        title: "Phát nội dung tương tự"
+        title: "Phát nội dung tương tự",
+        type: "broadcast"
     },
     {
         leftIcon: faLink,
-        title: "Sao chép link"
+        title: "Sao chép link",
+        type: "copyLink"
     }
 ]
 const MenuSongOptions = forwardRef(
@@ -66,6 +73,7 @@ const MenuSongOptions = forwardRef(
         const [error, serError] = useState(null);
         const dispatch = useDispatch();
         const user = useSelector(state => state.user.user);
+        const isLogin = useSelector(state => state.user.isLogin);
 
         const getAllPlaylist = async () => {
             console.log("Callll");
@@ -153,44 +161,57 @@ const MenuSongOptions = forwardRef(
         const renderAddPlaylist = (attrs) => (
             <div className={cx('menu-list', 'customAddPlaylist')} tabIndex="-1" {...attrs}>
                 <div className={cx('wrapper', 'menu-popper')}>
-                    <div className={cx("searchBox")}>
-                        <input type="text" placeholder="Tìm playlist" value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
-                    </div>
-                    <div className={cx("menu")}>
-                        <div className={cx("menu-item", "createPlaylist")} onClick={onShow}>
-                            <div className={cx("icon")}>
-                                <img src={create_playlist_SVG} />
-                            </div>
-                            <span>Tạo playlist mới</span>
-                        </div>
-                        <ul className={cx("listPlaylist")}>
-                            {loading
-                                ?
-                                <div className={cx("loadingText")}>Loading...</div>
-                                :
-                                Array.isArray(playlists) && playlists.length > 0
-                                    ?
-                                    playlists.map((item, index) => (
-                                        <li key={index} className={cx("itemPlaylist")} onClick={(e) => handleAddSongToPlaylist(e, item.id, valueMenu)}>
-                                            <div className={cx("icon")}>
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                    height="24px"
-                                                    viewBox="0 -960 960 960"
-                                                    width="24px"
-                                                    fill="#e8eaed">
-                                                    <path d="M400-240q50 0 85-35t35-85v-280h120v-80H460v256q-14-8-29-12t-31-4q-50 0-85 35t-35 85q0 50 35 85t85 35Zm80 160q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
-                                                </svg>
-                                            </div>
-                                            <div className={cx("title")}>{item?.namePlaylist}</div>
-                                            <img src={add_playlist} />
-                                        </li>
-                                    ))
-                                    :
-                                    <div className={cx("loadingText")}>Danh sách rỗng</div>
-                            }
-                        </ul>
 
-                    </div>
+
+                    {!isLogin
+                        ?
+                        <div className={cx("requiredLogin")}>
+                            <SignInwithGoogle>
+                                <Button className={cx("btn")} variant="outlined"   >Đăng nhập để xem</Button>
+                            </SignInwithGoogle>
+                        </div>
+                        :
+                        <>
+                            <div className={cx("searchBox")}>
+                                <input type="text" placeholder="Tìm playlist" value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
+                            </div>
+                            <div className={cx("menu")}>
+                                <div className={cx("menu-item", "createPlaylist")} onClick={onShow}>
+                                    <div className={cx("icon")}>
+                                        <img src={create_playlist_SVG} />
+                                    </div>
+                                    <span>Tạo playlist mới</span>
+                                </div>
+                                <ul className={cx("listPlaylist")}>
+                                    {loading
+                                        ?
+                                        <div className={cx("loadingText")}>Loading...</div>
+                                        :
+                                        Array.isArray(playlists) && playlists.length > 0
+                                            ?
+                                            playlists.map((item, index) => (
+                                                <li key={index} className={cx("itemPlaylist")} onClick={(e) => handleAddSongToPlaylist(e, item.id, valueMenu)}>
+                                                    <div className={cx("icon")}>
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                            height="24px"
+                                                            viewBox="0 -960 960 960"
+                                                            width="24px"
+                                                            fill="#e8eaed">
+                                                            <path d="M400-240q50 0 85-35t35-85v-280h120v-80H460v256q-14-8-29-12t-31-4q-50 0-85 35t-35 85q0 50 35 85t85 35Zm80 160q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
+                                                        </svg>
+                                                    </div>
+                                                    <div className={cx("title")}>{item?.namePlaylist}</div>
+                                                    <img src={add_playlist} />
+                                                </li>
+                                            ))
+                                            :
+                                            <div className={cx("loadingText")}>Danh sách rỗng</div>
+                                    }
+                                </ul>
+
+                            </div>
+                        </>
+                    }
 
                 </div>
             </div >
@@ -210,7 +231,11 @@ const MenuSongOptions = forwardRef(
                             render={renderAddPlaylist}
                             offset={[0, -10]}
                             hideOnClick={false}
-                            onShow={handleGetPlaylist}
+                            onShow={() => {
+                                if (isLogin) {
+                                    handleGetPlaylist();
+                                }
+                            }}
                         >
                             <div className={cx("menu-item")}>
                                 <FontAwesomeIcon className={cx("icon")} icon={faPlus} />

@@ -103,6 +103,8 @@ function Discover() {
             .then((data) => {
                 setLoading6(false);
                 dispatch(setListSong(data));
+                console.log(data);
+
             })
             .catch((error) => { setLoading6(true); console.log(error) });
     }, [params.filter]);
@@ -131,7 +133,7 @@ function Discover() {
     };
 
     return (<>
-        <div id={cx("discover")}>
+        <div className={cx("discover")}>
             <div className={cx("all-slides")}>
                 <div className={cx("single-slide")} data-order="3" ref={refOther3}>
                     <img src={img_slide3} alt="1" />
@@ -149,7 +151,7 @@ function Discover() {
                 </div>
                 <ul className={cx("navCountry")}>
                     <div>
-                        <NavLink to="" className={cx("navCountryItem", { "active": formatPathname() === '/discover' || formatPathname() === "/discover/all" })} id={cx("All")}>TẤT CẢ</NavLink>
+                        <NavLink to="" className={cx("navCountryItem", { "active": formatPathname() === '/discover' || formatPathname() === "/discover/all" })} >TẤT CẢ</NavLink>
                         <NavLink to="vietnam" className={cx("navCountryItem", { "active": formatPathname() === '/discover/vietnam' })} id={cx("VN")}>VIỆT NAM</NavLink>
                         <NavLink to="thegioi" className={cx("navCountryItem", { "active": formatPathname() === '/discover/thegioi' })} id={cx("TG")}>THẾ GIỚI</NavLink>
                     </div>
@@ -178,27 +180,27 @@ function Discover() {
                 <WidgetAlbum data={songOutstanding} loading={loading1} />
             </div> */}
 
-            <div className={cx("topSong")} id={cx("vn_music")} ref={refVn}>
+            <div className={cx("topSong")} ref={refVn}>
                 <div className={cx("title")}>
                     Nhạc Việt Nam
                 </div>
                 <WidgetAlbum data={songVN} loading={loading2} />
             </div>
 
-            <div className={cx("topSong")} id={cx("asia_music")} ref={refAsian}>
+            <div className={cx("topSong")} ref={refAsian}>
                 <div className={cx("title")}>
                     Nhạc Châu Á
                 </div>
                 <WidgetAlbum data={songAsian} loading={loading3} />
             </div>
 
-            <div className={cx("topSong")} id={cx("uk_music")} ref={refUsuk}>
+            <div className={cx("topSong")} ref={refUsuk}>
                 <div className={cx("title")}>
                     Nhạc Âu Mỹ
                 </div>
                 <WidgetAlbum data={songUsuk} loading={loading4} />
             </div>
-            <div className={cx("topSong")} id={cx("uk_music")} ref={refArtist}>
+            <div className={cx("topSong")} ref={refArtist}>
                 <div className={cx("title")}>
                     Ca sĩ/ Nhạc sĩ
                 </div>

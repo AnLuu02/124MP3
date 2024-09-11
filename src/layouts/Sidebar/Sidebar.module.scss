@@ -5,10 +5,13 @@
     background-color: #1b2039;
     left: 0;
     top: 0;
-    z-index: 100;
+    z-index: 1000;
     transition: 0.2s;
 
-
+    &.isSong {
+        min-height: unset;
+        height: calc(100vh - 90px);
+    }
 
     &>span {
         display: block;
@@ -26,8 +29,14 @@
         width: 240px;
         transform: translateX(-100%);
 
+        &.isSong {
+            min-height: unset;
+            height: 100vh !important;
+        }
+
         &.active {
             transform: translateX(0);
+            z-index: 200;
 
         }
 

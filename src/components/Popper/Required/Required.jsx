@@ -40,6 +40,7 @@ function Required({ children, title, placement = "right-start", isLoggedIn }) {
                 placement={placement}
                 render={renderResult}
                 trigger="click"
+                zIndex={500}
             >
                 {children}
             </Tippy>
@@ -48,8 +49,6 @@ function Required({ children, title, placement = "right-start", isLoggedIn }) {
 
 Required.propTypes = {
     children: PropTypes.node.isRequired,
-    items: PropTypes.array,
-    hideOnClick: PropTypes.bool,
     title: PropTypes.string,
     placement: PropTypes.string,
     isLoggedIn: PropTypes.bool

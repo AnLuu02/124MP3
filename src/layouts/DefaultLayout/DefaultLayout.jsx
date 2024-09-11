@@ -22,7 +22,6 @@ function DefaultLayout({ children }) {
     const dispatch = useDispatch();
     const song = useSelector(state => state.song.song);
     const currentVolume = useSelector(state => state.song.volume);
-    const currentTimeSong = useSelector(state => state.song.currentTimeSong);
     const listSong = useSelector(state => state.listSong.listSong);
     const indexSong = useSelector(state => state.song.indexSong);
     const isPlay = useSelector(state => state.song.isPlay)
@@ -96,7 +95,7 @@ function DefaultLayout({ children }) {
                 durationTime: videoRef.current.duration
             }));
         }
-    }, [dispatch]);
+    }, [videoRef.current]);
 
     const renderModal = useCallback(() => {
         switch (typeModal) {

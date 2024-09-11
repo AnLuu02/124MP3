@@ -1,6 +1,8 @@
-#discover {
+.discover {
     width: 100% !important;
     overflow: hidden;
+    // position: relative;
+    // z-index: 1 ;
 
     .all-slides {
         display: flex;
@@ -168,7 +170,7 @@
 }
 
 @media screen and (max-width: 480px) {
-    #discover {
+    .discover {
         .navCountry {
             &>div {
                 display: flex;
@@ -198,7 +200,7 @@
         }
     }
 
-    #discover {
+    .discover {
         margin-top: 50px;
 
         .newSong {
@@ -222,7 +224,7 @@
 }
 
 @media screen and (min-width: 581px) and (max-width: 768px) {
-    #discover {
+    .discover {
         margin-top: 50px;
 
 
@@ -238,7 +240,7 @@
 
 
 @media screen and (min-width: 768px) and (max-width: 1024px) {
-    #discover {
+    .discover {
         margin-top: 50px;
 
 

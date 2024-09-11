@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
-import { Fragment } from 'react';
+import { Fragment, memo } from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink, useLocation } from 'react-router-dom';
 import Required from '../../Popper/Required/Required';
@@ -35,7 +35,7 @@ function NavItem({ isAuth = false, to, title, iconSvg = null, iconFontAwesome = 
 
     return (
         <RequiredComponent>
-            <li className={cx("navItem", className, { "active": song.name ? true : false }, isShowSidebar ? "showFullSidebar" : "")} onClick={onClick}>
+            <li className={cx("navItem", className, isShowSidebar ? "showFullSidebar" : "")} onClick={onClick}>
                 <ProtectedNavLinkComponent to={to} className={cx("nav_item", { "active": handleActiveNav() })}>
                     {icon}
                     <div className={cx("title")}> {title}</div>
@@ -64,4 +64,6 @@ NavItem.defaultProps = {
     onClick: () => { },
 };
 
-export default NavItem
+const memoNavItem = memo(NavItem);
+memoNavItem.displayName = 'NavItem';
+export default memoNavItem;

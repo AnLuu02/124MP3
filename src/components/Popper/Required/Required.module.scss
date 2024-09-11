@@ -1,20 +1,19 @@
-.wrapper {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-height: min((100vh - 96px) - 60px, 734px);
-    min-height: 100px;
-    color: white;
-    border-radius: 8px;
-    background-color: #1b2039;
-    box-shadow: rgb(0 0 0 / 12%) 0px 2px 12px;
-    overflow: hidden;
-    z-index: 1000000000000 !important;
-}
-
 .menu-list {
     width: 280px;
     min-height: 100px;
+
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-height: min((100vh - 96px) - 60px, 734px);
+        min-height: 100px;
+        color: white;
+        border-radius: 8px;
+        background-color: #1b2039;
+        box-shadow: rgb(0 0 0 / 12%) 0px 2px 12px;
+        overflow: hidden;
+    }
 
     .desc {
         padding: 0 16px;

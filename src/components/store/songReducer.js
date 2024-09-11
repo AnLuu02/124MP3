@@ -17,6 +17,10 @@ const musicSlice = createSlice({
     name: "song",
     initialState: initialStateSong,
     reducers: {
+        setSong: (state, action) => {
+            state.song = { ...action.payload.song };
+            state.indexSong = action.payload.indexSong;
+        },
         playSong: (state, action) => {
             state.isPlay = true;
             state.song = { ...action.payload.song };
@@ -87,9 +91,9 @@ const minuteTimeSong = state => {
 }
 
 //actions
-const { playSong, pauseSong, endedSong, timeUpdateSong, repeatSong, nextSong, prevSong, changeVolume, randomSong, changeTimeSong } = musicSlice.actions;
+const { setSong, playSong, pauseSong, endedSong, timeUpdateSong, repeatSong, nextSong, prevSong, changeVolume, randomSong, changeTimeSong } = musicSlice.actions;
 
-export { changeTimeSong, changeVolume, endedSong, minuteTimeSong, nextSong, pauseSong, playSong, prevSong, randomSong, repeatSong, secondTimeSong, timeProgress, timeUpdateSong };
+export { changeTimeSong, changeVolume, endedSong, minuteTimeSong, nextSong, pauseSong, playSong, prevSong, randomSong, repeatSong, secondTimeSong, setSong, timeProgress, timeUpdateSong };
 
 //reducer
 export const sliceSongReducer = musicSlice.reducer;

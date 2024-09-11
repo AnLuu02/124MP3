@@ -1,6 +1,7 @@
 import { faChevronLeft, faChevronRight, faCompactDisc, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from "classnames/bind";
+import { memo, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SignInwithGoogle from "../FireBase/signInWIthGoogle";
 import { setStateSidebar } from "../store/mobileReducer";
@@ -10,6 +11,8 @@ import NavItem from "./NavItem/NavItem";
 
 const cx = classNames.bind(styles);
 function Nav() {
+    console.log("Nav");
+
     const isLoggedIn = useSelector(state => state.user.isLogin);
     const song = useSelector(state => state.song.song);
     const dispatch = useDispatch();
@@ -20,17 +23,23 @@ function Nav() {
 
     //mobile
     const isShowSidebar = useSelector(state => state.mobile.isShowSidebar);
-    const handleHideSidebar = () => {
-        if (isShowSidebar) {
-            dispatch(setStateSidebar(false));
-        }
-    }
+    const handleHideSidebar = useCallback(
+        () => {
+            if (isShowSidebar) {
+                dispatch(setStateSidebar(false));
+            }
+        },
+        [isShowSidebar]
+    )
     //mobile
 
 
-    const handleToggleSidebar = () => {
-        dispatch(setStateSidebar(!isShowSidebar));
-    }
+    const handleToggleSidebar = useCallback(
+        () => {
+            dispatch(setStateSidebar(!isShowSidebar));
+        },
+        [isShowSidebar]
+    )
 
     return (
         <>
@@ -362,4 +371,7 @@ function Nav() {
     );
 }
 
-export default Nav;
+
+const memoNav = memo(Nav);
+memoNav.displayName = 'Nav';
+export default memoNav;

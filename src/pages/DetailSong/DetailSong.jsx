@@ -15,6 +15,8 @@ import AudioRun from "../../components/SongItem/AudioRun/AudioRun";
 import RenderArtist from "../../components/SongItem/RenderArtist/RenderArtist";
 import SongOptions from "../../components/SongItem/SongOptions/SongOptions";
 import { setListSong } from "../../components/store/listSongReducer";
+import { setSong } from "../../components/store/songReducer";
+
 import { pauseSong, playSong } from "../../components/store/songReducer";
 import useFetch from "../../Custom hooks/useFetch";
 import formatNumberToString from "../../utils/formatNumberToString";
@@ -88,6 +90,9 @@ function DetailSong() {
             else if (p == "thinh-hanh") {
                 query += `?topStart=21&topEnd=40`;
             }
+            else {
+                query += `?name=${p}`;
+            }
             get(query)
                 .then((data) => {
                     setSongs(data)
@@ -150,7 +155,9 @@ function DetailSong() {
             <div className={cx("playSong")} >
                 <div className={cx("layoutLeft")}>
                     <div className={cx("boxAudio")}>
-                        <img src={pathname.includes("playlist") ? album_default : song?.thumbnailUrl} alt="" />
+                        <img src={
+                            pathname.includes("playlist") ? album_default : song?.thumbnailUrl ? song?.thumbnailUrl : songs?.[0]?.thumbnailUrl
+                        } alt="" />
                         <div className={cx("boxControls")} onClick={() => handleSong(song)}>
                             <div className={cx("border1")}>
                                 {isPlay ? <AudioRun isPlay={isPlay} songId={song?.id} currentSongId={song?.id} /> : <FontAwesomeIcon icon={faPlay} className={cx("icon", !isPlay ? "active" : "")} />}
@@ -168,18 +175,61 @@ function DetailSong() {
                                     ?
                                     song?.name
                                     :
-                                    <Skeleton className={cx("skeleton")} />
+                                    songs?.[0]?.name
+                                        ?
+                                        songs?.[0]?.name
+                                        :
+                                        <Skeleton className={cx("skeleton")} width="60%" />
+
                         }
                         {playlists?.[0]?.namePlaylist && allowSetNamePlaylist && <FontAwesomeIcon icon={faCheck} className={cx("icon")} onClick={handleClickSaveName} />}
                     </div>
 
-                    <div className={cx("releaseDate")} >Cập nhật:  {playlists?.[0]?.timestamp ? formatTimestamp(playlists?.[0]?.timestamp) : song?.releaseDate ? song?.releaseDate : <Skeleton className={cx("skeleton")} />}
+                    <div className={cx("releaseDate")} >
+                        {playlists?.[0]?.timestamp
+                            ?
+                            `Cập nhật: ${formatTimestamp(playlists?.[0]?.timestamp)}`
+                            :
+                            song?.releaseDate
+                                ?
+                                `Cập nhật: ${song?.releaseDate}`
+                                :
+                                songs?.[0]?.releaseDate
+                                    ?
+                                    `Cập nhật: ${songs?.[0]?.releaseDate}`
+                                    :
+                                    <Skeleton className={cx("skeleton")} width="50%" />
+                        }
                     </div>
                     <div className={cx("artist")}>
-                        {song?.name ? <RenderArtist dataArtist={song?.artists} /> : user.displayName}
+                        {
+                            song?.name
+                                ?
+                                <RenderArtist dataArtist={song?.artists} />
+                                :
+                                songs?.[0]?.name
+                                    ?
+                                    <RenderArtist dataArtist={songs?.[0]?.artists} />
+                                    :
+                                    user.displayName
+                                        ?
+                                        user.displayName
+                                        :
+                                        <Skeleton className={cx("skeleton")} />
+                        }
                     </div>
                     <div className={cx("loveSong")}>
-                        {song?.name ? `${formatNumberToString(song.like_count)} lượt yêu thích` : ""}
+                        {
+                            song?.name
+                                ?
+                                `${formatNumberToString(song.like_count)} lượt yêu thích`
+                                :
+                                songs?.[0]?.name
+                                    ?
+                                    `${formatNumberToString(songs?.[0]?.like_count)} lượt yêu thích`
+                                    :
+                                    ""
+                        }
                     </div>
 
 
@@ -274,9 +324,24 @@ function DetailSong() {
                                             <h4>Cung cấp bởi</h4>
                                         </div>
                                         <div className={cx('right')}>
-                                            <h4>{songs?.length ?? 0}</h4>
-                                            <h4>{formatTimestamp(playlists?.[0]?.timestamp)}</h4>
-                                            <h4>{playlists?.[0]?.namePlaylist ?? "Universal Music Group"}</h4>
+                                            <h4>{songs?.length ?? 1}</h4>
+                                            <h4>{
+                                                playlists?.[0]?.timestamp
+                                                    ?
+                                                    formatTimestamp(playlists?.[0]?.timestamp)
+                                                    :
+                                                    song?.releaseDate
+                                                        ?
+                                                        song?.releaseDate
+                                                        :
+                                                        songs?.[0]?.releaseDate
+                                                            ?
+                                                            songs?.[0]?.releaseDate
+                                                            :
+                                                            <Skeleton className={cx("skeleton")
+                                                            }
+                                                            />}</h4>
+                                            <h4>{playlists?.[0]?.namePlaylist ?? "124Mp3 Media"}</h4>
                                         </div>
                                     </div>
                                 </div>

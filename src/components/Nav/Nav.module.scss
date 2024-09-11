@@ -6,8 +6,7 @@ ul.navSidebar {
 
     &.nav2 {
         overflow-y: auto;
-        // height: 315px;
-        height: calc(100vh - 315px) !important;
+        height: calc(100vh - 365px) !important;
 
         &.isSong {
             height: calc(100vh - 453px) !important;

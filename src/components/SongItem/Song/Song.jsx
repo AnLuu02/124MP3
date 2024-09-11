@@ -32,10 +32,6 @@ function Song({ songId, indexSong, dataSong, classNames, loading }) {
             ...dataSong
         })
     }
-
-    console.log("song");
-
-
     return (
         <>
             <li
